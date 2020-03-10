@@ -1,0 +1,28 @@
+Angular
+-Angular มี app module ที่เป็น root module (main module) อย่างน้อย 1 module (module เป็น feature ต่างๆของ angular)
+-แต่ละ module เป็น component กับ service
+ -> component เป็นส่วนของ view
+    -> angular app จะมี component อย่างน้อย 1 ตัว ที่เป็น root component(main component)
+    -> ทุกๆ component จะอยู่ใน root component
+    -> แต่ละ component จะมี html(view),class(control logic)
+    -> มี service ที่จัดการกับ back end
+-angular app จะมีได้หลาย module
+ -> แต่ละ module จะมีได้หลาย component ,service
+ -> module สามารถ import , export ได้
+
+
+Package.json จะมีพวก library , module ที่ angular app ใช้
+ -> จะ install เมื่อเรา run ng new (ตอนสร้าง Project) รวมถึง node_module
+
+
+src folder
+-main.ts เป็น entry point(จุดเริ่มต้น) ของ angular app
+-app folder
+ -> app.module.ts เป็น root module
+ -> app.component.ts เป็น root component
+
+เมื่อรัน ng serve 
+-มันจะมาที่ main.ts จะมี bootstrap kick start ไปที่ app.module 
+ -> ใน app module ก็จะมี bootstrap kick start ไปที่ app.component
+    -> จะมี html,class
+        -> class จะมี logic หรือ data สำหรับ view
