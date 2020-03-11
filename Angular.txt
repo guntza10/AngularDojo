@@ -26,3 +26,47 @@ src folder
  -> ใน app module ก็จะมี bootstrap kick start ไปที่ app.component
     -> จะมี html,class
         -> class จะมี logic หรือ data สำหรับ view
+-index.html เป็น main template (ที่มี app.component)
+-เวลาจะใช้ component อื่น เอามาใช้ใน app.component(ที่เป็น root component ของ angular)
+
+Component 
+-Template(view) -> html
+-Class(logic+data+method) -> typescript
+-Metadata(information) -> ใช้บอกว่าเป็น particular class หรือ regular class ใน component
+    -> จะมี decorator(function ที่จัดการข้อมูลเกี่ยวกับ class ของ component) ที่เป็น feature ที่ใช้ใน Typescript (ดูตัวอย่างใน app.component.ts)
+    -> metadata templateUrl ที่อ้างอิงไฟล์ html สามารถใช้ property template ที่อ้างอิง tag html ได้โดยตรง (ดูตัวอย่างใน test.component.ts)
+        -> ใช้ `` escape key ครอบ ถ้าจะทำเป็น multiple line
+    -> metadata styleUrls สามารถใช้ styles แทนได้เหมือนข้างบน
+-ทุกครั้งที่สร้าง component จะมีการการ Import component class ให้ auto ใน app.module
+-ทุก component เอามาใช้ภายใต้ app.component(root component)
+note : เวลาสร้าง component จะมี spec ไฟล์สำหรับ test(ไม่จำเป็นสามารถลบได้)
+-เราสามารถ define selector ของ component ได้ 3 วิธี (ดูตัวอย่างที่ test.component.html)
+    -> กำหนดชื่อ tag 
+    -> กำหนดให้เป็น class css
+    -> กำหนดให้เป็น attribute 
+
+Interpolation => syntax{{}} (ดูตัวอย่างที่ binding.component.ts)
+-คือการ binding data จาก class สู่ template(view)
+-ไม่สามารถ define ตัวแปรได้ เช่น a = 2+2
+-ไม่สามารถใช้ global javascript variable ได้ เช่น window ,screen 
+note : interpolation มีข้อจำกัดที่สามารถใช้งานได้แค่กับ string value เท่านั้น ใช้กับ attribute ที่เป็น boolean ไม่ได้
+
+Property Binding -> คือการ binding data ให้ attribute ที่เป็น boolean only? (ดูตัวอย่างที่ binding.component.ts)
+-attribute ที่เป็น boolean 
+    -> ไม่สามารถไปเปลี่ยนแปลงค่ามันได้ด้วย string value ("true" or "false")
+        ->เช่น disabled (เปลี่ยนแปลงค่าที่เป็น string value ไม่มีผล disabled = "false" เพราะมันต้องการ true or false ที่เป็น boolean)
+-ใช้กับ attribute ได้หมด แต่นิยมใช้กับ attribute ที่เป็น boolean เนื่องจากข้อจำกัดที่กล่าวไปข้างต้น
+note : syntax [] or bind-ชื่อของ attribute
+
+Class Binding
+-> binding class css ว่าจะใช้หรือไม่ใช้ (ดูตัวอย่างที่ binding.component.ts)
+-> ngClass คือการ set object ให้ binding class โดยที่เราไม่ต้องไป set หลายครั้ง set เป็น object รอบเดียวจบ (set multiple class)
+-> รับค่าเป็น boolean
+
+Style Binding
+-> binding style css property
+-> รับค่าเป็น string value ("''") or ('""')
+-> สามารถใช้ condition expression ได้
+-> ngStyle คือการ set object ให้ binding style (set multiple style)
+    -> เราใช้ - ไม่ได้ (font-style ต้องเป็น camel case => fontStyle) ใน ngStyle
+Note : ชื่อ property ใน Object ถ้าไม่มี "" or '' จะต้องพิมพ์ติดกันเป็น camel case
