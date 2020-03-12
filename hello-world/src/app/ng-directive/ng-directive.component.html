@@ -1,0 +1,49 @@
+<h1>------------------------------------------------------------------------------------------------------------------------------
+</h1>
+<h1 class="title">Ng-directive</h1>
+
+<h2>=> Ngif</h2>
+<h2>simple syntax</h2>
+<h3 *ngIf="displayName; else elseBlock">Show NgIf</h3>
+<ng-template #elseBlock>
+    <h3>NgIf is hidden</h3>
+</ng-template>
+
+<h2>advance syntax</h2>
+<div *ngIf="displayName; then showBlock ;else hideBlock"></div>
+<ng-template #showBlock>
+    <h3>NgIf is show</h3>
+</ng-template>
+<ng-template #hideBlock>
+    <h3>NgIf is hidden</h3>
+</ng-template>
+
+<h2>=> NgSwitch</h2>
+<div [ngSwitch]="color">
+    <h3 *ngSwitchCase="'red'">You picked red color</h3>
+    <h3 *ngSwitchCase="'blue'">You picked blue color</h3>
+    <h3 *ngSwitchCase="'green'">You picked green color</h3>
+    <h3 *ngSwitchDefault>You picked {{color}} color</h3>
+</div>
+
+<h2>=> NgFor</h2>
+<h3>->index</h3>
+<div *ngFor="let color of colors; index as i">
+    <h3>{{i+1}} {{color}}</h3>
+</div>
+<h3>->first</h3>
+<div *ngFor="let color of colors; first as f">
+    <h3>{{f}} {{color}}</h3>
+</div>
+<h3>->last</h3>
+<div *ngFor="let color of colors; last as l">
+    <h3>{{l}} {{color}}</h3>
+</div>
+<h3>->odd</h3>
+<div *ngFor="let color of colors; odd as o">
+    <h3>{{o}} {{color}}</h3>
+</div>
+<h3>->even</h3>
+<div *ngFor="let color of colors; even as e">
+    <h3>{{e}} {{color}}</h3>
+</div>

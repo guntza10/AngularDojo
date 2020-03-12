@@ -46,7 +46,7 @@ note : เวลาสร้าง component จะมี spec ไฟล์ส�
     -> กำหนดให้เป็น attribute 
 
 Interpolation => syntax{{}} (ดูตัวอย่างที่ binding.component.ts)
--คือการ binding data จาก class สู่ template(view)
+-คือการ binding data จาก component class สู่ component template(view)
 -ไม่สามารถ define ตัวแปรได้ เช่น a = 2+2
 -ไม่สามารถใช้ global javascript variable ได้ เช่น window ,screen 
 note : interpolation มีข้อจำกัดที่สามารถใช้งานได้แค่กับ string value เท่านั้น ใช้กับ attribute ที่เป็น boolean ไม่ได้
@@ -70,3 +70,40 @@ Style Binding
 -> ngStyle คือการ set object ให้ binding style (set multiple style)
     -> เราใช้ - ไม่ได้ (font-style ต้องเป็น camel case => fontStyle) ใน ngStyle
 Note : ชื่อ property ใน Object ถ้าไม่มี "" or '' จะต้องพิมพ์ติดกันเป็น camel case
+
+Event Binding
+-> การส่ง data จาก component template สู่ component class
+    -> syntax => (event)
+    -> ทำผ่าน event handle (function ของ component class)
+-> สามารถส่ง parameter event handle ได้ ($event)
+    -> special var ของ angular (จะส่ง all information about DOM ของ event ที่เราทำ เช่น click)
+        -> สามารถ access all property ของ DOM event
+-> สามารถใช้ template statement แทน event handle ได้ (set property ผ่าน event binding ได้เลย)
+
+Template Reference Variables
+-> การ binding data ของ component template (refer html element และ all DOM property)
+    -> syntax => #ตามด้วยชื่อตัวแปร
+note : argument vs parameter
+        -> sum(a,b) => retunr a+b; => a,b คือ parameter
+        -> var result = sum(4,5); => 4,5 คือ argument
+
+Two Way Binding
+-> การเปลี่ยนแปลง data ที่ template ,data(property) ที่ class จะเปลี่ยนแปลงด้วย หรือ 
+    เปลี่ยนแปลง data(property) ที่ class ,data ที่ template จะเปลี่ยนแปลงด้วย
+-> syntax => [(ngModel)] -> ต้องเรียกใช้ FormsModule
+    => [] property binding = data from class to template
+    => () event binding = data from template to class
+
+Ng-Directive (ดูตัวอย่างที่ ng-directive.component)
+->NgIf (if เงื่อนไข ซ่อน แสดง Html element) => syntax *ngIf
+    ->If else สามารถใช้ ng-template(template reference var) เข้ามาช่วย 
+        -> เป็น container สำหรับ element อื่นที่มาใช้ร่วมกับ ng-if directive
+-NgSwitch (switch statement สำหรับ multiple value) => syntax [ngSwitch] กับ *ngSwitchCase
+-NgFor => syntax  *ngFor="let i of list" note: list คือ array ที่เราจะเอามา for-loop
+    -> สามารถอ้างอิง Index ของ array ได้ ด้วย index as i (i หรือ ชื่ออะไรก็ได้)
+    -> สามารถ check ว่าเป็น first element ได้ด้วย first as f (f หรือ ชื่ออะไรก็ได้)
+    -> สามารถ check ว่าเป็น last element ได้ด้วย last as l (l หรือ ชื่ออะไรก็ได้)
+    -> สามารถ check ว่า index เป็น odd ได้ด้วย odd as o (o หรือ ชื่ออะไรก็ได้)
+    -> สามารถ check ว่า index เป็น even ได้ด้วย even as e (e หรือ ชื่ออะไรก็ได้)
+
+Component Interaction
