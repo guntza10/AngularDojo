@@ -1,0 +1,35 @@
+<h1>-------------------------------------------------------------------------------------------------------></h1>
+<h1>Pipes</h1>
+<h2>-> pipe for string property</h2>
+<h3>{{pipes}}</h3>
+<h3>{{pipes | lowercase}} ->lowercase pipe</h3>
+<h3>{{pipes | uppercase}} ->uppercase pipe</h3>
+<!-- transform to capitalize -->
+<h3>{{titleName | titlecase}} ->titlecase pipe</h3>
+<!-- slice string: 3 คือ index ที่เริ่มตัดเอามา Index เริ่มจาก 0 -->
+<h3>{{titleName | slice : 3}} ->slice pipe แบบที่ 1</h3>
+<!-- slice string: 3 : 5 คือ index ที่ 3 ถึง 5 แต่ไม่เอา 5 -->
+<h3>{{titleName | slice : 3:5}} ->slice pipe แบบที่ 2</h3>
+<h3>{{person | json}} ->Json pipe</h3>
+
+<h2>-> pipe for number property</h2>
+<!-- x.y-z (digit คือจำนวนหลัก)
+    -> x คือ minimum digit number ของ integer
+    -> y คือ minimum digit number ของ decimal
+    -> z คือ maximum digit number ของ decimal
+-->
+<h3>{{5.678 | number: '1.2-3'}}</h3>
+<h3>{{5.678 | number: '3.4-5'}}</h3>
+<!-- มันปัดเลขขึ้นให้เลย -->
+<h3>{{5.678 | number: '3.1-2'}}</h3>
+
+<h3>{{0.25 | percent}} -> percent pipe</h3>
+<!-- default currency pipe คือ $ us dollar -->
+<h3>{{0.25 | currency}} -> currency pipe</h3>
+<!-- ไม่อยากแสดงเป็น symbol -->
+<h3>{{0.25 | currency:'EUR':'code'}} -> currency pipe</h3>
+
+<h3>{{date}} -> date pipe</h3>
+<h3>{{date | date: 'short'}} -> date pipe</h3>
+<h3>{{date | date: 'shortDate'}} -> date pipe</h3>
+<h3>{{date | date: 'shortTime'}} -> date pipe</h3>

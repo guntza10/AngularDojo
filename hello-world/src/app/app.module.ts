@@ -7,6 +7,7 @@ import { TestComponent } from './test/test.component';
 import { BindingComponent } from './binding/binding.component';
 import { NgDirectiveComponent } from './ng-directive/ng-directive.component';
 import { ComponentInteractionComponent } from './component-interaction/component-interaction.component';
+import { PipesComponent } from './pipes/pipes.component';
 
 // Ngmodule decorator
 @NgModule({
@@ -17,7 +18,8 @@ import { ComponentInteractionComponent } from './component-interaction/component
     TestComponent,
     BindingComponent,
     NgDirectiveComponent,
-    ComponentInteractionComponent
+    ComponentInteractionComponent,
+    PipesComponent
   ],
   imports: [
     BrowserModule,

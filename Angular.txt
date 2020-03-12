@@ -126,5 +126,6 @@ note:
     ->จากตัวอย่าง app.component เป็น parent ส่วน component-interaction.component เป็น child
     ->@input , @output สามารถ define ชื่อให้มันได้
 
-Pipes
+Pipes (ดูตัวอย่างที่ pipes.component.html)
+-> ใช้แปลง data ก่อนจะเอาไปแสดงที่ view จะไม่เปลี่ยแปลงค่าของ property ของ class
 
