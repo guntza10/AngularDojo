@@ -106,4 +106,25 @@ Ng-Directive (ดูตัวอย่างที่ ng-directive.component)
     -> สามารถ check ว่า index เป็น odd ได้ด้วย odd as o (o หรือ ชื่ออะไรก็ได้)
     -> สามารถ check ว่า index เป็น even ได้ด้วย even as e (e หรือ ชื่ออะไรก็ได้)
 
-Component Interaction
+Component Interaction (ดูตัวอย่างที่ component-interaction.component)
+-> คือการรับ-ส่ง data ระหว่าง Parent component กับ Child component
+-> component ที่เป็น parent component
+    -> สามารถมี child component ซึ่งทำงานอิสระต่อกัน
+-> วิธีรับ-ส่ง data จะใช้
+    -> ส่ง data จาก parent ไปที่ child
+        -> declare property ที่จะส่ง แล้วกำหนด property binding ให้กับ selector ของ component ที่ต้องการให้เป็น child 
+        เช่น [parentData]="propertyที่จะส่ง"
+        -> ใช้ decorator input (@input) ที่ child ให้กับ property ที่เราจะเอาไว้รับค่าที่ส่งมาจาก parent 
+        (child component จะรับ data(input) จาก parent component) แล้วนำ property ที่รับค่ามานั้น ไป binding ใน child component template ต่อ
+
+    -> รับ data จาก child (่ส่ง data จาก child ไป parent)
+        -> สร้าง event ในการส่ง data จาก child ไป parent (EventEmiiter) ที่ child
+        -> ใช้ decorator output (@output) ที่ child ให้กับ event ที่เราสร้าง
+        (child component จะส่ง data (output) ไปที่ parent component)
+        -> สร้าง event binding (childEvent) ที่ parent component ให้กับ selector ของ component ที่เป็น child + สร้าง property ที่รับค่าจาก event ที่ได้จาก child
+note: 
+    ->จากตัวอย่าง app.component เป็น parent ส่วน component-interaction.component เป็น child
+    ->@input , @output สามารถ define ชื่อให้มันได้
+
+Pipes
+

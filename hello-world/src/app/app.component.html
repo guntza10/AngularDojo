@@ -11,5 +11,9 @@
 </div>
 <app-binding></app-binding>
 <app-ng-directive></app-ng-directive>
+<!-- componentInteraction -->
+<app-component-interaction (childEvent)="message=$event" [parentData]="componentInteraction">
+</app-component-interaction>
+<h2>{{message}}</h2>
 
 <!-- <router-outlet></router-outlet> -->

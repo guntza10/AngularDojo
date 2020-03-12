@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { TestComponent } from './test/test.component';
 import { BindingComponent } from './binding/binding.component';
 import { NgDirectiveComponent } from './ng-directive/ng-directive.component';
+import { ComponentInteractionComponent } from './component-interaction/component-interaction.component';
 
 // Ngmodule decorator
 @NgModule({
@@ -15,7 +16,8 @@ import { NgDirectiveComponent } from './ng-directive/ng-directive.component';
     AppComponent,
     TestComponent,
     BindingComponent,
-    NgDirectiveComponent
+    NgDirectiveComponent,
+    ComponentInteractionComponent
   ],
   imports: [
     BrowserModule,

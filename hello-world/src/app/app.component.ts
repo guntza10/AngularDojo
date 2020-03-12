@@ -12,4 +12,8 @@ import { Component } from '@angular/core';
 // class
 export class AppComponent {
   title = 'hello-world';
+  // data from parent to child
+  public componentInteraction = "componentInteraction";
+  // property ที่รับค่าจาก child
+  public message = "";
 }
