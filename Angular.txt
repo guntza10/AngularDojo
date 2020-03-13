@@ -160,3 +160,14 @@ Dependency Injection
     or คือการรับค่าที่ parameter ของ constructor class?(injection ปกติ)?
 
 Http and Observables
+-> เราดึง data จาก server ผ่าน service ด้วย Http request
+    -> ส่ง Http request ไปที่ web api หรือ web service เพื่อไปดึง data จาก database แล้วส่ง Http response กลับมา 
+-> Observable คือ Http response ที่ได้กลับมา
+-> step การทำงานของ Http
+    -> service ส่ง Http request ไปที่ web api or web service เพื่อไปดึง data จาก database
+    -> database ส่ง Observable (Http response) กลับมา แปลง Observable ที่ได้ให้เป็นโมเดล data ที่เราต้องการนำไปแสดง
+    -> subscribe ตัว Observable ไปที่ component ที่เราต้องการใช้แสดงข้อมูล
+    -> สร้าง array data ที่ Local แล้วนำ subscribe data ที่ได้มาเก็บที่ตัวแปร local
+Note : 
+-> RxJs(Reactive Extensions for Javascript)
+    -> เป็น library ที่จัดการเกี่ยวกับ Observable ใน angular (เป็น external library ที่ทำงานด้วย observable)
