@@ -8,6 +8,9 @@ import { BindingComponent } from './binding/binding.component';
 import { NgDirectiveComponent } from './ng-directive/ng-directive.component';
 import { ComponentInteractionComponent } from './component-interaction/component-interaction.component';
 import { PipesComponent } from './pipes/pipes.component';
+import { ForService1Component } from './for-service1/for-service1.component';
+import { ForService2Component } from './for-service2/for-service2.component';
+import { EmployeeService } from './services/employee.service';
 
 // Ngmodule decorator
 @NgModule({
@@ -19,14 +22,17 @@ import { PipesComponent } from './pipes/pipes.component';
     BindingComponent,
     NgDirectiveComponent,
     ComponentInteractionComponent,
-    PipesComponent
+    PipesComponent,
+    ForService1Component,
+    ForService2Component
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule, 
+    AppRoutingModule,
     FormsModule
   ],
-  providers: [],
+  // register services ด้วย injector providers
+  providers: [EmployeeService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

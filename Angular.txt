@@ -14,7 +14,6 @@ Angular
 Package.json จะมีพวก library , module ที่ angular app ใช้
  -> จะ install เมื่อเรา run ng new (ตอนสร้าง Project) รวมถึง node_module
 
-
 src folder
 -main.ts เป็น entry point(จุดเริ่มต้น) ของ angular app
 -app folder
@@ -125,7 +124,39 @@ Component Interaction (ดูตัวอย่างที่ component-interac
 note: 
     ->จากตัวอย่าง app.component เป็น parent ส่วน component-interaction.component เป็น child
     ->@input , @output สามารถ define ชื่อให้มันได้
+    ->decorator ของ component มีได้แค่ decorator เดียว?
 
 Pipes (ดูตัวอย่างที่ pipes.component.html)
 -> ใช้แปลง data ก่อนจะเอาไปแสดงที่ view จะไม่เปลี่ยแปลงค่าของ property ของ class
 
+Service (ดูตัวอย่างที่ employee.service.ts,for-service1.component,for-service2.component)
+-> โดยหลักการแล้ว เราไม่ควรจัดการกับ data ใน class (class ควรจัดการแค่ logic ที่ควบคุม view) หรือถ้ามีการใช้ data ซ้ำๆหลายที่ 
+    -> เราควรใช้ service จัดการ
+-> เป็น class ที่จัดการเรื่องที่มัน specific
+    -> ใช้ share data ให้หลายๆ component
+    -> ใช้จัดการ Logic จัดการ data
+    -> ใช้จัดการการเชื่อมต่อ database รับส่งข้อมูล 
+note: 
+    -ยึดตาม principle programmingS
+        -> Do Not Repeat Yourself (DRY)
+        -> Single Responsibility Principle
+    -วิธีตั้งชื่อ service => xxxx.service.ts
+-> step ในการทำ service
+    -> สร้าง service
+    -> จัดการ data (สร้าง function get data)
+    -> register service (ด้วยการ injection)
+        => ควร register ที่ app module(app module คือชั้นบนสุด) -> เพื่อที่จะสามารถนำไปใช้ได้ทุกที่ (register ที่ providers ที่เป็น angular injector)
+    -> dependency injection service ใน class component ที่เราต้องการใช้
+    note : ถ้า register service ที่ไหนแล้ว สามารถใช้ service กับตัวมันและ child มันได้
+note : 
+    ->Injectable decorator ใน service เป็นตัวบอกว่า class นี้เป็น service
+        -> ถ้าต้องการ inject service อื่นเข้ามาใช้ใน service เราจะต้องใช้ Injectable decorator 
+    -> component class ไม่ได้มี Injectable decorator แต่ก็ยังสามารถใช้ service ได้ 
+    เพราะมี component decorator ที่ทำให้สามารถใช้ dependency injection ได้ 
+    แต่ service ไม่มี component decorator แล้วถ้าเอา Injectable decorator ออกจาก service มันจะกลายเป็น class ธรรมดา
+
+Dependency Injection
+-> คือ การที่ constructor ของ class รับ parameter เป็น instance ของ class อื่นมาใช้ (dependency injection)
+    or คือการรับค่าที่ parameter ของ constructor class?(injection ปกติ)?
+
+Http and Observables
