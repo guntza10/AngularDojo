@@ -11,6 +11,7 @@ import { PipesComponent } from './pipes/pipes.component';
 import { ForService1Component } from './for-service1/for-service1.component';
 import { ForService2Component } from './for-service2/for-service2.component';
 import { EmployeeService } from './services/employee.service';
+import { HttpClientModule} from '@angular/common/http';
 
 // Ngmodule decorator
 @NgModule({
@@ -29,7 +30,8 @@ import { EmployeeService } from './services/employee.service';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   // register services ด้วย injector providers
   providers: [EmployeeService],

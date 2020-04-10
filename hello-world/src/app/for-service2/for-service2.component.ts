@@ -12,7 +12,12 @@ export class ForService2Component implements OnInit {
   constructor(private _employService: EmployeeService) { }
 
   ngOnInit(): void {
-    this.employeesDetail = this._employService.getEmployees();
+    // this.employeesDetail = this._employService.getEmployees();
+
+    this._employService.getEmployeesFromDB()
+      .subscribe(data => {
+        this.employeesDetail = data;
+      });
   }
 
 }

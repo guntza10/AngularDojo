@@ -129,6 +129,65 @@ note:
 Pipes (ดูตัวอย่างที่ pipes.component.html)
 -> ใช้แปลง data ก่อนจะเอาไปแสดงที่ view จะไม่เปลี่ยแปลงค่าของ property ของ class
 
+Dependency Injection
+-> dependency คือการที่ constructor ของ class รับ parameter เข้ามา
+Ex.
+class Engine {
+    constructor(newParemeter) {
+
+    }
+}
+
+class Tires {
+    constructor(newParemeter) {
+
+    }
+}
+
+class Car {
+    engine; -> มี dependency 2 ตัว คือ engine,tires
+    tires;
+    constructor() {
+        this.engine = new Engine();
+        this.tires = new Tires();
+    }
+}
+Note: code drawbacks ไม่ flexible เพราะถ้า dependency ที่เราไป instance มามีการรับ parameter จะทำให้ Car เราพังเนื่องจาก Engine 
+ที่เรา instance มามันมีการรับ parameter เพราะฉะนั้นตอน instance มาใช้ใน Car ต้องรับ argument เข้ามาด้วย 
+การเปลี่ยน dependency ของ class ที่ instance มาใช้ ทำให้เราต้องเปลี่ยนตามด้วยใน class ที่นำมาใช้
+
+-> dependency injection คือการที่ class รับ dependency จากภายนอกแทนการ instance มาใช้ (ใน constructor) 
+จะเห็นว่า code flexible มากตามตัวอย่างข้างล่าง
+Ex.
+class Car {
+    engine; 
+    tires;
+    
+    constructor(engine,tires) { -> รับ dependency จากภายนอกแทน
+        this.engine = engine;
+        this.tires = tires;
+    }
+}
+
+var myEngine = new Engine();               |     var myEngine = new Engine(parameter);     |      var myEngine = new Engine(parameter);
+var myTires = new Tires();                 |     var myTires = new Tires();                |      var myTires = new Tires(parameter);
+var myCar = new Car(myEngine,myTires);     |     var myCar = new Car(myEngine,myTires);    |      var myCar = new Car(myEngine,myTires);
+
+Ex. ถ้าเกิดเรามี dependency เยอะ เราต้องสร้าง inpendency ทั้งหมดที่เราจะใช้ก่อนจะเอาไปสร้าง Car 
+ซึ่งเป็นเรื่องยากที่จะจัดการหาก dependency มีเยอะมากๆ
+var myEngine = new Engine();
+var myTires = new Tires();
+var depA = new dependency();
+var depB = new dependency();
+var depC = new dependency();
+var myCar = new Car(myEngine,myTires,depA,depB,depC);
+Note: ใน angular เราใช้ dependency injection ในการทำ service ห้ามทำ draw back เพราะมันไม่ flexible และไม่ standard ที่เค้าทำกัน
+    -> สร้าง service 
+    -> register service ด้วย angular injector (ex. HttpClient)
+    -> declare service ที่เป็น dependency ที่เราต้องการใช้ (พวก class ที่เราต้องการเอามาใช้ใน service)
+- dependency injection ใน angular แค่ inject dependency เข้ามาก็สามารถใช้ dependency ของ class อื่นได้เลย ไม่ต้องสร้าง Instance 
+เพียงแค่ declare ใน parameter ของ constructor ก็สามารถเอาไปใช้ได้เลย
+  
 Service (ดูตัวอย่างที่ employee.service.ts,for-service1.component,for-service2.component)
 -> โดยหลักการแล้ว เราไม่ควรจัดการกับ data ใน class (class ควรจัดการแค่ logic ที่ควบคุม view) หรือถ้ามีการใช้ data ซ้ำๆหลายที่ 
     -> เราควรใช้ service จัดการ
@@ -150,14 +209,11 @@ note:
     note : ถ้า register service ที่ไหนแล้ว สามารถใช้ service กับตัวมันและ child มันได้
 note : 
     ->Injectable decorator ใน service เป็นตัวบอกว่า class นี้เป็น service
+        -> ทำให้สามารถใช้ dependency injection ได้ 
         -> ถ้าต้องการ inject service อื่นเข้ามาใช้ใน service เราจะต้องใช้ Injectable decorator 
     -> component class ไม่ได้มี Injectable decorator แต่ก็ยังสามารถใช้ service ได้ 
     เพราะมี component decorator ที่ทำให้สามารถใช้ dependency injection ได้ 
     แต่ service ไม่มี component decorator แล้วถ้าเอา Injectable decorator ออกจาก service มันจะกลายเป็น class ธรรมดา
-
-Dependency Injection
--> คือ การที่ constructor ของ class รับ parameter เป็น instance ของ class อื่นมาใช้ (dependency injection)
-    or คือการรับค่าที่ parameter ของ constructor class?(injection ปกติ)?
 
 Http and Observables
 -> เราดึง data จาก server ผ่าน service ด้วย Http request
@@ -165,9 +221,26 @@ Http and Observables
 -> Observable คือ Http response ที่ได้กลับมา
 -> step การทำงานของ Http
     -> service ส่ง Http request ไปที่ web api or web service เพื่อไปดึง data จาก database
-    -> database ส่ง Observable (Http response) กลับมา แปลง Observable ที่ได้ให้เป็นโมเดล data ที่เราต้องการนำไปแสดง
-    -> subscribe ตัว Observable ไปที่ component ที่เราต้องการใช้แสดงข้อมูล
+    -> database ส่ง Observable (Http response) กลับมา แปลง Observable ที่ได้ให้เป็นโมเดล data ที่เราต้องการนำไปแสดง (cast observable ให้เป็นโมเดล data)
+    -> subscribe ตัว Observable ไปใช้ต่อที่ component ที่เราต้องการใช้แสดงข้อมูล (subscribe เป็นตัวแปลง Observable ที่ถูก cast ให้เป็นก้อน data)
+        -> แปลง Http response ให้กลายเป็นก้อน data
     -> สร้าง array data ที่ Local แล้วนำ subscribe data ที่ได้มาเก็บที่ตัวแปร local
 Note : 
 -> RxJs(Reactive Extensions for Javascript)
     -> เป็น library ที่จัดการเกี่ยวกับ Observable ใน angular (เป็น external library ที่ทำงานด้วย observable)
+
+Fetch Data Using HTTP
+- import HttpClientModule ใน imports ของ app.module (เพื่อ register Http service มาใช้ใน angular)
+- dependency injection HttpClient ที่ service ที่เราจะใช้
+- สร้าง model ของ data
+- สร้าง url ที่จะใช้ยิง request 
+- สร้าง Method ที่ส่ง Http request และรับ Http response กลับมา return observable
+- dependency injection service ไปใช้ที่ component ที่ต้องการ
+- subscribe ตัว Observable ที่ได้จาก Method ของ service -> จะได้ data มา
+- เอา data ที่ได้มาเก็บที่ตัวแปร Local (property ของ component) เพื่อเอาไปใช้ binding ต่อ
+
+HTTP Error Handling
+- ใช้ catch ในการ handle exception error -> ใน argument จะรับ method ที่จัดการ error
+- จะโชว์ message error ให้กับ component ที่ subscripe observable ไปใช้
+- step
+    -> import 'rxjs/add/operator/catch' เพื่อใช้ catch กับ import 'rxjs/add/observable/throw';
