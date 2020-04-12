@@ -1,21 +1,16 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { IEmployee } from 'src/models/IEmployess';
-import { Observable } from 'rxjs';
-// import 'rxjs/add/operator/catch';
-// import 'rxjs/add/observable/throw';
-import { throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Injectable } from "@angular/core";
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
+import { IEmployee } from "src/models/IEmployess";
+import { Observable, throwError } from "rxjs";
+import { catchError } from "rxjs/operators";
+
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class EmployeeService {
-
   // url ที่ใช้ยิง request ไปที่ api หรือ server
   private _url: string = "/assets/data/employees.json";
-  constructor(private http: HttpClient) {
-
-  }
+  constructor(private http: HttpClient) {}
 
   getEmployees() {
     return [
@@ -29,14 +24,13 @@ export class EmployeeService {
   // return เป็น observable ที่มี Type เป็น IEmployee[]
   getEmployeesFromDB(): Observable<IEmployee[]> {
     // cast http response (observable) -> ให้เป็น Type IEmployee[]
-    return this.http.get<IEmployee[]>(this._url)
-      // .catchError(this.errorHandler);
+    return this.http
+      .get<IEmployee[]>(this._url)
+      .pipe(catchError(this.errorHandler));
   }
 
   errorHandler(error: HttpErrorResponse) {
     // a || b คือถ้า a เป็น null ให้ใช้ b
-    // return Observable.throwError(error.message || "Server Error");
+    return throwError(error.message || "Server Error");
   }
-
-
 }

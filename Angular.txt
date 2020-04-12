@@ -239,8 +239,13 @@ Fetch Data Using HTTP
 - subscribe ตัว Observable ที่ได้จาก Method ของ service -> จะได้ data มา
 - เอา data ที่ได้มาเก็บที่ตัวแปร Local (property ของ component) เพื่อเอาไปใช้ binding ต่อ
 
-HTTP Error Handling
-- ใช้ catch ในการ handle exception error -> ใน argument จะรับ method ที่จัดการ error
+HTTP Error Handling (ดูตัวอย่างที่ employee.service.ts)
+- ใช้ catchError ผ่าน pipe ในการ handle exception error -> ใน argument จะรับ method ที่จัดการ error
 - จะโชว์ message error ให้กับ component ที่ subscripe observable ไปใช้
 - step
-    -> import 'rxjs/add/operator/catch' เพื่อใช้ catch กับ import 'rxjs/add/observable/throw';
+    ->  import { Observable, throwError } from "rxjs";
+        import { catchError } from "rxjs/operators";
+    -> ใช้ pipe(catchError(this.handlerError)) ให้กับ observable ใน service
+    -> สร้าง method ที่ใช้ throw error
+    -> ใน argument ตัวที่ 2 ของ subscribe จะเป็น error function ที่จัดการ error
+        -> set ให้กับ component ที่ subscribe ไปใช้

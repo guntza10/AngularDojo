@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EmployeeService } from '../services/employee.service';
+import { error } from 'protractor';
 
 @Component({
   selector: 'app-for-service1',
@@ -9,6 +10,7 @@ import { EmployeeService } from '../services/employee.service';
 export class ForService1Component implements OnInit {
 
   public employees = [];
+  public errorMsg;
   // dependency injection service ใน constructor ของ class component ที่เราจะใช้งาน
   constructor(private _employeeService: EmployeeService) {
     // this.employees = new EmployeeService(); -> ไม่ควรทำ เป็น drawback กลับไปอ่านที่ dependency injection ถ้าสงสัย
@@ -23,6 +25,10 @@ export class ForService1Component implements OnInit {
       .subscribe(data => {
         // data คือ observable ที่ถูกแปลงมาเป็น data model
         this.employees = data;
+      },
+      error => {
+        // error
+        this.errorMsg = error
       });
   }
 
