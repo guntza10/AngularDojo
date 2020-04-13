@@ -249,3 +249,27 @@ HTTP Error Handling (ดูตัวอย่างที่ employee.service.ts
     -> สร้าง method ที่ใช้ throw error
     -> ใน argument ตัวที่ 2 ของ subscribe จะเป็น error function ที่จัดการ error
         -> set ให้กับ component ที่ subscribe ไปใช้
+
+Routing and Navigation (ดูตัวอย่างที่ Project routing-demo)
+- ที่ base tag ใน index.html จะมี href ="/" ที่ angular application จะรู้ว่าต้องสร้าง url เพื่อการ navigate ไปที่ไหน ขึ้นอยู่กับการ configure ใน app-routing.module
+- step 
+    1. สร้าง project ด้วย routing option (ตอนสร้าง project มันจะถามเราว่าจะสร้าง routing option มาด้วยหรือเปล่า) -> จะถูกสร้างมาให้อยู่แล้วตอนสร้างโปรเจ็ค
+        - ที่ app-routing.module จะเอาไว้จัดการเกี่ยวกับ route
+            -> ใน app.module จะมี AppRoutingModule ที่อยู่ใน imports ที่ใช้ในการ route 
+    2. สร้าง component ที่จะใช้ navigate 
+    Note : การสร้าง component จะมี option
+        -it => inline template -> จะไม่มี html มาให้
+        -is => inline style -> จะไม่มี css
+    3. configure route
+        -> ใน app-routing.module เราจะกำหนด route ทั้งหมดที่ const routes ซึ่งแต่ route จะเป็น Object    
+            -> route object จะมี property ดังนี้
+                -path => กำหนด url ของ component ที่เราจะ navigate ไป
+                -component => เป็นตัวบอกว่าเราจะ navigate ไปที่ component ไหน
+        -> routes ที่เราสร้างจะถูกส่งไปที่ argument ของ forRoot ของ routerModule 
+    Note : จะเห็นว่าเรามีการ import component 2 ที่ คือที่ app.module กับ app-routing.module (ดูตัวอย่างที่ app-routing.module และ app.module)
+        -> เราสามารถ import ไปใช้ที่ app-routing.module ที่เดียว แล้ว export จาก app-routing.module ไปใช้ที่ app.module ได้ (good practice)
+    Note : router-outlet tag เป็น tag ที่ระบุว่า router จะเอา view มาแสดง
+        -> navigation ใช้ routerLink = "/pathUrl" -> เป็นการ navigate ไปที่ path โดยตรง (directive)
+        -> routerLinkActive เป็นการกำหนด css ให้กับ routerLink เมื่อมีการ navigate
+
+Wildcard Route and Redirecting Routes
