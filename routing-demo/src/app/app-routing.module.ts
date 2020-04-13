@@ -1,15 +1,31 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { DepartmetnListComponent } from './departmetn-list/departmetn-list.component';
-import { EmployeeListComponent } from './employee-list/employee-list.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { DepartmentListComponent } from './department-list/department-list.component';
+import { EmployeesListComponent } from './employees-list/employees-list.component';
+import { DepartmentDetailComponent } from './department-detail/department-detail.component';
 
 
 const routes: Routes = [
+  // default path
   {
-    path: 'departments', component: DepartmetnListComponent
+    path: '', redirectTo: 'departments', pathMatch: 'full'
+    // path '' (empty path) กำหนด pathMatch เป็น prefix ไม่ได้ จะทำให้เข้า path ไหนก็จะเข้ามาที่ path '' เสมอ เนื่องจาก path '' เป็น prefix path ของทุก path
+    // path: '', component: DepartmetnListComponent ไม่นิยมทำแบบนี้เพราะ ถ้าเป็น path ที่เรามีอยู่แล้ว ให้ redirectTo ไป path ที่เรามี
   },
   {
-    path: 'employees', component: EmployeeListComponent
+    path: 'departments', component: DepartmentListComponent
+  },
+  // route parameter
+  {
+    path: 'departments/:id', component: DepartmentDetailComponent
+  },
+  {
+    path: 'employees', component: EmployeesListComponent
+  },
+  //wildcard route
+  {
+    path: "**", component: PageNotFoundComponent
   }
 ];
 
@@ -19,4 +35,4 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
-export const routingComponent = [DepartmetnListComponent, EmployeeListComponent];
+export const routingComponent = [DepartmentListComponent, EmployeesListComponent, PageNotFoundComponent, DepartmentDetailComponent];

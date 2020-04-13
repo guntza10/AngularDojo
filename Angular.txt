@@ -273,3 +273,37 @@ Routing and Navigation (ดูตัวอย่างที่ Project routing-
         -> routerLinkActive เป็นการกำหนด css ให้กับ routerLink เมื่อมีการ navigate
 
 Wildcard Route and Redirecting Routes
+-> Wildcard Route
+    - path : "**" => คือ route path ที่ไม่ map กับ route path ไหนเลยที่เรา config มันก็จะมาเข้า wildcard route ตัวนี้
+        -> เอาไว้ใช้ทำ 404 - Not Found (เพราะ path ที่เราเข้ามาไม่ map กับ path ไหนเลย)
+-> Redirect Route
+    - redirectTo => ให้มัน redirect ไปที่ path ที่เรากำหนด
+        - redirectTo = '' -> คือ redirect ไปที่ default คือ app.component
+    - pathMatch => เป็น property ที่กำหนดวิธีการ map path url ว่าจะ map url segment แบบไหน
+        -> full -> จะ redirect ไปได้ต้องเข้ามาด้วย path url แบบเต็มๆ
+        -> prefix -> ไม่ว่าจะเข้ามาด้วย path url แบบไหน ถ้าใน path url นั้นมี path url prefix อยู่ก็จะ redirect ไปได้หมด
+        EX.
+            { path: '/route1/route2/route3', redirectTo: 'login', pathMatch: 'full' },
+            { path: 'login', component: LoginComponent }
+                full -> จะต้องเข้ามาด้วย path url /route1/route2/route3 นี้เท่านั้นถึงจะ redirect
+            { path: '/route1/route2', redirectTo: 'login', pathMatch: 'prefix' },
+            { path: 'login', component: LoginComponent }
+                prefix -> ไม่ว่าจะเข้ามาด้วย path url อะไรก็ตามที่มี /route1/route2 (เป็น prefix path) ก็จะ redirect ไปได้หมด
+                    เช่น /route1/route2/route3 หรือ /route1/route2/route4 
+Note : เวลามันไล่ทำ routes มันทำจากบนลงล่าง เลยต้องกำหนด wildcard route ไว้ล่างสุด เพื่อให้มัน หา route path ทั้งหมดไม่เจอก่อน
+Note : path default เราไม่นิยมให้มัน directive route ไปที่ component โดยตรง (ดูตัวอย่างที่ app-routing.module)
+Note : path ที่กำหนดไม่ต้องใส่ / แต่ redirectTo จะใส่ / หรือไม่ใส่ก็ได้
+Note :  path '' (empty path) กำหนด pathMatch เป็น prefix ไม่ได้ 
+        จะทำให้เข้า path ไหนก็จะเข้ามาที่ path '' เสมอ เนื่องจาก path '' เป็น prefix path ของทุก path
+
+Route Parameters (ดูตัวอย่างที่ department-list.ts)
+- กำหนด path สำหรับ route parameter
+    -> path : 'path: 'departments/:id' -> ที่อยู่ด้านหลัง : คือชื่อ route parameter ที่เราต้องการส่ง
+- import {Router} from '@angular/router';' (จัดการที่ component ที่เราต้องการจะส่ง parameter)
+    -> inject Router มาใช้ (ดูตัวอย่างที่ department-list.ts)
+    ->  this.router.navigate(['/ชื่อpath', ชื่อ route parameter ที่เรา config ไว้ที่ app-routing.module]) -> 
+    ตั้งให้ตรงกับที่เรา config ไว้เพื่อที่จะ navigate ไปให้ถูก path
+- import { ActivatedRoute } from '@angular/router'; (จัดการที่ component ที่เราต้องการจะรับ parameter)
+    -> inject ActivatedRoute มาใช้ (ดูตัวอย่างที่ department-detail.component.ts)
+    -> this.router.snapshot.paramMap.get('id') -> ใช้ในการ get ค่า route parameter
+    Note : snapshot คือการ get state ของ router ในตอนนั้นเพื่อที่จะใช้ paramMap.get('param') ต่อได้
