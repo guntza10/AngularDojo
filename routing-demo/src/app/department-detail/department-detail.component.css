@@ -1,0 +1,9 @@
+.item {
+  padding: 10px;
+  margin: 5px;
+  border-radius: 5px;
+  border: none;
+  background-color: #f0ebea;
+  list-style: none;
+  width: 15%;
+}

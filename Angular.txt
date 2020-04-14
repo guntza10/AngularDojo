@@ -36,7 +36,7 @@ Component
     -> metadata templateUrl ที่อ้างอิงไฟล์ html สามารถใช้ property template ที่อ้างอิง tag html ได้โดยตรง (ดูตัวอย่างใน test.component.ts)
         -> ใช้ `` escape key ครอบ ถ้าจะทำเป็น multiple line
     -> metadata styleUrls สามารถใช้ styles แทนได้เหมือนข้างบน
--ทุกครั้งที่สร้าง component จะมีการการ Import component class ให้ auto ใน app.module
+-ทุกครั้งที่สร้าง component จะมีการการ Import component class ให้ auto ใน app.module (ทุกๆ component ต้อง declare ที่ app.module ไม่งั้นจะไม่เห็นใช้งาน component นั้นไม่ได้)
 -ทุก component เอามาใช้ภายใต้ app.component(root component)
 note : เวลาสร้าง component จะมี spec ไฟล์สำหรับ test(ไม่จำเป็นสามารถลบได้)
 -เราสามารถ define selector ของ component ได้ 3 วิธี (ดูตัวอย่างที่ test.component.html)
@@ -60,7 +60,7 @@ note : syntax [] or bind-ชื่อของ attribute
 Class Binding
 -> binding class css ว่าจะใช้หรือไม่ใช้ (ดูตัวอย่างที่ binding.component.ts)
 -> ngClass คือการ set object ให้ binding class โดยที่เราไม่ต้องไป set หลายครั้ง set เป็น object รอบเดียวจบ (set multiple class)
--> รับค่าเป็น boolean
+-> รับค่าเป็น boolean (property หรือ function ก็ได้ที่ return boolean)
 
 Style Binding
 -> binding style css property
@@ -268,7 +268,9 @@ Routing and Navigation (ดูตัวอย่างที่ Project routing-
         -> routes ที่เราสร้างจะถูกส่งไปที่ argument ของ forRoot ของ routerModule 
     Note : จะเห็นว่าเรามีการ import component 2 ที่ คือที่ app.module กับ app-routing.module (ดูตัวอย่างที่ app-routing.module และ app.module)
         -> เราสามารถ import ไปใช้ที่ app-routing.module ที่เดียว แล้ว export จาก app-routing.module ไปใช้ที่ app.module ได้ (good practice)
-    Note : router-outlet tag เป็น tag ที่ระบุว่า router จะเอา view มาแสดง
+    Note : 
+        -> router-outlet เป็น tag ที่บอกให้ router เอา view จาก component ที่ถูก map ตาม path url มาแสดงออกมาที่ outlet นี้
+        เอาไว้ตรงไหนก็ได้ที่อยากให้ component นั้นแสดง  (ใช้ระบุว่า component นี้สามารถ navigate เข้าไปที่ component อื่นได้)
         -> navigation ใช้ routerLink = "/pathUrl" -> เป็นการ navigate ไปที่ path โดยตรง (directive)
         -> routerLinkActive เป็นการกำหนด css ให้กับ routerLink เมื่อมีการ navigate
 
@@ -296,14 +298,45 @@ Note : path ที่กำหนดไม่ต้องใส่ / แต่ r
 Note :  path '' (empty path) กำหนด pathMatch เป็น prefix ไม่ได้ 
         จะทำให้เข้า path ไหนก็จะเข้ามาที่ path '' เสมอ เนื่องจาก path '' เป็น prefix path ของทุก path
 
-Route Parameters (ดูตัวอย่างที่ department-list.ts)
+Route Parameters (ดูตัวอย่างที่ department-list.component.ts) ** core
 - กำหนด path สำหรับ route parameter
     -> path : 'path: 'departments/:id' -> ที่อยู่ด้านหลัง : คือชื่อ route parameter ที่เราต้องการส่ง
-- import {Router} from '@angular/router';' (จัดการที่ component ที่เราต้องการจะส่ง parameter)
+- import {Router} from '@angular/router';' (จัดการที่ component ที่เราต้องการจะส่ง parameter) ** core package ที่ใช้สำหรับการ navigate
     -> inject Router มาใช้ (ดูตัวอย่างที่ department-list.ts)
     ->  this.router.navigate(['/ชื่อpath', ชื่อ route parameter ที่เรา config ไว้ที่ app-routing.module]) -> 
     ตั้งให้ตรงกับที่เรา config ไว้เพื่อที่จะ navigate ไปให้ถูก path
-- import { ActivatedRoute } from '@angular/router'; (จัดการที่ component ที่เราต้องการจะรับ parameter)
+- import { ActivatedRoute } from '@angular/router'; (จัดการที่ component ที่เราต้องการจะรับ parameter) ** core package ที่ใช้สำหรับการรับค่าจากการ navigate
     -> inject ActivatedRoute มาใช้ (ดูตัวอย่างที่ department-detail.component.ts)
     -> this.router.snapshot.paramMap.get('id') -> ใช้ในการ get ค่า route parameter
-    Note : snapshot คือการ get state ของ router ในตอนนั้นเพื่อที่จะใช้ paramMap.get('param') ต่อได้
+    Note : snapshot คือการ get state ของ router ในตอนนั้น(เมื่อ initialize)เพื่อที่จะใช้ paramMap.get('param') ต่อได้
+
+ParamMap Observable (ดูตัวอย่างที่ department-detail.component.ts)
+- ถ้าเรา navigate กลับมาที่ component เดิม snapshot ไม่เวิร์ค (มันจะทำแค่ตอนที่ initialize)
+ -> มัน Initialize แค่ครั้งแรกที่ถูกสร้าง ถ้าเรา navigate กลับมาที่ component เดิมมันไม่ได้ initialize ใหม่ แต่แค่ reused component เดิม
+- เราแก้ไขโดยใช้ paramMap
+
+Optional Route Parameters
+- คือการส่งค่า property ไปที่ component อื่น
+- this.router.navigate(['/pathของcomponent,{ชื่อ property: ค่าที่เราต้องการส่งกลับ}])
+    -> this.router.navigate(['/departments', {id:selectedId}]) 
+    -> จะต่างกับ route param ตรงที่ใส่ {} ครอบ property ที่เราต้องการส่งค่าไปที่อีก component แต่ route param ที่ไม่มี {} 
+        ตัว navigate มันจะไป match กับ route param ที่เรา config ไว้ที่ app-routing.module
+    -> สามารถส่งค่า property ได้หลายค่า
+์Note : ==, === แตกต่างกันตรงที่ อันแรกจะ convert ให้เป็น type เดียวกันก่อน compare แต่อันที่ 2 คือ compare เลย ทำให้แบบที่ 2 มัน strong compare กว่าแบบแรก 
+     เพราะมันต้องเป็น type เดียวกันเท่านั้นถึงจะ compare กันได้ ถ้าคนละ type มันจะ compare ไม่ได้แล้ว return false ทันที
+
+Relative Navigation (ดูตัวอย่างที่ department-list.component.ts กับ department-detail.component.ts)
+- absolute path route ก่อนหน้านี้ที่ผ่านมามันไม่ flexible เพราะถ้าเราเปลี่ยน path route ที่ config ไว้ที่ app-routing.module 
+  เราต้องไปไล่เปลี่ยน path route ให้กับทุกที่ที่เราใช้ absolute path
+- แก้ปัญหาการใช้ absolute path ที่ไม่ flexible
+    -> this.router.navigate([a],{b})
+         -> a => array ของ parameter ที่เราต้องการส่ง (route parameter)
+         -> b =>  object ของ property relativeTo -> จะส่ง route parameter ไปที่ path url ของ current route(ActivatedRoute)
+Note : absolute path คือ path เต็มๆ เช่น '/departments' ถ้าเราเปลี่ยนไปใช้ 'department-list' เราต้องไปนั่งไล่เปลี่ยนทุกที่ที่เราใช้ absolute path 
+ตัวนี้ไม่งั้นมันจะerrorเพราะมันไม่รู้จัก path เดิมนี้ซึ่งมันโดนเปลี่ยนไปแล้ว
+
+Child Routes (ดูตัวอย่างที่ department-detail.component.ts)
+- set child route ผ่าน property children ให้กับ component ที่เราต้องการให้มันมี route ย่อย
+ต้องการการเข้า path url ซ้อนเข้าไปเรื่อยๆ  (config ใน app-routing.module.ts)
+- อย่าลืมใช้ router-outlet เพื่อสามารถใช้ navigate เข้าไปที่ component อื่นที่เป็น child route 
+    -> เพื่อนำ view จาก component ของ child route ออกมาแสดงที่ parent component 

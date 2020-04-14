@@ -1,1 +1,18 @@
 <h3>You selected department with id = {{departmentId}}</h3>
+
+<div>
+    <button class="item" (click)="showOverview()">Overview</button>
+    <button class="item" (click)="showContact()">Contact</button>
+</div>
+<!-- เอาไว้ในตำแหน่งที่เราอยากให้ view ของ child route มาแสดง  -->
+<router-outlet></router-outlet>
+
+
+<div>
+    <button class="item" (click)="goPrevious()">Previous</button>
+    <button class="item" (click)="goNext()">Next</button>
+</div>
+
+<div>
+    <button class="item" (click)="backToDepartment()">Back</button>
+</div>

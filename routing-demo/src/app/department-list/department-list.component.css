@@ -16,5 +16,10 @@
 }
 
 .item:hover {
-  background-color: #C8C9CA  ;
+  background-color: #c8c9ca;
+}
+
+.selectedDepartment {
+  background-color: slategrey;
+  color: #EF4343;
 }
