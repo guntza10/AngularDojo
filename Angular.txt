@@ -340,3 +340,11 @@ Child Routes (ดูตัวอย่างที่ department-detail.componen
 ต้องการการเข้า path url ซ้อนเข้าไปเรื่อยๆ  (config ใน app-routing.module.ts)
 - อย่าลืมใช้ router-outlet เพื่อสามารถใช้ navigate เข้าไปที่ component อื่นที่เป็น child route 
     -> เพื่อนำ view จาก component ของ child route ออกมาแสดงที่ parent component 
+
+New Feature in Angular 6
+- เลิกใช้ tag template มาใช้ tag ng-template แทน
+- service ที่สร้างไม่ต้องไป inject ไว้ที่ providers ของ app.module แล้ว
+    -> set property providedIn : 'root' ใน Injectable decorator จบ (การ set providedIn จะทำให้ทั้ง app สามารถเรียกใช้ service ได้เลยแบบ auto)
+        -> เป็นการ instance service เพื่อให้ทั้ง app สามารถเรียกใช้ service นี้ได้ 
+- มี angular material ให้ใช้
+- ใช้ ivy render engine ในการ render ที่มีความเร็ว และ ลดขนาด size ของ app

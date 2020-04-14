@@ -33,7 +33,7 @@ import { HttpClientModule} from '@angular/common/http';
     FormsModule,
     HttpClientModule
   ],
-  // register services ด้วย injector providers
+  // register services ด้วย injector providers -> ใน version ใหม่ไม่ต้อง inject service แล้ว
   providers: [EmployeeService],
   bootstrap: [AppComponent]
 })
