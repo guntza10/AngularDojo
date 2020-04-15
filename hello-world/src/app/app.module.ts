@@ -35,6 +35,7 @@ import { HttpClientModule} from '@angular/common/http';
   ],
   // register services ด้วย injector providers -> ใน version ใหม่ไม่ต้อง inject service แล้ว
   providers: [EmployeeService],
+  // boostrap kick to AppComponent
   bootstrap: [AppComponent]
 })
 export class AppModule { }

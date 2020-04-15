@@ -13,7 +13,7 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'hello-world';
   // data from parent to child
-  public componentInteraction = "componentInteraction";
+  public componentInteraction = "componentInteraction 555";
   // property ที่รับค่าจาก child
   public message = "";
 }

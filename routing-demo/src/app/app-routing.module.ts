@@ -15,7 +15,7 @@ const routes: Routes = [
     // path: '', redirectTo: 'departments-list', pathMatch: 'full' -> for relative navigation
 
     // path '' (empty path) กำหนด pathMatch เป็น prefix ไม่ได้ จะทำให้เข้า path ไหนก็จะเข้ามาที่ path '' เสมอ เนื่องจาก path '' เป็น prefix path ของทุก path
-    // path: '', component: DepartmetnListComponent ไม่นิยมทำแบบนี้เพราะ ถ้าเป็น path ที่เรามีอยู่แล้ว ให้ redirectTo ไป path ที่เรามี
+    // path: '', component: DepartmentListComponent ไม่นิยมทำแบบนี้เพราะ ถ้าเป็น path ที่เรามีอยู่แล้ว ให้ redirectTo ไป path ที่เรามี
   },
   {
     path: 'departments', component: DepartmentListComponent
@@ -41,6 +41,7 @@ const routes: Routes = [
   }
 ];
 
+// NgModule decorator เป็นตัว config ของ class AppRoutingModule 
 @NgModule({
   // routes ที่โดนสร้างจะถูกส่งมาที่นี่ แล้ว export RouterModule ไปใช้
   imports: [RouterModule.forRoot(routes)],

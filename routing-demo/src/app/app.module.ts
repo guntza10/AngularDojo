@@ -16,7 +16,7 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule // import app-routing.module เข้ามาใช้ใน app.module ที่อยู่ชั้นบนสุด
   ],
   providers: [],
   bootstrap: [AppComponent]

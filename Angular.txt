@@ -16,6 +16,7 @@ Package.json จะมีพวก library , module ที่ angular app ใช
 
 src folder
 -main.ts เป็น entry point(จุดเริ่มต้น) ของ angular app
+-app.module ถูก export ไปใช้ที่ main.ts
 -app folder
  -> app.module.ts เป็น root module
  -> app.component.ts เป็น root component
@@ -25,13 +26,14 @@ src folder
  -> ใน app module ก็จะมี bootstrap kick start ไปที่ app.component
     -> จะมี html,class
         -> class จะมี logic หรือ data สำหรับ view
--index.html เป็น main template (ที่มี app.component)
+-index.html เป็น main template (ที่มี app.component) -> เป็นโครง view หลัก
 -เวลาจะใช้ component อื่น เอามาใช้ใน app.component(ที่เป็น root component ของ angular)
 
 Component 
 -Template(view) -> html
 -Class(logic+data+method) -> typescript
 -Metadata(information) -> ใช้บอกว่าเป็น particular class หรือ regular class ใน component
+    -> เป็น property ข้อมูลที่ อยู่ใน decorator
     -> จะมี decorator(function ที่จัดการข้อมูลเกี่ยวกับ class ของ component) ที่เป็น feature ที่ใช้ใน Typescript (ดูตัวอย่างใน app.component.ts)
     -> metadata templateUrl ที่อ้างอิงไฟล์ html สามารถใช้ property template ที่อ้างอิง tag html ได้โดยตรง (ดูตัวอย่างใน test.component.ts)
         -> ใช้ `` escape key ครอบ ถ้าจะทำเป็น multiple line
@@ -80,7 +82,7 @@ Event Binding
 -> สามารถใช้ template statement แทน event handle ได้ (set property ผ่าน event binding ได้เลย)
 
 Template Reference Variables
--> การ binding data ของ component template (refer html element และ all DOM property)
+-> การ binding data ของ component template (อ้างถึง html element และ all DOM property)
     -> syntax => #ตามด้วยชื่อตัวแปร
 note : argument vs parameter
         -> sum(a,b) => retunr a+b; => a,b คือ parameter
@@ -112,7 +114,7 @@ Component Interaction (ดูตัวอย่างที่ component-interac
 -> วิธีรับ-ส่ง data จะใช้
     -> ส่ง data จาก parent ไปที่ child
         -> declare property ที่จะส่ง แล้วกำหนด property binding ให้กับ selector ของ component ที่ต้องการให้เป็น child 
-        เช่น [parentData]="propertyที่จะส่ง"
+        เช่น [parentData]="propertyที่จะส่ง" ใน tag ของ child component 
         -> ใช้ decorator input (@input) ที่ child ให้กับ property ที่เราจะเอาไว้รับค่าที่ส่งมาจาก parent 
         (child component จะรับ data(input) จาก parent component) แล้วนำ property ที่รับค่ามานั้น ไป binding ใน child component template ต่อ
 
@@ -183,8 +185,9 @@ var depC = new dependency();
 var myCar = new Car(myEngine,myTires,depA,depB,depC);
 Note: ใน angular เราใช้ dependency injection ในการทำ service ห้ามทำ draw back เพราะมันไม่ flexible และไม่ standard ที่เค้าทำกัน
     -> สร้าง service 
-    -> register service ด้วย angular injector (ex. HttpClient)
-    -> declare service ที่เป็น dependency ที่เราต้องการใช้ (พวก class ที่เราต้องการเอามาใช้ใน service)
+    -> import module HttpClientModule ไว้ใช้สำหรับจัดการพวกการเชื่อมต่อกับ server หรือ api (ไว้ที่ imports ของ app.module)
+    -> register service ไปที่ providers ของ app.module (ใน angular เวอร์ชั้นล่าสุดไม่ต้อง register แล้ว )
+    -> dependency injection HttpClient มาใช้ใน service
 - dependency injection ใน angular แค่ inject dependency เข้ามาก็สามารถใช้ dependency ของ class อื่นได้เลย ไม่ต้องสร้าง Instance 
 เพียงแค่ declare ใน parameter ของ constructor ก็สามารถเอาไปใช้ได้เลย
   
@@ -196,15 +199,13 @@ Service (ดูตัวอย่างที่ employee.service.ts,for-service
     -> ใช้จัดการ Logic จัดการ data
     -> ใช้จัดการการเชื่อมต่อ database รับส่งข้อมูล 
 note: 
-    -ยึดตาม principle programmingS
-        -> Do Not Repeat Yourself (DRY)
-        -> Single Responsibility Principle
     -วิธีตั้งชื่อ service => xxxx.service.ts
 -> step ในการทำ service
     -> สร้าง service
-    -> จัดการ data (สร้าง function get data)
+    -> import module HttpClientModule ไว้ใช้สำหรับจัดการพวกการเชื่อมต่อกับ server หรือ api (ไว้ที่ imports ของ app.module) *(ถ้ามีการจัดการกับ server,api)
     -> register service (ด้วยการ injection)
         => ควร register ที่ app module(app module คือชั้นบนสุด) -> เพื่อที่จะสามารถนำไปใช้ได้ทุกที่ (register ที่ providers ที่เป็น angular injector)
+        Note: ไม่ต้องทำขั้นตอนนี้แล้วในเวอร์ชั่นล่าสุด
     -> dependency injection service ใน class component ที่เราต้องการใช้
     note : ถ้า register service ที่ไหนแล้ว สามารถใช้ service กับตัวมันและ child มันได้
 note : 
@@ -220,7 +221,7 @@ Http and Observables
     -> ส่ง Http request ไปที่ web api หรือ web service เพื่อไปดึง data จาก database แล้วส่ง Http response กลับมา 
 -> Observable คือ Http response ที่ได้กลับมา
 -> step การทำงานของ Http
-    -> service ส่ง Http request ไปที่ web api or web service เพื่อไปดึง data จาก database
+    -> service ส่ง Http request ไปที่ web api or web server เพื่อไปดึง data จาก database
     -> database ส่ง Observable (Http response) กลับมา แปลง Observable ที่ได้ให้เป็นโมเดล data ที่เราต้องการนำไปแสดง (cast observable ให้เป็นโมเดล data)
     -> subscribe ตัว Observable ไปใช้ต่อที่ component ที่เราต้องการใช้แสดงข้อมูล (subscribe เป็นตัวแปลง Observable ที่ถูก cast ให้เป็นก้อน data)
         -> แปลง Http response ให้กลายเป็นก้อน data
@@ -254,14 +255,14 @@ Routing and Navigation (ดูตัวอย่างที่ Project routing-
 - ที่ base tag ใน index.html จะมี href ="/" ที่ angular application จะรู้ว่าต้องสร้าง url เพื่อการ navigate ไปที่ไหน ขึ้นอยู่กับการ configure ใน app-routing.module
 - step 
     1. สร้าง project ด้วย routing option (ตอนสร้าง project มันจะถามเราว่าจะสร้าง routing option มาด้วยหรือเปล่า) -> จะถูกสร้างมาให้อยู่แล้วตอนสร้างโปรเจ็ค
-        - ที่ app-routing.module จะเอาไว้จัดการเกี่ยวกับ route
+        - ที่ app-routing.module จะเอาไว้จัดการเกี่ยวกับ route (เป็น route option)
             -> ใน app.module จะมี AppRoutingModule ที่อยู่ใน imports ที่ใช้ในการ route 
     2. สร้าง component ที่จะใช้ navigate 
     Note : การสร้าง component จะมี option
         -it => inline template -> จะไม่มี html มาให้
         -is => inline style -> จะไม่มี css
     3. configure route
-        -> ใน app-routing.module เราจะกำหนด route ทั้งหมดที่ const routes ซึ่งแต่ route จะเป็น Object    
+        -> ใน app-routing.module เราจะกำหนด route ทั้งหมดที่ const routes ซึ่งแต่ละ route จะเป็น Object    
             -> route object จะมี property ดังนี้
                 -path => กำหนด url ของ component ที่เราจะ navigate ไป
                 -component => เป็นตัวบอกว่าเราจะ navigate ไปที่ component ไหน
@@ -271,7 +272,7 @@ Routing and Navigation (ดูตัวอย่างที่ Project routing-
     Note : 
         -> router-outlet เป็น tag ที่บอกให้ router เอา view จาก component ที่ถูก map ตาม path url มาแสดงออกมาที่ outlet นี้
         เอาไว้ตรงไหนก็ได้ที่อยากให้ component นั้นแสดง  (ใช้ระบุว่า component นี้สามารถ navigate เข้าไปที่ component อื่นได้)
-        -> navigation ใช้ routerLink = "/pathUrl" -> เป็นการ navigate ไปที่ path โดยตรง (directive)
+        -> navigation ใช้ routerLink = "/pathUrl" -> เป็นการ navigate ไปที่ path โดยตรง (direct navigate)
         -> routerLinkActive เป็นการกำหนด css ให้กับ routerLink เมื่อมีการ navigate
 
 Wildcard Route and Redirecting Routes
@@ -293,7 +294,7 @@ Wildcard Route and Redirecting Routes
                 prefix -> ไม่ว่าจะเข้ามาด้วย path url อะไรก็ตามที่มี /route1/route2 (เป็น prefix path) ก็จะ redirect ไปได้หมด
                     เช่น /route1/route2/route3 หรือ /route1/route2/route4 
 Note : เวลามันไล่ทำ routes มันทำจากบนลงล่าง เลยต้องกำหนด wildcard route ไว้ล่างสุด เพื่อให้มัน หา route path ทั้งหมดไม่เจอก่อน
-Note : path default เราไม่นิยมให้มัน directive route ไปที่ component โดยตรง (ดูตัวอย่างที่ app-routing.module)
+Note : path default เราไม่นิยมให้มัน direct route ไปที่ component โดยตรง (ดูตัวอย่างที่ app-routing.module)
 Note : path ที่กำหนดไม่ต้องใส่ / แต่ redirectTo จะใส่ / หรือไม่ใส่ก็ได้
 Note :  path '' (empty path) กำหนด pathMatch เป็น prefix ไม่ได้ 
         จะทำให้เข้า path ไหนก็จะเข้ามาที่ path '' เสมอ เนื่องจาก path '' เป็น prefix path ของทุก path
@@ -303,8 +304,9 @@ Route Parameters (ดูตัวอย่างที่ department-list.compon
     -> path : 'path: 'departments/:id' -> ที่อยู่ด้านหลัง : คือชื่อ route parameter ที่เราต้องการส่ง
 - import {Router} from '@angular/router';' (จัดการที่ component ที่เราต้องการจะส่ง parameter) ** core package ที่ใช้สำหรับการ navigate
     -> inject Router มาใช้ (ดูตัวอย่างที่ department-list.ts)
-    ->  this.router.navigate(['/ชื่อpath', ชื่อ route parameter ที่เรา config ไว้ที่ app-routing.module]) -> 
-    ตั้งให้ตรงกับที่เรา config ไว้เพื่อที่จะ navigate ไปให้ถูก path
+    ->  this.router.navigate(['/ชื่อpath', ชื่อ route parameter ที่เรา config ไว้ที่ app-routing.module]) -> ? **Edit
+    ->  this.router.navigate(['/ชื่อpath', route parameter ของเรา]) -> ? **Edit
+    ตั้งให้ตรงกับที่เรา config ไว้เพื่อที่จะ navigate ไปให้ถูก path  or ตามด้วย route param? **Edit
 - import { ActivatedRoute } from '@angular/router'; (จัดการที่ component ที่เราต้องการจะรับ parameter) ** core package ที่ใช้สำหรับการรับค่าจากการ navigate
     -> inject ActivatedRoute มาใช้ (ดูตัวอย่างที่ department-detail.component.ts)
     -> this.router.snapshot.paramMap.get('id') -> ใช้ในการ get ค่า route parameter
@@ -313,7 +315,7 @@ Route Parameters (ดูตัวอย่างที่ department-list.compon
 ParamMap Observable (ดูตัวอย่างที่ department-detail.component.ts)
 - ถ้าเรา navigate กลับมาที่ component เดิม snapshot ไม่เวิร์ค (มันจะทำแค่ตอนที่ initialize)
  -> มัน Initialize แค่ครั้งแรกที่ถูกสร้าง ถ้าเรา navigate กลับมาที่ component เดิมมันไม่ได้ initialize ใหม่ แต่แค่ reused component เดิม
-- เราแก้ไขโดยใช้ paramMap
+- เราแก้ไขโดยใช้ paramMap (ถ้าเรา navigate แล้วส่งค่ากลับมาที่ component เดิม ใช้ paramMap)
 
 Optional Route Parameters
 - คือการส่งค่า property ไปที่ component อื่น
@@ -331,11 +333,12 @@ Relative Navigation (ดูตัวอย่างที่ department-list.com
 - แก้ปัญหาการใช้ absolute path ที่ไม่ flexible
     -> this.router.navigate([a],{b})
          -> a => array ของ parameter ที่เราต้องการส่ง (route parameter)
-         -> b =>  object ของ property relativeTo -> จะส่ง route parameter ไปที่ path url ของ current route(ActivatedRoute)
+         -> b =>  object ของ property relativeTo -> จะส่ง route parameter ไปที่ path url ของ current route(ActivatedRoute) 
+         (optional route parameter)
 Note : absolute path คือ path เต็มๆ เช่น '/departments' ถ้าเราเปลี่ยนไปใช้ 'department-list' เราต้องไปนั่งไล่เปลี่ยนทุกที่ที่เราใช้ absolute path 
 ตัวนี้ไม่งั้นมันจะerrorเพราะมันไม่รู้จัก path เดิมนี้ซึ่งมันโดนเปลี่ยนไปแล้ว
 
-Child Routes (ดูตัวอย่างที่ department-detail.component.ts)
+Child Routes (ดูตัวอย่างที่ department-detail.component.ts) -> เป็นการเอา component อื่นมาแปะบน component เราโดยไม่เปลี่ยนหน้า
 - set child route ผ่าน property children ให้กับ component ที่เราต้องการให้มันมี route ย่อย
 ต้องการการเข้า path url ซ้อนเข้าไปเรื่อยๆ  (config ใน app-routing.module.ts)
 - อย่าลืมใช้ router-outlet เพื่อสามารถใช้ navigate เข้าไปที่ component อื่นที่เป็น child route 

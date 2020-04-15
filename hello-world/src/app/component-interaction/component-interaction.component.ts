@@ -7,7 +7,7 @@ import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 })
 export class ComponentInteractionComponent implements OnInit {
   // Input decorator บอกว่า property parentData เป็น data(input) ที่รับมาจาก parent 
-  // @Input() public parentData;
+  // @Input() public parentData; ไม่ได้ define ชื่อ
   // สามารถ define ชื่อให้มันได้
   @Input('parentData') public name;
   
