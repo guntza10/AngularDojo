@@ -91,9 +91,11 @@ note : argument vs parameter
 Two Way Binding
 -> การเปลี่ยนแปลง data ที่ template ,data(property) ที่ class จะเปลี่ยนแปลงด้วย หรือ 
     เปลี่ยนแปลง data(property) ที่ class ,data ที่ template จะเปลี่ยนแปลงด้วย
--> syntax => [(ngModel)] -> ต้องเรียกใช้ FormsModule
+-> syntax => [(ngModel)] -> ต้อง import FormsModule มาใช้ใน app.module
     => [] property binding = data from class to template
     => () event binding = data from template to class
+    => two way binding [()] -> จะรับค่าจาก template มาที่ class ผ่าน event binding แล้วอัพเดทค่าจาก class สู่ template ด้วย property binding
+-> split two way binding -> ทำให้สามารถ handle two way binding แบบ advance ได้มากขึ้น
 
 Ng-Directive (ดูตัวอย่างที่ ng-directive.component)
 ->NgIf (if เงื่อนไข ซ่อน แสดง Html element) => syntax *ngIf
@@ -351,3 +353,4 @@ New Feature in Angular 6
         -> เป็นการ instance service เพื่อให้ทั้ง app สามารถเรียกใช้ service นี้ได้ 
 - มี angular material ให้ใช้
 - ใช้ ivy render engine ในการ render ที่มีความเร็ว และ ลดขนาด size ของ app
+

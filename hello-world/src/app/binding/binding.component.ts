@@ -49,6 +49,10 @@ import { Component, OnInit } from '@angular/core';
   <h1 [class.textInterPolation]="IsTextInterpolation" [class.text-style]="IsTextStyle">Two Way Binding</h1>
   <input [(ngModel)]="twoWayBinding" type="text">
   <h2>{{twoWayBinding}}</h2>
+  <h2>Split Two Way Binding</h2>
+  <div>
+    <input [ngModel]="splitTwoWayBinding" (ngModelChange) ="handleSplitTwoWayBinding($event)" type="text">
+  </div>
   `,
   styles: [`
     .textInterPolation {
@@ -90,6 +94,7 @@ export class BindingComponent implements OnInit {
   public showEvent = "";
   // Two Way Binding
   public twoWayBinding = "";
+  public splitTwoWayBinding = "";
 
 
   constructor() { }
@@ -110,6 +115,13 @@ export class BindingComponent implements OnInit {
 
   logMessage(value) {
     console.log(value);
+  }
+
+  handleSplitTwoWayBinding(updateValue) {
+    this.splitTwoWayBinding = updateValue;
+    if (this.splitTwoWayBinding === 'guntzaWa') {
+      alert('Split Two Way Binding Activated by ' + this.splitTwoWayBinding);
+    }
   }
 
 }
