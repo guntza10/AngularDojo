@@ -88,7 +88,7 @@ note : argument vs parameter
         -> sum(a,b) => retunr a+b; => a,b คือ parameter
         -> var result = sum(4,5); => 4,5 คือ argument
 
-Two Way Binding
+Two Way Binding (ใช้จัดการกับพวก input ที่ต้องการให้มัน Interact ทั้ง view และ class)
 -> การเปลี่ยนแปลง data ที่ template ,data(property) ที่ class จะเปลี่ยนแปลงด้วย หรือ 
     เปลี่ยนแปลง data(property) ที่ class ,data ที่ template จะเปลี่ยนแปลงด้วย
 -> syntax => [(ngModel)] -> ต้อง import FormsModule มาใช้ใน app.module
@@ -96,6 +96,14 @@ Two Way Binding
     => () event binding = data from template to class
     => two way binding [()] -> จะรับค่าจาก template มาที่ class ผ่าน event binding แล้วอัพเดทค่าจาก class สู่ template ด้วย property binding
 -> split two way binding -> ทำให้สามารถ handle two way binding แบบ advance ได้มากขึ้น
+Note : สามารถใช้แบบ advance จัดการกับการส่ง data จาก Parent มา child ได้ (ดูตัวอย่างที่ app.component.ts กับ component-interactive2.ts)
+
+Getters-Setters (ดูตัวอย่างที่ binding.component.ts) -> ใช้ตัวนี้ หรือ split two way binding (อันนี้มันใช้จัดการได้หมด two way binding จัดการแค่ Input)
+- ใช้ดักการเปลี่ยนแปลงของ property input เพื่อจัดการอะไรบางอย่าง (จัดการ get - set กับ private property)
+- getter(get) เป็น function ที่ return private property
+- setter(set) เป็น function ที่รับค่า แล้วมา assign ให้ private property
+- แล้วเอา getter setter ไป binding
+Note : สามารถใช้แบบ advance จัดการกับการส่ง data จาก Parent มา child ได้ (ดูตัวอย่างที่ app.component.ts กับ component-interactive2.ts)
 
 Ng-Directive (ดูตัวอย่างที่ ng-directive.component)
 ->NgIf (if เงื่อนไข ซ่อน แสดง Html element) => syntax *ngIf
@@ -116,7 +124,7 @@ Component Interaction (ดูตัวอย่างที่ component-interac
 -> วิธีรับ-ส่ง data จะใช้
     -> ส่ง data จาก parent ไปที่ child
         -> declare property ที่จะส่ง แล้วกำหนด property binding ให้กับ selector ของ component ที่ต้องการให้เป็น child 
-        เช่น [parentData]="propertyที่จะส่ง" ใน tag ของ child component 
+        เช่น [parentData]="propertyที่จะส่ง" ใน tag ของ child component (ตั้งชื่อ attribute อะไรก็ได้ไม่จำเป็นต้อง parentData)
         -> ใช้ decorator input (@input) ที่ child ให้กับ property ที่เราจะเอาไว้รับค่าที่ส่งมาจาก parent 
         (child component จะรับ data(input) จาก parent component) แล้วนำ property ที่รับค่ามานั้น ไป binding ใน child component template ต่อ
 
@@ -129,6 +137,15 @@ note:
     ->จากตัวอย่าง app.component เป็น parent ส่วน component-interaction.component เป็น child
     ->@input , @output สามารถ define ชื่อให้มันได้
     ->decorator ของ component มีได้แค่ decorator เดียว?
+
+ViewChild Decorator (ดูตัวอย่างที่ app.component.ts)
+- ปกติเรารับ - ส่ง data ระหว่าง parent กับ child แบบ One by one โดยใช้ @input , @output 
+    -> แต่ถ้าเราอยากเข้าถึง data ทั้งหมดที่ Public ใน child เราจะใช้ @ViewChild (เข้าถึงเพื่อแก้ไข-เปลี่ยนแปลง data ของ child จาก parent)
+        => (ex. ใช้กับพวก modal เป็นต้น )
+- ใช้ template ref ในการ อ้างถึงตัว child component
+Note : ใน Angular เวอร์ชั่นใหม่เราต้องใส่ option static (true,false)
+    -> false => เราจะใช้ view child ใน ngOnInit ไม่ได้ 
+    -> true => เราจะใช้ view child ใน ngOnInit ได้ (ใช้ได้เมื่อมัน initialize เสร็จ อาจช้าเพราะต้องรอให้มันโหลดให้เสร็จหมดก่อน)
 
 Pipes (ดูตัวอย่างที่ pipes.component.html)
 -> ใช้แปลง data ก่อนจะเอาไปแสดงที่ view จะไม่เปลี่ยแปลงค่าของ property ของ class
@@ -354,3 +371,18 @@ New Feature in Angular 6
 - มี angular material ให้ใช้
 - ใช้ ivy render engine ในการ render ที่มีความเร็ว และ ลดขนาด size ของ app
 
+์Angular LifeCycle hooks
+- constructor() => จะถูกเรียกใช้เป็นตัวแรกเมื่อ component ถูกสร้างขึ้ันมา (เป็นการสร้างค่าเริ่มต้นให้ class)
+- เราสามารถแบ่ง lifecycle ได้เป็น 2 กลุ่ม
+   -> group 1 Component (parent) 
+        -ngOnChanges() -> จะถูกเรียกเมื่อ input , output ที่ binding มีการเปลี่ยนแปลง
+        -ngOnInit() -> จะถูกเรียกเมื่อ component ถูกสร้างเสร็จ(initialize component เสร็จ) 
+        -ngDoCheck() -> จะถูกเรียกทุกครั้งเมื่อเรา focus ที่ element นั้นๆ แล้ว check ว่ามีการเปลี่ยนแปลงมั้ย (เอาไว้ดักการเปลี่ยนแปลงในรูปแบบที่ต้องการ)
+        -ngOnDestroy() -> จะถูกเรียกใช้ก่อนที่ component จะถูกทำลาย (ใช้ตอนที่ unsubscribe ของ observable,event เพื่อไม่ให้ memory leak)
+        Note : memory leak ก็คือเกิดการใช้ ram เรื่อยๆ แบบสิ้นเปลืองไม่เกิดไม่ประโยชน์ทำให้ performance ช้า
+    -> group 2 child component
+        -ngAfterContentInit() -> จะถูกเรียกในการสร้าง view/content ครั้งแรก
+        -ngAfterContentChecked() -> จะถูกเรียกเพื่อ check การเปลี่ยนแปลงต่างๆของ child
+        -ngAfterViewInit() -> จะถูกเรียกเมื่อ child ถูกสร้างเสร็จ (initialize child component เสร็จ)
+        -ngAfterViewChecked() -> จะถูกเรียกเมื่อ property ที่ binding มีการเปลี่ยนแปลง (ใน child)
+์Note : เรียงตามลำดับการถูกเรียก

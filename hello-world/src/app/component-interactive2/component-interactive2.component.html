@@ -1,0 +1,7 @@
+<h1 class="title" style="color: red;">Component Interaction Advance</h1>
+<p *ngIf="statusFlag">statusFlag : True From Parent (getters and setters)</p>
+<p *ngIf="!statusFlag">statusFlag : False From Parent (getters and setters)</p>
+
+
+<input [ngModel]="statusFlagWithTwoWayBinding" (ngModelChange)=" setFlagWithSplitTwoWayBinding()" type="text">
+<p>{{statusFlagWithTwoWayBinding}} with Split Two Way Bindig</p>

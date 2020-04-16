@@ -12,6 +12,7 @@ import { ForService1Component } from './for-service1/for-service1.component';
 import { ForService2Component } from './for-service2/for-service2.component';
 import { EmployeeService } from './services/employee.service';
 import { HttpClientModule} from '@angular/common/http';
+import { ComponentInteractive2Component } from './component-interactive2/component-interactive2.component';
 
 // Ngmodule decorator
 @NgModule({
@@ -25,7 +26,8 @@ import { HttpClientModule} from '@angular/common/http';
     ComponentInteractionComponent,
     PipesComponent,
     ForService1Component,
-    ForService2Component
+    ForService2Component,
+    ComponentInteractive2Component
   ],
   imports: [
     BrowserModule,

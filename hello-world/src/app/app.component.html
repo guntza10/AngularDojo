@@ -10,11 +10,20 @@
   </h1>
 </div>
 <app-binding></app-binding>
-<app-ng-directive></app-ng-directive>
+<h1 style="color: red;">ViewChild</h1>
+<button (click)="onClickViewChild()">Test View Child</button>
+<app-ng-directive #testViewChild></app-ng-directive>
 <!-- componentInteraction -->
 <app-component-interaction (childEvent)="message=$event" [parentData]="componentInteraction">
 </app-component-interaction>
 <h2>{{message}}</h2>
+<h1>-----------------------------------------------------------------------------------------------------></h1>
+<div>
+  <button (click)="statusInteractive=true">Set statusInteractive True</button>
+  <button (click)="statusInteractive=false">Set statusInteractive False</button>
+  <p>{{statusInteractive}}</p>
+</div>
+<app-component-interactive2 [parentData2]="statusInteractive" [parentData3]="statusInteractive"></app-component-interactive2>
 <app-pipes></app-pipes>
 <app-for-service1></app-for-service1>
 <app-for-service2></app-for-service2>

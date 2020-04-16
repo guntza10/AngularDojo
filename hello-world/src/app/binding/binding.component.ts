@@ -53,6 +53,10 @@ import { Component, OnInit } from '@angular/core';
   <div>
     <input [ngModel]="splitTwoWayBinding" (ngModelChange) ="handleSplitTwoWayBinding($event)" type="text">
   </div>
+  <h1>------------------------------------------------------------------------------------------------------------------------------</h1>
+  <h1 [class.textInterPolation]="IsTextInterpolation" [class.text-style]="IsTextStyle">Getters And Setters</h1>
+  <input [(ngModel)]="customerName" type="text">
+  <h2>{{customerName}}</h2>
   `,
   styles: [`
     .textInterPolation {
@@ -95,10 +99,22 @@ export class BindingComponent implements OnInit {
   // Two Way Binding
   public twoWayBinding = "";
   public splitTwoWayBinding = "";
+  // Getters and Setters
+  private _customerName: string;
 
+  get customerName(): string {
+    return this._customerName;
+  }
+
+  set customerName(value: string) {
+    this._customerName = value;
+    if (value === 'guntzaWa') {
+      alert('getter and setter by ' + value);
+    }
+  }
 
   constructor() { }
-
+ 
   ngOnInit(): void {
   }
 
