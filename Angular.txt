@@ -386,3 +386,9 @@ New Feature in Angular 6
         -ngAfterViewInit() -> จะถูกเรียกเมื่อ child ถูกสร้างเสร็จ (initialize child component เสร็จ)
         -ngAfterViewChecked() -> จะถูกเรียกเมื่อ property ที่ binding มีการเปลี่ยนแปลง (ใน child)
 ์Note : เรียงตามลำดับการถูกเรียก
+
+Trick Typescript
+- string interpolation expression => ใช้ `` ครอบตัว string ที่อยากเอา property มา binding โดยไม่ใช้ +
+Ex.
+    let name = 'gun';
+    let result = 'welcome ' + name; -> let result = `welcome ${name}` 

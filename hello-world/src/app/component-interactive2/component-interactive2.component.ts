@@ -28,8 +28,8 @@ export class ComponentInteractive2Component implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log('statusFlag : ' + this.statusFlag);
-    console.log('statusFlagFromParent : ' + this.statusFlagFromParent);
+    console.log(`statusFlag : ${this.statusFlag}`);
+    console.log(`statusFlagFromParent : ${this.statusFlagFromParent}`);
     this.statusFlagWithTwoWayBinding = this.statusFlagFromParent;
   }
 
