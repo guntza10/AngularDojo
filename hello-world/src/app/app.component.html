@@ -12,9 +12,14 @@
 <app-binding></app-binding>
 <h1 style="color: red;">ViewChild</h1>
 <button (click)="onClickViewChild()">Test View Child</button>
-<app-ng-directive #testViewChild></app-ng-directive>
+<!-- ใช้ template ref -->
+<!-- <app-ng-directive #childComponentRef></app-ng-directive> -->
+<!-- ไม่ใช้ template ref -->
+<app-ng-directive></app-ng-directive>
 <!-- componentInteraction -->
-<app-component-interaction (childEvent)="message=$event" [parentData]="componentInteraction">
+<!-- parent รับ event(data) จาก child -->
+<!-- <app-component-interaction (childEvent)="message=$event" [parentData]="componentInteraction"> -->
+<app-component-interaction (childEvent)="getDataFromChild($event)" [parentData]="componentInteraction">
 </app-component-interaction>
 <h2>{{message}}</h2>
 <h1>-----------------------------------------------------------------------------------------------------></h1>
@@ -23,7 +28,18 @@
   <button (click)="statusInteractive=false">Set statusInteractive False</button>
   <p>{{statusInteractive}}</p>
 </div>
-<app-component-interactive2 [parentData2]="statusInteractive" [parentData3]="statusInteractive"></app-component-interactive2>
+<app-component-interactive2 [parentData2]="statusInteractive" [parentData3]="statusInteractive">
+</app-component-interactive2>
+<div>
+  <button (click)="sendAkuma()">Send Akuma</button>
+  <button (click)="sendFalseNoGod()">Send FalseNoGodz</button>
+</div>
+<app-interaction-service></app-interaction-service>
+<!-- template ref access property or method -->
+<app-ng-on-change-demo #child [ngOnChangeValue]="statusInteractive"></app-ng-on-change-demo>
+<p>{{child.name}}</p>
+<button (click)="child.onTemplateRef()">TemplateRef Access Method</button>
+
 <app-pipes></app-pipes>
 <app-for-service1></app-for-service1>
 <app-for-service2></app-for-service2>

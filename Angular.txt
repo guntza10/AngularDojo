@@ -84,6 +84,8 @@ Event Binding
 Template Reference Variables
 -> การ binding data ของ component template (อ้างถึง html element และ all DOM property)
     -> syntax => #ตามด้วยชื่อตัวแปร
+-> การใช้ template ref สามารถทำให้ parent access เข้าถึง property หรือ method ของ child ได้ (ดูตัวอย่างที่ app.component.html กับ ng-on-change-demo.component.ts)
+    -> เหมาะใช้กับพวก Nested component หรือ form (เป็นการ access ผ่าน view ถ้าอยาก access ผ่าน class ให้ใช้ ViewChild decorator)
 note : argument vs parameter
         -> sum(a,b) => retunr a+b; => a,b คือ parameter
         -> var result = sum(4,5); => 4,5 คือ argument
@@ -104,6 +106,15 @@ Getters-Setters (ดูตัวอย่างที่ binding.component.ts) -
 - setter(set) เป็น function ที่รับค่า แล้วมา assign ให้ private property
 - แล้วเอา getter setter ไป binding
 Note : สามารถใช้แบบ advance จัดการกับการส่ง data จาก Parent มา child ได้ (ดูตัวอย่างที่ app.component.ts กับ component-interactive2.ts)
+
+ngOnChanges (ดูตัวอย่างที่ ng-on-change-demo.component.ts)
+- เอาไว้ดัก property ที่ค่าเปลี่ยน(เหมาะกับดัก input หลายๆตัว ที่สามารถ Keep track เรื่อง previouseValue,currentValue)
+- จะรับ parameter เป็น type SimpleChanges (changes: SimpleChanges) เป็น object ที่มี property ดังนี้
+    -> previousValue เป็นค่าก่อนหน้าที่จะเปลี่ยน
+    -> currentValue เป็นค่าปัจจุบัน
+    -> firstChange เป็นสถานะ true,false ว่าเป็นการเปลี่ยนครั้งแรกใช่มั้ย?
+- สามารถ get ค่า property ของ object SimpleChanges ได้ด้วย changes['ชื่อ property ของเราที่มีการเปลี่ยนแปลง']
+Note : getters-setters เหมาะกับจัดการ input แค่ตัวเดียว แต่ถ้ามี property หลายตัวที่เราอยากดักการเปลี่ยนแปลงให้ใช้ ngOnChanges (มันจะประหยัดเรื่องบรรทัดไม่ต้องเขียนเยอะ)
 
 Ng-Directive (ดูตัวอย่างที่ ng-directive.component)
 ->NgIf (if เงื่อนไข ซ่อน แสดง Html element) => syntax *ngIf
@@ -133,19 +144,33 @@ Component Interaction (ดูตัวอย่างที่ component-interac
         -> ใช้ decorator output (@output) ที่ child ให้กับ event ที่เราสร้าง
         (child component จะส่ง data (output) ไปที่ parent component)
         -> สร้าง event binding (childEvent) ที่ parent component ให้กับ selector ของ component ที่เป็น child + สร้าง property ที่รับค่าจาก event ที่ได้จาก child
+            -> ค่าที่รับจาก child จะเป็น $event(event value)
 note: 
     ->จากตัวอย่าง app.component เป็น parent ส่วน component-interaction.component เป็น child
     ->@input , @output สามารถ define ชื่อให้มันได้
     ->decorator ของ component มีได้แค่ decorator เดียว?
+Note: nested component คือ component ที่มันซ้อนกันอยู่
 
 ViewChild Decorator (ดูตัวอย่างที่ app.component.ts)
 - ปกติเรารับ - ส่ง data ระหว่าง parent กับ child แบบ One by one โดยใช้ @input , @output 
-    -> แต่ถ้าเราอยากเข้าถึง data ทั้งหมดที่ Public ใน child เราจะใช้ @ViewChild (เข้าถึงเพื่อแก้ไข-เปลี่ยนแปลง data ของ child จาก parent)
+    -> แต่ถ้าเราอยากเข้าถึง property,method(data) ทั้งหมดที่ Public ใน child เราจะใช้ @ViewChild (เข้าถึงเพื่อแก้ไข-เปลี่ยนแปลง data ของ child จาก parent)
         => (ex. ใช้กับพวก modal เป็นต้น )
-- ใช้ template ref ในการ อ้างถึงตัว child component
+- ใช้ template ref ในการ อ้างถึงตัว child component (จะใช้หรือไม่ใช้ก็ได้)->(ดูตัวอย่างที่ app.component.ts,app.component.html)
+    Ex.
+        ->  @ViewChild('testViewChild', { static: false }) testViewChild: NgDirectiveComponent; -> ใช้ template ref
+        ->  @ViewChild(NgDirectiveComponent, { static: false }) testViewChild: NgDirectiveComponent; ไม่ใช้ template ref ก็ใช้ child ref แทน
 Note : ใน Angular เวอร์ชั่นใหม่เราต้องใส่ option static (true,false)
     -> false => เราจะใช้ view child ใน ngOnInit ไม่ได้ 
     -> true => เราจะใช้ view child ใน ngOnInit ได้ (ใช้ได้เมื่อมัน initialize เสร็จ อาจช้าเพราะต้องรอให้มันโหลดให้เสร็จหมดก่อน)
+
+Component Interaction Using Service (ดูตัวอย่างที่ Interaction.service.ts,app.component.ts,interation-service.component.ts)
+- เป็นการส่ง data จาก parent ไปที่ service (share data ไว้ที่ service) แล้วให้ child ที่ต้องการ data ไป subscribe data มาใช้
+- step 
+    -> สร้าง subject เอาไว้เก็บ data ที่ parent ต้องการจะแชร์ ที่ service
+    -> เอา subject ที่สร้างแปลงให้มันเป็น Observable เก็บไว้ใน Local property (property ที่เก็บ Observable ของ subject)
+    -> parent เรียกใช้ method ของ service ที่ทำหน้าที่รับ data ไปเก็บไว้ที่ subject
+    -> child ตัวไหนที่อยากได้ data ที่แชร์เก็บไว้ที่ survice ก็มา subscribe ไปใช้ได้ผ่านตัว property ของ service ที่เราเก็บ Observable ของ subject
+Note : component ที่ subscribe ไปใช้ ไม่จำเป็นต้องเป็น parent-child กันก็ได้ เพราะ data มันถูกแชร์เก็บไว้ที่ service แล้ว component ไหนจะมา subscribe ไปใช้ก็ได้
 
 Pipes (ดูตัวอย่างที่ pipes.component.html)
 -> ใช้แปลง data ก่อนจะเอาไปแสดงที่ view จะไม่เปลี่ยแปลงค่าของ property ของ class

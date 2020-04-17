@@ -3,5 +3,5 @@
 <p *ngIf="!statusFlag">statusFlag : False From Parent (getters and setters)</p>
 
 
-<input [ngModel]="statusFlagWithTwoWayBinding" (ngModelChange)=" setFlagWithSplitTwoWayBinding()" type="text">
+<input [ngModel]="statusFlagWithTwoWayBinding" (ngModelChange)="setFlagWithSplitTwoWayBinding()" type="text">
 <p>{{statusFlagWithTwoWayBinding}} with Split Two Way Bindig</p>
