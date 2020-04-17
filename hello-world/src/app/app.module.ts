@@ -15,6 +15,9 @@ import { HttpClientModule} from '@angular/common/http';
 import { ComponentInteractive2Component } from './component-interactive2/component-interactive2.component';
 import { NgOnChangeDemoComponent } from './ng-on-change-demo/ng-on-change-demo.component';
 import { InteractionServiceComponent } from './interaction-service/interaction-service.component';
+import { ParentInjectionComponent } from './parent-injection/parent-injection.component';
+import { ShareService1Component } from './share-service1/share-service1.component';
+import { ShareService2Component } from './share-service2/share-service2.component';
 
 // Ngmodule decorator
 @NgModule({
@@ -31,7 +34,10 @@ import { InteractionServiceComponent } from './interaction-service/interaction-s
     ForService2Component,
     ComponentInteractive2Component,
     NgOnChangeDemoComponent,
-    InteractionServiceComponent
+    InteractionServiceComponent,
+    ParentInjectionComponent,
+    ShareService1Component,
+    ShareService2Component
   ],
   imports: [
     BrowserModule,

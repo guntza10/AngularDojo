@@ -12,7 +12,7 @@ export class ComponentInteractionComponent implements OnInit {
   @Input('parentData') public name;
 
   // Event ที่จะส่ง data จาก child ไป parent
-  @Output() public childEvent = new EventEmitter();
+  @Output() public childEvent = new EventEmitter(); // new EventEmitter<string>() or new EventEmitter<number>() สามารถ define type ได้
   // สามารถ define ชื่อให้มันได้
   // @Output('childEvent55') public childEvent = new EventEmitter();
   public valueFromChild = 'Hey! data from child with event Gunt';

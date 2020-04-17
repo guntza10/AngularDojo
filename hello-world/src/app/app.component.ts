@@ -14,7 +14,7 @@ import { InteractionService } from './services/interaction.service';
 // class
 export class AppComponent {
   title = 'hello-world';
-
+  defaultName = 'hello-world';
   // data from parent to child
   public componentInteraction = "componentInteraction 555";
 
@@ -31,7 +31,7 @@ export class AppComponent {
   statusInteractive: boolean = true;
 
   // inject service ที่จะใช้ keep data
-  constructor(private _interactionService: InteractionService) {
+  constructor(public _interactionService: InteractionService) {
 
   }
 

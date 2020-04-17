@@ -12,6 +12,8 @@
 <app-binding></app-binding>
 <h1 style="color: red;">ViewChild</h1>
 <button (click)="onClickViewChild()">Test View Child</button>
+<app-parent-injection></app-parent-injection>
+<p>Title App : {{title}}</p>
 <!-- ใช้ template ref -->
 <!-- <app-ng-directive #childComponentRef></app-ng-directive> -->
 <!-- ไม่ใช้ template ref -->
@@ -35,6 +37,11 @@
   <button (click)="sendFalseNoGod()">Send FalseNoGodz</button>
 </div>
 <app-interaction-service></app-interaction-service>
+<!-- share data from service -->
+<h1 style="color: red;">Share data From Service</h1>
+<app-share-service1></app-share-service1>
+<app-share-service2></app-share-service2>
+<p>isLogged in Interaction-Service : {{_interactionService.getStatus()}}</p>
 <!-- template ref access property or method -->
 <app-ng-on-change-demo #child [ngOnChangeValue]="statusInteractive"></app-ng-on-change-demo>
 <p>{{child.name}}</p>
