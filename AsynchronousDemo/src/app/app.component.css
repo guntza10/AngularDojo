@@ -1,0 +1,10 @@
+.button-vertical {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.button-vertical button {
+    margin: 10px;
+    width: 60%;
+}

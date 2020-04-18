@@ -1,0 +1,23 @@
+Asynchronous TypeScript
+
+1.Observable (Callback) -> **ไม่นิยมทำ
+-> คือการที่มันทำงานคำสั่งต่อไปเรื่อยๆโดยไม่หยุดรอ result ก่อน (asynchronous) จนกระทั่งได้ result มันจึงกระโดดกลับมาทำ (callback)
+-> ข้อเสียของ Observable (Callback) คือถ้ามี Callback เยอะๆ จะทำให้ไล่ code ยากและวุ่นวาย เพราะมันต้องซ้อน callback เข้าไปเรื่อยๆ (Hell Callback)
+Note : callback มันทำงานแบบ asynchronous ทำให้เวลาใช้มันต้องซ้อนเข้าไปเรื่อยๆ เพื่อให้มันได้ result ก่อนถึงจะไปทำ callback อื่นๆต่อได้ (synchronous)
+
+2.Promise (Callback)
+-> พัฒนาต่อยอดมาและแก้ไขปัญหาของ Observable ที่มันต้องซ้อนเข้าไปเรื่อยๆซับซ้อน โดยทำการ toPromise() แล้ว .then ต่อไปเรื่อยๆ
+มันจะทำงานแบบเป็นลำดับเมื่อทำ .then ก่อนหน้าเสร็จ ทำให้ไล่codeง่ายขึ้น
+
+3.Promise (Multiple)
+-> เป็นการทำ promise แบบหลายๆตัวแล้วให้มันทำงานพร้อมกัน
+-> สร้าง promise object ของ promise แต่ละตัว แล้วให้มันทำงานผ่าน Promise.all([p1,p2,p3]).then()
+    -> ได้ result ออกมาเป็น array (ทำพร้อมกันแล้วรอให้เสร็จก่อนจึงจะ return result ออกมา)
+-> มันทำงานทีเดียวจบ
+Note : การทำ promise ถึงจะไล่ง่ายขึ้นเยอะ แต่ก็ยังต้องเชน code ต่อกันเป็นทอดๆ ทำให้ code ก็ยังดูเยอะและยังซับซ้อนอยู่ดี
+
+4.Promise (Async-Await) -> ต้องใช้กับ promise only? (recommended จัดการง่ายไม่เยอะยุ่งยาก)
+- คือการรันโดยที่ต้องรอคำสั่งก่อนหน้าทำงานเสร็จจนได้ result ก่อนถึงจะไปทำคำสั่งต่อไป (ทำให้เป็น synchronous)
+Note : การทำงานแบบ Async-Await มันจะไม่ได้หยุดรอ process ของ function เนื่องจาก async ที่ define ไว้หน้า function
+จะทำให้มันทำงาน process function อื่นต่อเลยไม่ได้รออยู่แล้ว 
+เพียงแต่ตัว process ของ Async-Await ย่อยข้างในมันจะทำงานเป็น synchronouse ของมันเอง

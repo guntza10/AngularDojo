@@ -238,6 +238,7 @@ var myCar = new Car(myEngine,myTires,depA,depB,depC);
 Note: ใน angular เราใช้ dependency injection ในการทำ service ห้ามทำ draw back เพราะมันไม่ flexible และไม่ standard ที่เค้าทำกัน
     -> สร้าง service 
     -> import module HttpClientModule ไว้ใช้สำหรับจัดการพวกการเชื่อมต่อกับ server หรือ api (ไว้ที่ imports ของ app.module)
+        -> import { HttpClientModule} from '@angular/common/http';
     -> register service ไปที่ providers ของ app.module (ใน angular เวอร์ชั้นล่าสุดไม่ต้อง register แล้ว )
     -> dependency injection HttpClient มาใช้ใน service
 - dependency injection ใน angular แค่ inject dependency เข้ามาก็สามารถใช้ dependency ของ class อื่นได้เลย ไม่ต้องสร้าง Instance 
