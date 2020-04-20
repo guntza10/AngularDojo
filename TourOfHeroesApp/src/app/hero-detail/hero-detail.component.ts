@@ -13,6 +13,7 @@ export class HeroDetailComponent implements OnInit {
   public heroData: HeroesModel;
   public idHero: string;
   public nameHero: string;
+  
   constructor(private router: Router, private route: ActivatedRoute, private _heroicHeroesService: HeroicHeroServiceService) { }
 
   ngOnInit(): void {
@@ -28,13 +29,21 @@ export class HeroDetailComponent implements OnInit {
     return this._heroicHeroesService.getHeroDetail(id);
   }
 
-  goToBackDashboard() {
-    this.router.navigate(['/dashboard']);
+  goToPrevious() {
+    if (this.router.url.includes('dashboard')) {
+      this.router.navigate(['../../'], { relativeTo: this.route });
+    } else {
+      this.router.navigate(['../../', this.idHero], { relativeTo: this.route });
+    }
   }
 
   saveChange(id: string) {
     this._heroicHeroesService.changeData(id, this.nameHero);
-    alert(`id : ${id} Has Changed!`);
+    if (this.router.url.includes('dashboard')) {
+      this.router.navigate(['../../'], { relativeTo: this.route });
+    } else {
+      this.router.navigate(['../../', this.idHero], { relativeTo: this.route });
+    }
   }
 
 }

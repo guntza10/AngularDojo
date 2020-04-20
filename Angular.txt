@@ -365,6 +365,8 @@ Route Parameters (ดูตัวอย่างที่ department-list.compon
     -> inject ActivatedRoute มาใช้ (ดูตัวอย่างที่ department-detail.component.ts)
     -> this.router.snapshot.paramMap.get('id') -> ใช้ในการ get ค่า route parameter
     Note : snapshot คือการ get state ของ router ในตอนนั้น(เมื่อ initialize)เพื่อที่จะใช้ paramMap.get('param') ต่อได้
+Note: navigate() -> path url ไม่ต้องใส่ /
+Note : ถ้าจะ get current url -> this.router.url
 
 ParamMap Observable (ดูตัวอย่างที่ department-detail.component.ts)
 - ถ้าเรา navigate กลับมาที่ component เดิม snapshot ไม่เวิร์ค (มันจะทำแค่ตอนที่ initialize)

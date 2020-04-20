@@ -76,11 +76,15 @@ export class HeroicHeroServiceService {
   }
 
   getHeroDetail(id: string) {
-    return this.listHero.find(obj => obj.id === id);
+    return this.listHero.find(data => data.id === id);
+  }
+
+  getNameHero(id: string) {
+    return this.listHero.find(data => data.id === id).Name;
   }
 
   changeData(id: string, newName: string) {
-    let elementIndex = this.listHero.findIndex(obj => obj.id === id);
+    let elementIndex = this.listHero.findIndex(data => data.id === id);
     this.listHero[elementIndex].Name = newName;
   }
 

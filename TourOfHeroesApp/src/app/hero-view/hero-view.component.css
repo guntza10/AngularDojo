@@ -1,0 +1,10 @@
+.heroViewConatainer {
+    margin: 20px;
+}
+
+.viewDetail {
+    padding: 4px;
+    margin: 5px;
+    border-radius: 3px;
+    border: none;
+}

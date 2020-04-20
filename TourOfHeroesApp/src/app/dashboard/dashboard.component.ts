@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HeroicHeroServiceService } from '../services/heroic-hero-service.service';
 import { HeroesModel } from '../models/HeroesModel';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,19 +11,16 @@ import { Router } from '@angular/router';
 export class DashboardComponent implements OnInit {
 
   public listHero: HeroesModel[];
-  constructor(private _heroicHeroesService: HeroicHeroServiceService, private router: Router) {
+  constructor(private _heroicHeroesService: HeroicHeroServiceService, private router: Router, private route: ActivatedRoute) {
 
   }
 
   ngOnInit(): void {
     this.listHero = this._heroicHeroesService.getAllTopHeroes();
-    console.log(this.listHero);
-
   }
 
   goToHeroDetail(id: string) {
-    this.router.navigate(['dashboard/heroDetail', id]);
+    this.router.navigate(['heroDetail', id], { relativeTo: this.route });
   }
-
 
 }
