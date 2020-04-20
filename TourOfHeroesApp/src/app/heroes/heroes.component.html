@@ -1,0 +1,22 @@
+<div class="heroesContainer">
+
+    <h2 style="text-align: center;">My Heroes</h2>
+
+    <div class="listMyHeroes">
+        <a class="myHeroBtn" *ngFor="let hero of listHero;index as i">
+            <span>{{i+1}}</span>
+            {{hero.Name}}
+        </a>
+    </div>
+
+</div>
+
+<!-- <div style="position: relative;padding: 10px;margin: 5px;background-color: blueviolet;border-radius: 4px;display: flex;align-items: center;justify-content: center;"
+                *ngFor="let hero of listHero;index as i">
+                <div
+                    style="position: absolute;background-color: aqua;left: 0px;top:0;width: 20px;height:44px;border-radius: 4px;">
+                    {{i+1}}</div>
+                <a style="position: relative;margin-left: 20px;display: blo;">
+                    {{hero.Name}}
+                </a>
+            </div> -->

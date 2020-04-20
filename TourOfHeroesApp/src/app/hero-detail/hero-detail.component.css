@@ -1,0 +1,15 @@
+.heroDetailContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.dataHero {
+  padding: 10px;
+}
+
+.backBtn {
+  padding: 4px;
+  margin: 5px;
+  border-radius: 3px;
+  border: none;
+}

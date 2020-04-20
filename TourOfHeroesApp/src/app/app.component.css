@@ -1,0 +1,22 @@
+.marginLink {
+  margin: 5px;
+}
+
+.menuBtn {
+  padding: 5px;
+  margin: 5px;
+  border-radius: 3px;
+  border: none;
+  background-color: #e3e3e3;
+  color: black;
+  text-decoration: none;
+}
+
+.routerActive {
+  color: yellow;
+  background-color: #da3248;
+}
+
+.groupMenuBtn {
+  margin: 10px 10px 10px 0;
+}

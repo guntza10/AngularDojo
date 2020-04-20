@@ -93,7 +93,7 @@ note : argument vs parameter
 Two Way Binding (ใช้จัดการกับพวก input ที่ต้องการให้มัน Interact ทั้ง view และ class)
 -> การเปลี่ยนแปลง data ที่ template ,data(property) ที่ class จะเปลี่ยนแปลงด้วย หรือ 
     เปลี่ยนแปลง data(property) ที่ class ,data ที่ template จะเปลี่ยนแปลงด้วย
--> syntax => [(ngModel)] -> ต้อง import FormsModule มาใช้ใน app.module
+-> syntax => [(ngModel)] -> ต้อง import FormsModule มาใช้ใน app.module (import { FormsModule } from '@angular/forms')
     => [] property binding = data from class to template
     => () event binding = data from template to class
     => two way binding [()] -> จะรับค่าจาก template มาที่ class ผ่าน event binding แล้วอัพเดทค่าจาก class สู่ template ด้วย property binding
@@ -314,6 +314,7 @@ Routing and Navigation (ดูตัวอย่างที่ Project routing-
     Note : การสร้าง component จะมี option
         -it => inline template -> จะไม่มี html มาให้
         -is => inline style -> จะไม่มี css
+        --skipTests=true -> ถ้าเป็น true จะไม่สร้าง ไฟล์ .spec
     3. configure route
         -> ใน app-routing.module เราจะกำหนด route ทั้งหมดที่ const routes ซึ่งแต่ละ route จะเป็น Object    
             -> route object จะมี property ดังนี้

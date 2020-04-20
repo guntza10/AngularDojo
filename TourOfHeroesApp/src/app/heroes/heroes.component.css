@@ -1,0 +1,27 @@
+.heroesContainer {
+  margin-top: 20px;
+}
+
+.listMyHeroes {
+  display: flex;
+  flex-direction: column;
+  margin: 50px;
+}
+
+.myHeroBtn {
+  padding: 10px;
+  margin: 5px;
+  border-radius: 4px;
+  background-color: rebeccapurple;
+  text-decoration: none;
+}
+
+.myHeroBtn span {
+  padding: 6px 6px;
+  border-radius: 4px;
+  background-color: teal;
+}
+
+.myHeroBtn:hover {
+  background-color: #cbd2d3;
+}

@@ -1,0 +1,9 @@
+<div class="dashboardContainer">
+
+    <h2 style="text-align: center;">Top Heroes</h2>
+
+    <div class="heroGroubBtn">
+        <a class="heroBtn" *ngFor="let hero of listHero" (click)="goToHeroDetail(hero.id)">{{hero.Name}}</a>
+    </div>
+    <!-- <router-outlet></router-outlet> -->
+</div>

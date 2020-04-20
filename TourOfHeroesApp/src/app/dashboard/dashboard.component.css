@@ -1,0 +1,22 @@
+.dashboardContainer {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.heroGroubBtn {
+  margin: 50px;
+}
+
+.heroBtn {
+  padding: 30px;
+  margin: 5px;
+  background-color: #2f8490;
+  color: white;
+  text-decoration: none;
+}
+
+.heroBtn:hover {
+  background-color: #cbd2d3;
+}
