@@ -1,0 +1,21 @@
+<div style="text-align: center;">
+
+  <h1>{{title}}</h1>
+  <div>
+    <button class="btn" (click)="decrement()">Subtract5555</button>
+    <button class="btn" (click)="decrement2()">Subtract6666</button>
+  </div>
+  <button class="btn" (click)="switchInvisible()">Show/Hide</button>
+
+  <app-child *ngIf="invisible" (messageEvent)="getEventFromChild($event)" [parentValue]="count" [parentValue2]="count2"
+    [parentValue3]="user"></app-child>
+  <h2>{{message}}</h2>
+
+  <div>
+    <button class="btn" (click)="increment()">Add5555</button>
+    <button class="btn" (click)="increment2()">Add6666</button>
+  </div>
+  <hr>
+  <button class="btn" (click)="updateValue()">Update</button>
+
+</div>

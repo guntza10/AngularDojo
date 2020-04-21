@@ -107,15 +107,6 @@ Getters-Setters (ดูตัวอย่างที่ binding.component.ts) -
 - แล้วเอา getter setter ไป binding
 Note : สามารถใช้แบบ advance จัดการกับการส่ง data จาก Parent มา child ได้ (ดูตัวอย่างที่ app.component.ts กับ component-interactive2.ts)
 
-ngOnChanges (ดูตัวอย่างที่ ng-on-change-demo.component.ts)
-- เอาไว้ดัก property ที่ค่าเปลี่ยน(เหมาะกับดัก input หลายๆตัว ที่สามารถ Keep track เรื่อง previouseValue,currentValue)
-- จะรับ parameter เป็น type SimpleChanges (changes: SimpleChanges) เป็น object ที่มี property ดังนี้
-    -> previousValue เป็นค่าก่อนหน้าที่จะเปลี่ยน
-    -> currentValue เป็นค่าปัจจุบัน
-    -> firstChange เป็นสถานะ true,false ว่าเป็นการเปลี่ยนครั้งแรกใช่มั้ย?
-- สามารถ get ค่า property ของ object SimpleChanges ได้ด้วย changes['ชื่อ property ของเราที่มีการเปลี่ยนแปลง']
-Note : getters-setters เหมาะกับจัดการ input แค่ตัวเดียว แต่ถ้ามี property หลายตัวที่เราอยากดักการเปลี่ยนแปลงให้ใช้ ngOnChanges (มันจะประหยัดเรื่องบรรทัดไม่ต้องเขียนเยอะ)
-
 Ng-Directive (ดูตัวอย่างที่ ng-directive.component)
 ->NgIf (if เงื่อนไข ซ่อน แสดง Html element) => syntax *ngIf
     ->If else สามารถใช้ ng-template(template reference var) เข้ามาช่วย 
@@ -140,7 +131,7 @@ Component Interaction (ดูตัวอย่างที่ component-interac
         (child component จะรับ data(input) จาก parent component) แล้วนำ property ที่รับค่ามานั้น ไป binding ใน child component template ต่อ
 
     -> รับ data จาก child (่ส่ง data จาก child ไป parent)
-        -> สร้าง event ในการส่ง data จาก child ไป parent (EventEmiiter) ที่ child (define type ได้ new EventEmiiter<string>() เป็นต้น)
+        -> สร้าง event ในการส่ง data จาก child ไป parent (EventEmitter) ที่ child (define type ได้ new EventEmitter<string>() เป็นต้น)
         -> ใช้ decorator output (@output) ที่ child ให้กับ event ที่เราสร้าง
         (child component จะส่ง data (output) ไปที่ parent component)
         -> สร้าง event binding (childEvent) ที่ parent component ให้กับ selector ของ component ที่เป็น child + สร้าง property ที่รับค่าจาก event ที่ได้จาก child
@@ -149,6 +140,7 @@ note:
     ->จากตัวอย่าง app.component เป็น parent ส่วน component-interaction.component เป็น child
     ->@input , @output สามารถ define ชื่อให้มันได้
     ->decorator ของ component มีได้แค่ decorator เดียว?
+    -> import { EventEmitter } from '@angular/core';
 Note: nested component คือ component ที่มันซ้อนกันอยู่
 
 ViewChild Decorator (ดูตัวอย่างที่ app.component.ts)
@@ -398,7 +390,7 @@ Child Routes (ดูตัวอย่างที่ department-detail.componen
 - set child route ผ่าน property children ให้กับ component ที่เราต้องการให้มันมี route ย่อย
 ต้องการการเข้า path url ซ้อนเข้าไปเรื่อยๆ  (config ใน app-routing.module.ts)
 - อย่าลืมใช้ router-outlet เพื่อสามารถใช้ navigate เข้าไปที่ component อื่นที่เป็น child route 
-    -> เพื่อนำ view จาก component ของ child route ออกมาแสดงที่ parent component 
+    -> เพื่อนำ view จาก component ของ child route ออกมาแสดงที่ parent component ** core
 
 New Feature in Angular 6
 - เลิกใช้ tag template มาใช้ tag ng-template แทน
@@ -412,9 +404,9 @@ New Feature in Angular 6
 - constructor() => จะถูกเรียกใช้เป็นตัวแรกเมื่อ component ถูกสร้างขึ้ันมา (เป็นการสร้างค่าเริ่มต้นให้ class)
 - เราสามารถแบ่ง lifecycle ได้เป็น 2 กลุ่ม
    -> group 1 Component (parent) 
-        -ngOnChanges() -> จะถูกเรียกเมื่อ input , output ที่ binding มีการเปลี่ยนแปลง
-        -ngOnInit() -> จะถูกเรียกเมื่อ component ถูกสร้างเสร็จ(initialize component เสร็จ) 
-        -ngDoCheck() -> จะถูกเรียกทุกครั้งเมื่อเรา focus ที่ element นั้นๆ แล้ว check ว่ามีการเปลี่ยนแปลงมั้ย (เอาไว้ดักการเปลี่ยนแปลงในรูปแบบที่ต้องการ)
+        -ngOnChanges() -> จะถูกเรียกเมื่อ input , output ที่ binding มีการเปลี่ยนแปลง (เอาไว้ดักค่า current,previous value ของ input,output)
+        -ngOnInit() -> จะถูกเรียกเมื่อ component ถูกสร้างเสร็จ(initialize component เสร็จ) -> จะถูกเรียกแค่ครั้งเดียว ไม่ถูกเรียกซ้ำจนกว่าจะมีการ initialize ครั้งใหม่
+        -ngDoCheck() -> จะถูกเรียกทุกครั้งเมื่อเรา focus ที่ element นั้นๆ แล้ว check ว่ามีการเปลี่ยนแปลงมั้ย (เอาไว้ดักการเปลี่ยนแปลงของ property object)
         -ngOnDestroy() -> จะถูกเรียกใช้ก่อนที่ component จะถูกทำลาย (ใช้ตอนที่ unsubscribe ของ observable,event เพื่อไม่ให้ memory leak)
         Note : memory leak ก็คือเกิดการใช้ ram เรื่อยๆ แบบสิ้นเปลืองไม่เกิดไม่ประโยชน์ทำให้ performance ช้า
     -> group 2 child component
@@ -422,10 +414,65 @@ New Feature in Angular 6
         -ngAfterContentChecked() -> จะถูกเรียกเพื่อ check การเปลี่ยนแปลงต่างๆของ child
         -ngAfterViewInit() -> จะถูกเรียกเมื่อ child ถูกสร้างเสร็จ (initialize child component เสร็จ)
         -ngAfterViewChecked() -> จะถูกเรียกเมื่อ property ที่ binding มีการเปลี่ยนแปลง (ใน child)
+        **Note: group 2 จะถูกเรียกหลัง ngDoCheck ทำเสร็จเสมอ 
 ์Note : เรียงตามลำดับการถูกเรียก
+
+ngOnChanges (ดูตัวอย่างที่ ng-on-change-demo.component.ts กับที่โปรเจ็ค angularLifeCycle) -> (จาก parent)
+- จะถูกเรียกเมื่อ input , output ที่ binding มีการเปลี่ยนแปลง 
+    -> เอาไว้ get current ,previous value
+- เอาไว้ดัก property ที่ค่าเปลี่ยน(เหมาะกับดัก input หลายๆตัว ที่สามารถ Keep track เรื่อง previouseValue,currentValue)
+- จะรับ parameter เป็น type SimpleChanges (changes: SimpleChanges) เป็น object ที่มี property ดังนี้
+    -> previousValue เป็นค่าก่อนหน้าที่จะเปลี่ยน
+    -> currentValue เป็นค่าปัจจุบัน
+    -> firstChange เป็นสถานะ true,false ว่าเป็นการเปลี่ยนครั้งแรกใช่มั้ย?
+- สามารถ get ค่า property ของ object SimpleChanges ได้ด้วย changes['ชื่อ property ของเราที่มีการเปลี่ยนแปลง']
+Note : getters-setters เหมาะกับจัดการ input แค่ตัวเดียว แต่ถ้ามี property หลายตัวที่เราอยากดักการเปลี่ยนแปลงให้ใช้ ngOnChanges (มันจะประหยัดเรื่องบรรทัดไม่ต้องเขียนเยอะ)
+Note : import,implement OnChanges 
+    -> import {  OnChanges } from '@angular/core';
+
+ngDoCheck -> (จาก parent)
+-> เอาไว้ดักการเปลี่ยนแปลงค่า property ของ Object
+    -> ถ้า input,output ตัวไหนที่ ngOnChanges detect ไม่ได้(ngOnChange ไม่สามารถ access ref ได้) ใช้ ngDoCheck แทน
+    Note : ถ้าเป็นการเปลี่ยนค่าที่เป็น ref ngOnChanges ไม่สามารถ detect ได้ แต่ถ้าเป็นการ instance ค่าให้ใหม่แทนการเข้าถึง ref แบบนี้ ngOnChanges จะ detect ได้ 
+     ex.
+        user = {
+            name : 'akari'
+        };
+
+        update() {
+            this.user.name = 'gunt'; -> ngOnChanges ไม่ detect
+            this.user = {
+                name : 'gunt'        -> ngOnChanges detect ได้
+            }; 
+        }
+-> จะถูกเรียกเมื่อ input,output เป็น Object ที่มีการเปลี่ยนแปลงค่า property ภายใน Object ใน ngOnChanges ไม่สามารถ detect ได้เพราะมันไม่สามารถ access เข้าถึง obj ref ได้
+Note : import,implement DoCheck 
+    -> import {  DoCheck } from '@angular/core';
+
+ngAfterContentInit -> (จาก child) -> เรียกแค่ครั้งเดียวจบจนกว่าจะ refresh ทั้ง page ใหม่
+- จะถูกเรียกในการสร้าง view/content ครั้งแรก (ทำแค่ครั้งแรกที่ถูกสร้าง)
+    -> ใช้สำหรับ set value ที่เราไม่อยากให้มันเปลี่ยนแปลงอีก มันจะอยู่คงที่ตลอดจนกว่าจะมีการ refresh ทั้ง page
+- จะถูกเรียกหลังทำ ngDoCheck และทำแค่ครั้งเดียวเท่านั้น จนกว่าจะ refresh ทั้ง page มันถึงจะถูกเรียกอีกครั้ง
+Note : ไม่ต้อง import หรือ implement อะไรเพิ่ม
+
+ngAfterContentChecked -> (จาก child) -> จะเรียกหลัง ngDoCheck และถูกเรียกพร้อม ngAfterViewChecked เสมอ
+- จะถูกเรียกเพื่อ check การเปลี่ยนแปลงต่างๆของ child
+- จะถูกเรียกเมื่อ ทุกๆค่ามีการเปลี่ยแปลงภายใต้ ngDoCheck ??
+
+ngAfterViewInit() -> (จาก child) เรียกแค่ครั้งเดียวจบจนกว่าจะ refresh ทั้ง page ใหม่
+-> จะถูกเรียกเมื่อ child ถูกสร้างเสร็จ (initialize child component เสร็จ)
+
+ngAfterViewChecked() -> (จาก child) -> จะถูกเรียกหลัง ngAfterContentChecked เสมอ
+-> จะถูกเรียกเมื่อ property ที่ binding มีการเปลี่ยนแปลง (ใน child)
+
+ngOnDestroy() 
+-> เมื่อ component ถูกทำลาย เช่น ตอนซ่อนแสดง component (ถือเป็นการ destroy)
+-> จะถูกเรียกใช้ก่อนที่ component จะถูกทำลาย (ใช้ตอนที่ unsubscribe ของ observable,event เพื่อไม่ให้ memory leak)
+Note : life cycle ของ parent มันจะ execute ก่อนของ child เราควรจะจัดการทุกอย่างใน life cycle ของ parent เป็นอันดับแรก
 
 Trick Typescript
 - string interpolation expression => ใช้ `` ครอบตัว string ที่อยากเอา property มา binding โดยไม่ใช้ +
 Ex.
     let name = 'gun';
     let result = 'welcome ' + name; -> let result = `welcome ${name}` 
+- ถ้าใช้ค่า null มา check ใน condition มันจะ return false
