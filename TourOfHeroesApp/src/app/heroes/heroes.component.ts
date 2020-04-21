@@ -11,18 +11,25 @@ import { Router, ActivatedRoute } from '@angular/router'
 export class HeroesComponent implements OnInit {
 
   public listHero: HeroesModel[];
+  public newHero: string;
   constructor(private _heroicHeroService: HeroicHeroServiceService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.listHero = this._heroicHeroService.getAllHero();
+    console.log(this.listHero);
+
   }
 
   goToHeroView(id: string) {
     this.router.navigate(['heroView', id], { relativeTo: this.route });
   }
 
-  deleteHero() { 
-    
+  AddHero() {
+    this._heroicHeroService.addHero(this.newHero);
+  }
+
+  deleteHero(id: string) {
+    this._heroicHeroService.deleteHero(id);
   }
 
 }

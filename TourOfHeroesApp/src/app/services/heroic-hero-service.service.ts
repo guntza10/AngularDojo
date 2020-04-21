@@ -8,64 +8,68 @@ export class HeroicHeroServiceService {
 
   private listHero: HeroesModel[] = [
     {
-      id: '1',
+      id: this.generateId(),
       Name: 'Narco'
     },
     {
-      id: '2',
+      id: this.generateId(),
       Name: 'Bambasto'
     },
     {
-      id: '3',
+      id: this.generateId(),
       Name: 'Celeritas'
     },
     {
-      id: '4',
+      id: this.generateId(),
       Name: 'Magneto'
     },
     {
-      id: '5',
+      id: this.generateId(),
       Name: 'Dr.Nice'
     },
     {
-      id: '6',
+      id: this.generateId(),
       Name: 'MaskRider Ryuki'
     },
     {
-      id: '7',
+      id: this.generateId(),
       Name: 'RubberMan'
     },
     {
-      id: '8',
+      id: this.generateId(),
       Name: 'Magneto'
     },
     {
-      id: '9',
+      id: this.generateId(),
       Name: 'Dynama'
     },
     {
-      id: '10',
+      id: this.generateId(),
       Name: 'Dr.Iq'
     },
     {
-      id: '11',
+      id: this.generateId(),
       Name: 'Magma'
     },
     {
-      id: '12',
+      id: this.generateId(),
       Name: 'Tornado'
     },
     {
-      id: '13',
+      id: this.generateId(),
       Name: 'Iron Man'
     },
     {
-      id: '14',
+      id: this.generateId(),
       Name: 'Spider man'
     }
   ];
 
   constructor() { }
+
+  generateId(): string {
+    return `${Math.random().toString(36).substr(2)}-${Math.random().toString(36).substr(2)}`;
+  }
 
   getAllTopHeroes() {
     return this.listHero.slice(0, 4);
@@ -86,6 +90,19 @@ export class HeroicHeroServiceService {
   changeData(id: string, newName: string) {
     let elementIndex = this.listHero.findIndex(data => data.id === id);
     this.listHero[elementIndex].Name = newName;
+  }
+
+  addHero(name: string) {
+
+    let newData: HeroesModel = {
+      id: (this.listHero.length + 1).toString(),
+      Name: name
+    };
+    this.listHero.push(newData);
+  }
+
+  deleteHero(id: string) {
+    this.listHero.splice(this.listHero.findIndex(data => data.id === id), 1);
   }
 
 }

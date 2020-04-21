@@ -1,42 +1,60 @@
 .heroesContainer {
-    margin-top: 20px;
+  margin-top: 20px;
+}
+
+.addHeroes {
+  display: grid;
+  grid-template-columns: 100px 200px 100px;
+  align-items: center;
+  margin: 30px 0 0 50px;
 }
 
 .listMyHeroes {
-    display: flex;
-    flex-direction: column;
-    margin: 50px;
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
 }
 
 .myHeroBtn {
-    display: grid;
-    align-items: center;
-    grid-template-columns: 35fr 2fr;
-    padding: 10px;
-    margin: 5px;
-    border-radius: 4px;
-    background-color: #D3D3CF;
-    text-decoration: none;
+  display: grid;
+  align-items: center;
+  grid-template-columns: 35fr 2fr;
+  padding: 10px;
+  margin: 5px;
+  border-radius: 4px;
+  background-color: #d3d3cf;
+  text-decoration: none;
 }
 
 .myHeroBtn span {
-    padding: 6px 6px;
-    border-radius: 4px;
-    background-color: teal;
+  padding: 6px 6px;
+  border-radius: 4px;
+  background-color: teal;
 }
 
 .myHeroBtn:hover {
-    background-color: #B6B6B6;
+  background-color: #b6b6b6;
+}
+
+.addBtn {
+  padding: 4px;
+  margin: 5px;
+  border-radius: 3px;
+  border: none;
+}
+
+.addBtn:hover {
+  background-color: #b6b6b6;
 }
 
 .deleteBtn {
-    align-self: center;
-    justify-self: center;
-    padding: 6px 6px;
-    border-radius: 4px;
-    background-color: #D52626;
+  align-self: center;
+  justify-self: center;
+  padding: 6px 6px;
+  border-radius: 4px;
+  background-color: #d52626;
 }
 
 .deleteBtn:hover {
-    background-color: #EFB633;
+  background-color: #efb633;
 }

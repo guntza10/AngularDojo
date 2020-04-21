@@ -2,12 +2,18 @@
 
     <h2 style="text-align: center;">My Heroes</h2>
 
+    <div class="addHeroes">
+        <label>Hero name :</label>
+        <input [(ngModel)]="newHero" [value]="newHero">
+        <button class="addBtn" (click)="AddHero()">Add</button>
+    </div>
+
     <div class="listMyHeroes">
         <div class="myHeroBtn" *ngFor="let hero of listHero;index as i">
-            <a (click)="goToHeroView(hero.id)">
+            <div (click)="goToHeroView(hero.id)">
                 <span>{{i+1}}</span> {{hero.Name}}
-            </a>
-            <a class="deleteBtn" (click)="deleteHero()">X</a>
+            </div>
+            <a class="deleteBtn" (click)="deleteHero(hero.id)">X</a>
         </div>
     </div>
 
