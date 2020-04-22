@@ -1,0 +1,16 @@
+Angular Form 
+- เราใช้ angular form เพื่อการ register,login,submit request เป็นต้น
+- จะ handle 
+    -> Data Biding
+    -> Change tracking 
+    -> Validation
+    -> Error Message
+    -> Form submit
+-> มี form 2 แบบ
+    -> Template Driven Forms (จะจัดการที่ html)
+    -> Reactive Forms (จะจัดการที่ class)
+
+Template Driven Forms (TDF)
+- ใช้ Two Way Binding (ngModel)
+- สามารถ keep track statement กับ validation
+- เหมาะกับการจัดการข้อมูลที่ไม่ได้ซับซ้อน
