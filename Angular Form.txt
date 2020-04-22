@@ -62,4 +62,7 @@ step Template Driven Form
 Note : attribute name หรือ id เอาไว้ ref ตัว element ใน Html (ถ้าเราใช้ ngModel binding แล้วไม่จำเป็นต้องใช้ name หรือ id ก็ได้) -> ในตัวอย่างเราใช้ name เพื่อให้ ngForm ref ถึง
     -> id -> ใช้ ref ถึง element บน html เพื่อให้มัน uniqe (access ผ่าน DOM)
     -> name -> ใช้ ref ถึง element เหมือนกันแต่เป็นในเชิงการส่ง data จาก client ไป server (จะเกี่ยวกับพวก form submit,Http GET POST)
-    
+        -> ex. ใน radio button เราใช้ id ให้แต่ละ option ตัวเลือก แต่เราใช้ name binding เป็นตัวเดียวกันหมดเพื่อเป็นตัวเก็บค่าที่ได้จากตัวเลือก radio button ที่จะ submit ใน form 
+    -> template reference variable กับ id ต่างกัน?
+        -> template ref ใช้ ref ถึง value ของ input ?
+        -> id ใช้ ref จัดการเกี่ยวกับ style ?
