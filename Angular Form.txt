@@ -51,12 +51,15 @@ Note :
 step Template Driven Form
 - สร้าง form Html 
 - binding ngForm ให้กับ template ref ของ tag form
-- binding form-control ใช้ template ref แล้ว ref ถึง ngModel + biding attribute name 
+- binding form-control ใช้ template ref แล้ว ref ถึง ngModel + biding ngModel(กับ property หรือ object)
     -> ngModel เป็นการ bindig data ระหว่าง class กับ html
-    -> name เป็นการ binding data สำหรับการส่งระหว่าง client กับ server
 - ใส่ required ให้กับ tag input ที่เราจะ validate
 - ใช้ Class Binding && Style Binding มาช่วยแต่ง css ให้มัน
     -> เช็คกับ template ref ที่เราอ้างถึง ngModel เพื่อใช้  property 
         - touched,untouch
         - dirty,pristine
         - valid,invalid
+Note : attribute name หรือ id เอาไว้ ref ตัว element ใน Html (ถ้าเราใช้ ngModel binding แล้วไม่จำเป็นต้องใช้ name หรือ id ก็ได้) -> ในตัวอย่างเราใช้ name เพื่อให้ ngForm ref ถึง
+    -> id -> ใช้ ref ถึง element บน html เพื่อให้มัน uniqe (access ผ่าน DOM)
+    -> name -> ใช้ ref ถึง element เหมือนกันแต่เป็นในเชิงการส่ง data จาก client ไป server (จะเกี่ยวกับพวก form submit,Http GET POST)
+    
