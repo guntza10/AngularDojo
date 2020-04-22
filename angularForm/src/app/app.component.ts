@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { User } from 'src/models/User';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'angularForm';
+  title = 'Angular Form';
+  topics = ['Angular', 'React', 'VueJs'];
+
+  userModel = new User('Gun', 'guntza22@hotmail.com', '08451675125', 'angular', 'morning', true);
 }

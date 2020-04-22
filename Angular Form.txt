@@ -10,7 +10,47 @@ Angular Form
     -> Template Driven Forms (จะจัดการที่ html)
     -> Reactive Forms (จะจัดการที่ class)
 
+*** กลับมาดู part 5 ใหม่ ngModelGroup
+
+Note : 
+    -> ทุก input ที่ต้องการ submit data ควรใส่ไว้ใน tag form
+    -> ต้องมี button เป็น type submit เพื่อ submit data ทั้งหมดที่อยู่ใน form นี้
+    -> import { FormsModule } from '@angular/forms' -> inject ใส่ Imports
+    -> ปกติ form ทั่วไปที่ใช้ จะใช้ attribute name ในการ Binding แต่ใน angular จะใช้ร่วมกับ ngModel
+
 Template Driven Forms (TDF)
 - ใช้ Two Way Binding (ngModel)
 - สามารถ keep track statement กับ validation
 - เหมาะกับการจัดการข้อมูลที่ไม่ได้ซับซ้อน
+-> ทุกครั้งที่เราใช้ tag form angular จะใช้ ng-directive ให้กับ form เพื่อทำให้ form สามารถ Handle ของข้างบนได้
+    -> โดยการใช้ template ref var กับ form แล้วใส่ ngForm เข้าไป
+    -> แล้วใช้ attribute name กับ ngModel ในการ binding
+        -> input type : text -> ได้ค่ามาเป็น string
+        -> input type : select -> ได้ค่ามาเป็น string
+        -> input type : radio-button -> ได้ค่ามาเป็น string
+        -> input type : check-box -> ได้ค่ามาเป็น boolean
+-> จัดการบน html (สำคัญ)
+
+Tracking state and validity (ดูตัวอย่างที่ app.component.ts)
+class (state ของ ngForm) -> บอกเป็น state
+ - ng-touched,ng-untouched
+    -> เมื่อมีการ click หรือ tap ที่ form control แล้วแตะออกจาก form control หรืออะไรก็แล้วแต่ที่ไปกดที่ form (ng-untouch -> ng-touch)
+ - ng-dirty, ng-pristine
+    -> เมื่อ form control มีการเปลี่ยนค่า (ng-pristine -> ng-dirty)
+ - ng-valid,ng-invalid (ต้องมี attribute required ด้วยเพื่อดัก valid ,invalid) 
+    -> เมื่อ form-control ไม่มีการกรอก (ng-valid -> ng-invalid)
+property(สำหรับ ngModel) -> return เป็น boolean
+- touched,untouch
+- dirty,pristine
+- valid,invalid
+Note : 
+ ** -> อย่าลืมใส่ required 
+    ->ถ้าจะโชว์ valid , invalid ใน view แบบเร็ว ง่ายก็ใช้ bootstrap (แต่ต้องเป็น class form-control) -> .is-invalid,.is-valid
+step
+- ใช้ template ref แล้ว ref ถึง ngModel
+- ใส่ required ให้กับ tag input ที่เราจะ validate
+- ใช้ Class Binding && Style Binding มาช่วยแต่ง css ให้มัน
+    -> เช็คกับ template ref ที่เราอ้างถึง ngModel เพื่อใช้  property 
+        - touched,untouch
+        - dirty,pristine
+        - valid,invalid
