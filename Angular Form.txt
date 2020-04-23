@@ -40,10 +40,14 @@ class (state ของ ngForm) -> บอกเป็น state
     -> เมื่อ form control มีการเปลี่ยนค่า (ng-pristine -> ng-dirty)
  - ng-valid,ng-invalid (**ต้องมี attribute required ด้วยเพื่อดัก valid ,invalid) 
     -> เมื่อ form-control ไม่มีการกรอก (ng-valid -> ng-invalid)
+    -> invalid หมายถึงไม่มีการกรอก input หรือ input ที่กรอกเข้ามาไม่ถูกตาม pattern ที่เรา set ให้ input
+    Note : สามารถ set valid,invalid ให้กับ pattern input ได้ โดยใช้ attribute pattern แล้วใช้ regular expression
+
 property(สำหรับ ngModel) -> return เป็น boolean
-- touched,untouch
+- touched,untouched
 - dirty,pristine
-- valid,invalid
+- valid,invalid 
+- errors
 Note : 
  ** -> อย่าลืมใส่ required 
     -> ถ้าจะโชว์ valid , invalid ใน view แบบเร็ว ง่ายก็ใช้ bootstrap (แต่ต้องเป็น class form-control) -> .is-invalid,.is-valid
@@ -54,11 +58,18 @@ step Template Driven Form
 - binding form-control ใช้ template ref แล้ว ref ถึง ngModel + biding ngModel(กับ property หรือ object)
     -> ngModel เป็นการ bindig data ระหว่าง class กับ html
 - ใส่ required ให้กับ tag input ที่เราจะ validate
-- ใช้ Class Binding && Style Binding มาช่วยแต่ง css ให้มัน
+- ใช้ Class Binding && Style Binding มาช่วยแต่ง css ให้มัน (จัดการการโชว์ error)
     -> เช็คกับ template ref ที่เราอ้างถึง ngModel เพื่อใช้  property 
         - touched,untouch
         - dirty,pristine
         - valid,invalid
+    -> ใช้ <small> ในการแสดง error แล้วใช้ class ,style binding แต่ง css อ้างถึง template ref ngModel
+        -> ใช้ class text-danger ของ bootstrap แทนเลยง่ายๆ
+    -> สามารถทำ multi show error ได้
+        -> ใช้ property ของ ngModel errors
+            -> errors สามารถดักได้หลายอย่างทั้ง
+                -> ดัก error pattern validate ของ input
+                -> ดัก error required validate ของ input
 Note : attribute name หรือ id เอาไว้ ref ตัว element ใน Html (ถ้าเราใช้ ngModel binding แล้วไม่จำเป็นต้องใช้ name หรือ id ก็ได้) -> ในตัวอย่างเราใช้ name เพื่อให้ ngForm ref ถึง
     -> id -> ใช้ ref ถึง element บน html เพื่อให้มัน uniqe (access ผ่าน DOM)
     -> name -> ใช้ ref ถึง element เหมือนกันแต่เป็นในเชิงการส่ง data จาก client ไป server (จะเกี่ยวกับพวก form submit,Http GET POST)
@@ -66,3 +77,10 @@ Note : attribute name หรือ id เอาไว้ ref ตัว element �
     -> template reference variable กับ id ต่างกัน
         -> template ref ใช้ binding data ของ element
         -> id ใช้ ref จัดการเกี่ยวกับ style css
+
+select validate
+-> binding input select ให้เรียบร้อย
+-> ใช้ attribute (blur) กับ (change) 
+    -> blur คือการ ติ้กเข้าแล้วติ้กออก
+    -> change คือเมื่อมีการเปลี่ยนค่าของ select
+-> สร้าง flag กับ method มาจัดการ
