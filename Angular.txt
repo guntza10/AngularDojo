@@ -476,3 +476,58 @@ Ex.
     let name = 'gun';
     let result = 'welcome ' + name; -> let result = `welcome ${name}` 
 - ถ้าใช้ค่า null มา check ใน condition มันจะ return false
+
+Summary
+1. Route and Navigation
+- set route ทั้งหมดรวมถึง component ใน app-routing.mudule
+- ใช้ module Router,ActivatedRoute inject ใน component class ที่จะใช้
+    -> Router => ใช้ navigate หรือส่ง data ไปที่ component อื่น 
+    -> ActivatedRoute => เป็นตัวเอาไว้ get data หรือ get state ของ current component 
+
+Type of Route
+-> Wildcard Route
+    -เป็นการ config path (**) เมื่อ url path ที่เข้ามาไม่ map กับ path ไหนเลย -> เอาไว้จัดการเวลาไม่มี path นี้ที่เรา config
+    Ex. {path '**',component : pageNotFoundComponent}
+-> Redirect Route
+    -เป็นการกำหนดว่าถ้าเข้ามาที่นี่จะ redirect ไปที่ path ไหน ปกติเราจะ set ให้ default path พร้อมกับใช้ pathMatch
+     Ex. {path '', redirectTo : 'Home',pathMatch:'full'}
+-> Route Parameters 
+    -เป็นการส่ง parameter เข้ามาใน path
+     Ex. {path 'detail/:id', component : DetailComponent}
+-> Child Route
+    -เป็นการ set path ให้กับ child component ที่เราต้องการให้มันมา show บน parent component (path url มันจะซ้อนเข้าไปเรื่อยๆ)
+    -ใช้กับ <router-outlet> เพื่อเป็นการ navigate ซ้อนเข้าไปใน child เพื่อไปดึง view ของ child ออกมา show ที่ parent
+
+Type of Navigation
+หมายเหตุ : ใช้ module Router(router),module ActivatedRoute(route)
+-> navigate with attribute routerLink
+    -เป็นการ navigate เข้าไปที่ paht ตรงๆ ผ่านhtml
+-> navigate with absolute path
+    -เป็นการเข้าถึง path ตรงๆ ผ่าน class
+    -this.router.navigate(['path']) => ใช้ module Router
+-> navigate with relative path
+    -เป็นการเข้าถึง path โดยอ้างอิงจาก current path 
+    -this.router.navigate([array ของ parameter],{redirectTo : this.route})
+-> navigate with Route parameter 
+    -เป็นการ navigate พร้อมทั้งส่งค่า param ไปที่ component อื่น โดยจะต้อง set config route ที่ app-routing.module
+    -this.router.navigate(['path',routeParam]) -> absolute path **
+    -this.router.navigate([routeParam],{relativeTo : this.route}) -> relative path **
+-> navigate with optional route parameter
+    -เป็นการ navigate ที่ส่ง property หรือ value อะไรก็ได้ไปที่ component อื่นโดยไม่ต้อง set config route ที่ app-routing.module
+    -this.router.navigate(['path',{ชื่อproperty : param value}]) -> absolute path
+    -this.router.navigate([{ชื่อproperty : param value}],{relativeTo : this.route}) -> relative path   
+Note : ถ้าต้องการส่งแค่ param ตัวเดียวก็ใช้ Route Parameter แต่ถ้าส่ง param หลายตัว หรือส่งเป็น list,object ใช้ optional route parameter
+    (เพราะ route parameter มันต้อง set config ที่ app-routing.component โดยต้อง set path ถ้าเป็น param หลายตัวมันจะจัดการ Path ยุ่งยาง 
+    หรือถ้าเป็น List หรือ object มัน set config path ไม่ได้ ทำให้ต้องใช้ optional route parameter จะจัดการได้ดีกว่า)
+
+Type of receive param (ใช้ module ActivatedRoute(route)) -> ใช้สำหรับรับค่า param จาก component อื่น
+-> snapshot
+    -this.route.snapshot.paramMap.get('param');
+    -การใช้ snapshot มันจะ get state ของ route เมื่อ initialize เท่านั้น (ถ้ามีการเข้ามา component นี้ซ้ำ มันไม่ได้ Initilize ใหม่ มัน reuse component เดิม)
+-> paramMap observable
+    -this.route.paramMap.subscribe((params: ParamMap)=> {
+        params.get('param');
+    });
+    -ใช้อันนี้แทน snapshot จะตอบโจทย์กว่า
+    -ใช้เมื่อมันกลับมา component เดิมซ้ำ
+
