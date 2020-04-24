@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angularForm": {
+    "reactiveForm": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/angularForm",
+            "outputPath": "dist/reactiveForm",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -62,18 +62,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "angularForm:build"
+            "browserTarget": "reactiveForm:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "angularForm:build:production"
+              "browserTarget": "reactiveForm:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "angularForm:build"
+            "browserTarget": "reactiveForm:build"
           }
         },
         "test": {
@@ -110,15 +110,15 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "angularForm:serve"
+            "devServerTarget": "reactiveForm:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "angularForm:serve:production"
+              "devServerTarget": "reactiveForm:serve:production"
             }
           }
         }
       }
     }},
-  "defaultProject": "angularForm"
+  "defaultProject": "reactiveForm"
 }

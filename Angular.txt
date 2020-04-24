@@ -111,6 +111,7 @@ Ng-Directive (ดูตัวอย่างที่ ng-directive.component)
 ->NgIf (if เงื่อนไข ซ่อน แสดง Html element) => syntax *ngIf
     ->If else สามารถใช้ ng-template(template reference var) เข้ามาช่วย 
         -> เป็น container สำหรับ element อื่นที่มาใช้ร่วมกับ ng-if directive
+    Note: ใน *ngIf ถ้าค่า property ที่มาใช้เป็น condition เป็น null จะถือว่าเป็น false
 -NgSwitch (switch statement สำหรับ multiple value) => syntax [ngSwitch] กับ *ngSwitchCase
 -NgFor => syntax  *ngFor="let i of list" note: list คือ array ที่เราจะเอามา for-loop
     -> สามารถอ้างอิง Index ของ array ได้ ด้วย index as i (i หรือ ชื่ออะไรก็ได้)

@@ -18,7 +18,7 @@ Note :
     -> import { FormsModule } from '@angular/forms' -> inject ใส่ Imports
 
 
-Template Driven Forms (TDF) 
+1.Template Driven Forms (TDF) 
 - ใช้ Two Way Binding (ngModel)
 - สามารถ keep track statement กับ validation
 - เหมาะกับการจัดการข้อมูลที่ไม่ได้ซับซ้อน
@@ -30,7 +30,10 @@ Template Driven Forms (TDF)
         -> input type : select -> ได้ค่ามาเป็น string
         -> input type : radio-button -> ได้ค่ามาเป็น string
         -> input type : check-box -> ได้ค่ามาเป็น boolean
+    -> ทำให้ check validate ngModel ทั้งหมดที่อยู่ใน ngForm ได้
 -> จัดการที่ html
+Note : 
+    -> ngForm คือ form ของ angular ที่จะทำให้เรา Handle data ใน form ได้
 
 Tracking state and validity (ดูตัวอย่างที่ app.component.ts)
 class (state ของ ngForm) -> บอกเป็น state
@@ -42,7 +45,7 @@ class (state ของ ngForm) -> บอกเป็น state
     -> เมื่อ form-control ไม่มีการกรอก (ng-valid -> ng-invalid)
     -> invalid หมายถึงไม่มีการกรอก input หรือ input ที่กรอกเข้ามาไม่ถูกตาม pattern ที่เรา set ให้ input
     Note : สามารถ set valid,invalid ให้กับ pattern input ได้ โดยใช้ attribute pattern แล้วใช้ regular expression
-
+Note : check จาก ngModel ที่อยู่ใน ngForm
 property(สำหรับ ngModel) -> return เป็น boolean
 - touched,untouched
 - dirty,pristine
@@ -77,10 +80,42 @@ Note : attribute name หรือ id เอาไว้ ref ตัว element �
     -> template reference variable กับ id ต่างกัน
         -> template ref ใช้ binding data ของ element
         -> id ใช้ ref จัดการเกี่ยวกับ style css
+- จัดการส่ง data ด้วยการ submit form
+    -> post data to server
+    -> receive response
+    -> handle error
 
 select validate
 -> binding input select ให้เรียบร้อย
 -> ใช้ attribute (blur) กับ (change) 
     -> blur คือการ ติ้กเข้าแล้วติ้กออก
     -> change คือเมื่อมีการเปลี่ยนค่าของ select
--> สร้าง flag กับ method มาจัดการ
+-> สร้าง flag กับ method มาจัดการ check กับตัว template ref ที่ ref ถึง ngModel
+-> ใช้ flag มา check แทน property ngModel
+
+ngForm form Property
+- เอาไว้ check validate ของทั้ง form
+- เอาไว้ set ค่า disable enable ปุ่ม submit ได้
+Note : ngForm จะมี property form ที่มี property control ที่มี filed ทั้งหมดของ form ที่เป็น type formControl (สามารถ get state ต่างๆได้ไปลอง log ดู)
+
+submit form data
+- ใช้ attribute novalidate ให้ form (ใน Html5)
+    -> novalidate => ใช้เพื่อบอก browser ว่าไม่ต้อง validate input เมื่อกด submit 
+    Note : ปกติ browser มันจะ validate form ให้ auto อยู่แล้วเมื่อ กด submit(โชว์ message validate ใน browser บางเวอร์ชั่น)
+        การที่เราใช้ attribute novalidation มันเป็นการปิด validation ของ browser เมื่อกด submit
+        เพื่อที่จะมาใช้ custom validate ของเราเอง
+- binding event submit (ngSubmit) ให้ form
+    -> ส่ง ngForm ผ่าน template ref ไปที่ event submit เพื่อนำ data ไปใช้ต่อ
+    -> ngForm ที่ส่งเข้าไปสามารถใช้ property ต่างๆได้ ex. value,พวก state
+- ใช้ service มาช่วยในการส่ง data ไปที่ server
+
+Error Hadling
+-> ทำเหมือน handler error angular service
+
+
+2.Reactive Form
+- จัดการที่ class
+- ไม่ใช้ two way binding
+- เหมาะกับจัดการ data ที่ซับซ้อน
+
+step
