@@ -118,4 +118,24 @@ Error Hadling
 - ไม่ใช้ two way binding
 - เหมาะกับจัดการ data ที่ซับซ้อน
 
+FormControl 
+-> คือ filed data ใน form 1 ตัว
+-> formControl = new FormControl(''); กำหนดค่าให้ field form ('' => เป็น default ไม่มีค่า)
+FormGroup
+-> คือ group ของ FormControl
+-> formGroup = new FormGroup(
+    formcon1 : new FormControl(''),
+    formcon2 : new FormControl('')
+);
+
 step
+- สร้าง form html
+- สร้าง form model (ใช้ formGroup กับ formControl)
+    -> import { ReactiveFormsModule } from '@angular/forms';
+    -> inject ใส่ imports ใน app.module
+    -> binding formGroup,formControl ใน html 
+        -[formGroup]="ชื่อ formGroup" -> binding ให้ form
+        -formControlName="ชื่อ formControl" -> binding ให้ input
+- จัดการ form control value (ด้วย FormBuilder)
+- ใช้ FormBuilder service (ในการสร้าง form model)
+- จัดการ validate
