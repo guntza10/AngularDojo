@@ -156,12 +156,13 @@ step
         })
     });
     Note :
-        userName : ['gunt',Validators.required] ตัวแรกใน array เป็น default value,ตัวที่ 2 เป็นเงื่อนไข validate
+        userName : ['gunt',Validators.required] ตัวแรกใน array เป็น default value,ตัวที่ 2 เป็นเงื่อนไข validate(สามารถใส่ validation ได้มากกว่า 1 ตัว ทำเป็น validaiton array)
 - จัดการ validate (จัดการที่ class แทนที่ view)
     -> import { Validators } from '@angular/forms'; 
     -> สร้างเงื่อนไขที่จะ validation form ให้กับ formControl แต่ละตัว
         -> สามารถจัดการเงื่อนไข validation ได้มากกว่า 1 
-            ex. passWord: ['', [Validators.required,Validators.minLength(5)]]
+            ex. passWord: ['', [Validators.required,Validators.minLength(5)]] -> เงื่อนไข validate มากกว่า 1
+            ex. passWord: ['', Validators.required] -> เงื่อนไข validation อันเดียว
         -> ดูตัวอย่างที่ app.component.html (ตอน binding check  property error ของ form)
     -> จัดการ show validation กับ error message
         -> class binding css ด้วยการ check property ของ reactive form
@@ -173,3 +174,5 @@ step
             }
     -> custom validation (good practice) -> (ดูตัวอย่างที่ user-name-validator.ts)
         - สร้างไฟล์ที่จัดการเกี่ยวกับ validation 
+        - สร้าง function ที่จัดการแล้ว export ออกไปใช้ที่ component class ที่อยากใช้ custom validation
+        - จัดการโชว์ errorMessage
