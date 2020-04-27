@@ -174,5 +174,18 @@ step
             }
     -> custom validation (good practice) -> (ดูตัวอย่างที่ user-name-validator.ts)
         - สร้างไฟล์ที่จัดการเกี่ยวกับ validation 
-        - สร้าง function ที่จัดการแล้ว export ออกไปใช้ที่ component class ที่อยากใช้ custom validation
+        - สร้าง function ที่จัดการแล้ว export ออกไปใช้ที่ component class ที่อยากใช้ custom validation (validator function)
+            -> รับ parameter แค่ 1 ตัว เป็น formControl (จัดการ check validate form control แค่ form control เดียว)
+        - ตอน set validate เอาไปใส่ใน validation array ของ form control ที่เราจะ set
         - จัดการโชว์ errorMessage
+
+Cross Field Validation (ดูตัวอย่างที่ password-validator.ts)
+- ใช้ตอนที่ต้องการจะ compare value ของ formControl ที่อยู่ใน form Group เดียวกัน (จัดการ check validate form control มากกว่า 1 ตัว)
+- ทำเหมือน custom validation
+    -> ต่างกันตรงที่ parameter ไม่ได้รับมาเป็น form control เดี่ยวๆ แต่รับมาเป็น formGroup (มัน ref formGroup แทนจากที่เป็น formControl)
+    -> ไม่ได้ set ที่ validation array ของ form control
+        -> set ให้ formGroup แทน (set ให้เป็น argument ตัวที่ 2)
+        -> set validator function สำหรับ cross field ให้ property validators ใน argument ตัวที่ 2 
+- จัดการโชว์ errorMessage
+Note :  การจัดการกับการโชว์ errorMessage ของ validator function ควรจัดการที่ function ที่เดียวจะดีกว่าไปจัดการที่ Html เพราะว่ามันง่ายต่อการ manage และ maintain code
+    เนื่องจากเราจัดการ code แค่ที่เดียวแล้วไปใช้ต่อที่อื่นได้อีก ทำให้จัดการ code ได้ง่าย (clean code + readable)

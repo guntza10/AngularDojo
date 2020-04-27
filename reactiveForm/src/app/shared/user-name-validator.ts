@@ -7,7 +7,7 @@ export function forbiddenNameValidatorHardCode(control: AbstractControl): { [key
     const forbidden = /admin/.test(control.value); // เป็นการ check ว่า value containe string admin มั้ย (เป็นการใช้ regx check)
     // flag เป็น true (containe admin เป็น true) -> จะ return object value -> inValid
     // flag เป็น false (ไม่ได้ containe admin เป็น false) -> จะ return null -> valid
-    return forbidden ? { 'forbiddenName': { value: control.value } } : null; // ขื่อ 'forbiddenName' เป็นชื่อของ custom validator 
+    return forbidden ? { 'forbiddenName': { value: control.value } } : null; // custom validator ที่มี property forbiddenName ที่มี value เป็นค่าของ control.value
 }
 
 // custom validator ผ่าน parameter (good practice ควรทำแบบนี้)

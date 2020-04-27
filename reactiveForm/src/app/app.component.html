@@ -3,10 +3,12 @@
     <h2>{{title}}</h2>
     <!-- display form group -->
     {{registrationForm.value | json}}
+
     <!-- สร้าง form html -->
     <form [formGroup]="registrationForm">
         <div class="form-group">
             <label>Username</label>
+
             <!-- binding class css get reactive form property -->
             <input [class.is-invalid]="registrationForm.get('userName').invalid && registrationForm.get('userName').touched" type="text" class="form-control" formControlName="userName">
             <div *ngIf="registrationForm.get('userName').invalid && registrationForm.get('userName').touched">
@@ -18,7 +20,7 @@
 
         <div class="form-group">
             <label>Password</label>
-            <input [class.is-invalid]=" passWord().invalid &&  passWord().touched" type="text" class="form-control" formControlName="passWord">
+            <input [class.is-invalid]=" passWord().invalid &&  passWord().touched" type="password" class="form-control" formControlName="passWord">
             <!-- multi error reactive form -->
             <div *ngIf=" passWord().invalid &&  passWord().touched">
                 <small *ngIf=" passWord().errors?.required" class="text-danger">passWord is required!</small>
@@ -29,8 +31,11 @@
 
         <div class="form-group">
             <label>Confirm Password</label>
-            <input type="password" class="form-control" formControlName="confirmPassword">
+            <!-- binding cross field validation -->
+            <input [class.is-invalid]="registrationForm.errors?.notMatch" type="password" class="form-control" formControlName="confirmPassword">
+            <small *ngIf="registrationForm.errors?.notMatch" class="text-danger">Confirm Password is not Match!</small>
         </div>
+
         <!-- formGroup ซ้อนอยู่ใน formGroup (nested form group) -->
         <div formGroupName="address">
             <div class="form-group">

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { forbiddenNameValidatorHardCode, forbiddenNameValidator } from './shared/user-name-validator';
+import { passwordValidator } from './shared/password-validator';
 
 @Component({
   selector: 'app-root',
@@ -36,6 +37,9 @@ export class AppComponent {
       State: [''],
       PostalCode: ['']
     })
+  }, {
+    // set for cross field validation
+    validators : passwordValidator
   });
 
   // จัดการ form control value 
