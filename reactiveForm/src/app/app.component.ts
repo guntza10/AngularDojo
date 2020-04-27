@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { forbiddenNameValidatorHardCode, forbiddenNameValidator } from './shared/user-name-validator';
 
 @Component({
   selector: 'app-root',
@@ -26,7 +27,8 @@ export class AppComponent {
 
   // ใช้ FormBuilder service
   registrationForm = this.fb.group({
-    userName: ['', Validators.required],
+    // userName: ['', [Validators.required, forbiddenNameValidatorHardCode]], // hard code
+    userName: ['', [Validators.required, forbiddenNameValidator(/admin/)]], // ส่ง Parameter ในรูปแบบ RegX
     passWord: ['', [Validators.required, Validators.minLength(5)]],
     confirmPassword: [''],
     address: this.fb.group({
