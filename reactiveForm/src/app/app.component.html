@@ -1,26 +1,56 @@
 <div class="container-fluid">
 
   <h2>{{title}}</h2>
+  <!-- display form group -->
+  {{registrationForm.value | json}}
   <!-- สร้าง form html -->
   <form [formGroup]="registrationForm">
     <div class="form-group">
       <label>Username</label>
-      <input type="text" class="form-control" formControlName="userName">
+      <!-- binding class css get reactive form property -->
+      <input [class.is-invalid]="registrationForm.get('userName').invalid && registrationForm.get('userName').touched"
+        type="text" class="form-control" formControlName="userName">
+      <small *ngIf="registrationForm.get('userName').invalid && registrationForm.get('userName').touched"
+        class="text-danger">userName is required!</small>
     </div>
 
     <div class="form-group">
       <label>Password</label>
-      <input type="password" class="form-control" formControlName="passWord">
+      <input [class.is-invalid]=" passWord().invalid &&  passWord().touched" type="text" class="form-control"
+        formControlName="passWord">
+      <!-- multi error reactive form -->
+      <div *ngIf=" passWord().invalid &&  passWord().touched">
+        <small *ngIf=" passWord().errors?.required" class="text-danger">passWord is required!</small>
+        <small *ngIf=" passWord().errors?.minlength" class="text-danger">passWord is must be at least 5 characters
+          !</small>
+      </div>
     </div>
 
     <div class="form-group">
       <label>Confirm Password</label>
       <input type="password" class="form-control" formControlName="confirmPassword">
     </div>
+    <!-- formGroup ซ้อนอยู่ใน formGroup (nested form group) -->
+    <div formGroupName="address">
+      <div class="form-group">
+        <label>City</label>
+        <input type="text" class="form-control" formControlName="City">
+      </div>
+
+      <div class="form-group">
+        <label>State</label>
+        <input type="text" class="form-control" formControlName="State">
+      </div>
+
+      <div class="form-group">
+        <label>Postal Code</label>
+        <input type="text" class="form-control" formControlName="PostalCode">
+      </div>
+    </div>
 
     <button class="btn btn-primary" type="submit">Register</button>
+    <button class="btn btn-secondary ml-2" type="button" (click)="loadApiData()">Load Api Data</button>
 
   </form>
-  <!-- display form group -->
-  {{registrationForm.value | json}}
+
 </div>

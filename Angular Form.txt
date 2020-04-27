@@ -123,19 +123,53 @@ FormControl
 -> formControl = new FormControl(''); กำหนดค่าให้ field form ('' => เป็น default ไม่มีค่า)
 FormGroup
 -> คือ group ของ FormControl
--> formGroup = new FormGroup(
+-> formGroup = new FormGroup({
     formcon1 : new FormControl(''),
     formcon2 : new FormControl('')
-);
+    });
 
 step
 - สร้าง form html
 - สร้าง form model (ใช้ formGroup กับ formControl)
     -> import { ReactiveFormsModule } from '@angular/forms';
     -> inject ใส่ imports ใน app.module
+    -> สร้าง Model form ของ reactive form ด้วย formGroup,formControl
     -> binding formGroup,formControl ใน html 
         -[formGroup]="ชื่อ formGroup" -> binding ให้ form
         -formControlName="ชื่อ formControl" -> binding ให้ input
-- จัดการ form control value (ด้วย FormBuilder)
-- ใช้ FormBuilder service (ในการสร้าง form model)
-- จัดการ validate
+    Note : สามารถเอา formGroup ยัดใส่ใน formgroup ได้ แล้ว binding ด้วย attribute formGroupName (nested form group)
+- จัดการ form control value 
+    -> set value ให้ form -> ใช้ form.setValue(object value ที่ต้องการ set ที่ model ต้อง Match กับ Model ของ form) -> วิธีนี้ต้อง set value ให้ครบทุก field
+    -> set patch คือ set ให้แค่บาง field -> ใช้ form.patchValue(object ของ field ที่เราต้องการ set)
+- สามารถใช้ FormBuilder service (ในการสร้าง form model)
+    -> ช่วยให้เวลาสร้าง formGroup , formControl จัดการง่าย code ไม่เยอะยุ่งยาก
+    -> import { FormBuilder } from '@angular/forms'; 
+    -> inject มาใช้ใน constructor
+    -> this.fb.group({ -> formGroup 
+        userName: ['Akuma'],    -> formControl 
+        passWord: [''],         -> formControl
+        confirmPassword: [''],  -> formControl
+        address: this.fb.group({ -> formGroup
+            City: [''],            -> formControl
+            State: [''],           -> formControl
+            PostalCode: ['']       -> formControl
+        })
+    });
+    Note :
+        userName : ['gunt',Validators.required] ตัวแรกใน array เป็น default value,ตัวที่ 2 เป็นเงื่อนไข validate
+- จัดการ validate (จัดการที่ class แทนที่ view)
+    -> import { Validators } from '@angular/forms'; 
+    -> สร้างเงื่อนไขที่จะ validation form ให้กับ formControl แต่ละตัว
+        -> สามารถจัดการเงื่อนไข validation ได้มากกว่า 1 
+            ex. passWord: ['', [Validators.required,Validators.minLength(5)]]
+        -> ดูตัวอย่างที่ app.component.html (ตอน binding check  property error ของ form)
+    -> จัดการ show validation กับ error message
+        -> class binding css ด้วยการ check property ของ reactive form
+            - reactiveForm.get('ชื่อ filed').property -> ex. registrationForm.get('userName').invalid
+            - สามารถทำเป็น Method เพื่อ get field ได้ (ทำให้ code ดู clean)
+            ex.
+            passWord() {
+                return this.registrationForm.get('passWord');
+            }
+    -> custom validation (good practice) -> (ดูตัวอย่างที่ user-name-validator.ts)
+        - สร้างไฟล์ที่จัดการเกี่ยวกับ validation 
