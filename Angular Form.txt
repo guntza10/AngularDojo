@@ -143,6 +143,9 @@ step
     -> set patch คือ set ให้แค่บาง field -> ใช้ form.patchValue(object ของ field ที่เราต้องการ set)
 - สามารถใช้ FormBuilder service (ในการสร้าง form model)
     -> ช่วยให้เวลาสร้าง formGroup , formControl จัดการง่าย code ไม่เยอะยุ่งยาก
+        -> formGroup -> this.fb.group({})
+        -> formControl -> this.fb.control('')
+        -> formArray -> this.fb.array([])
     -> import { FormBuilder } from '@angular/forms'; 
     -> inject มาใช้ใน constructor
     -> this.fb.group({ -> formGroup 
@@ -189,3 +192,20 @@ Cross Field Validation (ดูตัวอย่างที่ password-validat
 - จัดการโชว์ errorMessage
 Note :  การจัดการกับการโชว์ errorMessage ของ validator function ควรจัดการที่ function ที่เดียวจะดีกว่าไปจัดการที่ Html เพราะว่ามันง่ายต่อการ manage และ maintain code
     เนื่องจากเราจัดการ code แค่ที่เดียวแล้วไปใช้ต่อที่อื่นได้อีก ทำให้จัดการ code ได้ง่าย (clean code + readable)
+
+Conditional Validation
+- เป็น validation ที่จัดการกับเงื่อนไข validate ที่มันเฉพาะ
+    ex. ถ้าไม่ตื้ก check box email field จะไม่ required แต่ถ้าติ้กจะ required
+
+Dynamic Form Control (form array มาช่วยจัดการ dynamic form control)
+step
+    -> import {FormArray} from '@angular/forms'; 
+    -> define form array ใน form model
+        => ใน form array จะ contain form control
+    -> define getter ที่ เข้าถึง form array เพื่อให้ html เข้าถึงได้ง่าย(ควรใส่ type assert ว่าเป็น FormArray ให้มันด้วย)
+    -> สร้าง method ที่เอาไว้ add dynamic form control เข้าไปใน form array
+    -> สร้าง button ที่ call method ข้างบน
+    -> เอา form array มา show บน html
+        -> binding form array => formArrayName="alternativeEmail"
+        -> alternativeEmail.controls คือการ get array form control ของ form array 
+        -> binding form control ใน form array ด้วย index ของ form control => [formControlName]="i"
