@@ -209,3 +209,8 @@ step
         -> binding form array => formArrayName="alternativeEmail"
         -> alternativeEmail.controls คือการ get array form control ของ form array 
         -> binding form control ใน form array ด้วย index ของ form control => [formControlName]="i"
+
+Submitting Form Data
+-> คือการ post form data ไปที่ server
+-> binding event (ngSubmit) ให้กับ form
+-> ใช้ service ในการติดต่อกับ server 

@@ -5,20 +5,17 @@
     {{registrationForm.value | json}}
 
     <!-- สร้าง form html -->
-    <form [formGroup]="registrationForm">
+    <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
             <label>Username</label>
 
             <!-- binding class css get reactive form property -->
-            <input
-                [class.is-invalid]="registrationForm.get('userName').invalid && registrationForm.get('userName').touched"
-                type="text" class="form-control" formControlName="userName">
+            <input [class.is-invalid]="registrationForm.get('userName').invalid && registrationForm.get('userName').touched" type="text" class="form-control" formControlName="userName">
             <div *ngIf="registrationForm.get('userName').invalid && registrationForm.get('userName').touched">
                 <small *ngIf="registrationForm.get('userName').errors?.required" class="text-danger">userName is
                     required!</small>
                 <!-- binding custom validation (property forbiddenName เป็น ชื่อ custom validator ที่เราสร้าง)-->
-                <small *ngIf="registrationForm.get('userName').errors?.forbiddenName"
-                    class="text-danger">{{registrationForm.get('userName').errors?.forbiddenName.value}} userName not
+                <small *ngIf="registrationForm.get('userName').errors?.forbiddenName" class="text-danger">{{registrationForm.get('userName').errors?.forbiddenName.value}} userName not
                     allowed!</small>
             </div>
         </div>
@@ -27,8 +24,7 @@
             <label>Email</label>
             <button type="button" class="btn btn-secondary btn-sm m-2" (click)="addAlteranativeEmail()">Add
                 Email</button>
-            <input [class.is-invalid]="email.invalid && email.touched" type="text" class="form-control"
-                formControlName="email">
+            <input [class.is-invalid]="email.invalid && email.touched" type="text" class="form-control" formControlName="email">
             <small *ngIf="email.invalid && email.touched" class="text-danger">Email is required!</small>
             <!-- show form array => alternativeEmail.controls คือการ get array form control ของ form array -->
             <!-- binding form array -->
@@ -44,8 +40,7 @@
 
         <div class="form-group">
             <label>Password</label>
-            <input [class.is-invalid]="passWord().invalid &&  passWord().touched" type="password" class="form-control"
-                formControlName="passWord">
+            <input [class.is-invalid]="passWord().invalid &&  passWord().touched" type="password" class="form-control" formControlName="passWord">
             <!-- multi error reactive form -->
             <div *ngIf="passWord().invalid && passWord().touched">
                 <small *ngIf="passWord().errors?.required" class="text-danger">passWord is required!</small>
@@ -58,8 +53,7 @@
         <div class="form-group">
             <label>Confirm Password</label>
             <!-- binding cross field validation -->
-            <input [class.is-invalid]="registrationForm.errors?.notMatch" type="password" class="form-control"
-                formControlName="confirmPassword">
+            <input [class.is-invalid]="registrationForm.errors?.notMatch" type="password" class="form-control" formControlName="confirmPassword">
             <small *ngIf="registrationForm.errors?.notMatch" class="text-danger">Confirm Password is not Match!</small>
         </div>
 
@@ -81,7 +75,7 @@
             </div>
         </div>
 
-        <button class="btn btn-primary" type="submit">Register</button>
+        <button [disabled]="!registrationForm.valid" class="btn btn-primary" type="submit">Register</button>
         <button class="btn btn-secondary ml-2" type="button" (click)="loadApiData()">Load Api Data</button>
 
     </form>

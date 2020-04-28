@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { forbiddenNameValidatorHardCode, forbiddenNameValidator } from './shared/user-name-validator';
 import { passwordValidator } from './shared/password-validator';
+import { RegistrationService } from './registration.service';
 
 @Component({
   selector: 'app-root',
@@ -39,7 +40,7 @@ export class AppComponent implements OnInit {
   }
 
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private _registrationService: RegistrationService) { }
 
   ngOnInit(): void {
     // ใช้ FormBuilder service
@@ -110,4 +111,17 @@ export class AppComponent implements OnInit {
   get email() {
     return this.registrationForm.get('email');
   }
+
+  // submit form data
+  onSubmit() {
+    console.log(this.registrationForm.value);
+    this._registrationService.register(this.registrationForm.value)
+      .subscribe(res => {
+        console.log(`res : ${res}`);
+        console.log('Success');
+      }, error => {
+        console.error(`Error! : ${error}`);
+      });
+  }
+
 }

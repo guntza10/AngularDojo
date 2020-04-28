@@ -7,6 +7,10 @@ var port = process.env.PORT || 3000;
 app.use(bodyParser.json());
 app.use(cors());
 
+app.get('/', function(req, res) {
+    res.send('<h1>Hello Node.js</h1>');
+});
+
 app.post('/enroll', (req, res) => {
     var json = req.body;
     console.log(json);
@@ -14,14 +18,11 @@ app.post('/enroll', (req, res) => {
     // res.status(401).send({ "message": "Data received" });
 });
 
-app.listen(port, function () {
+app.listen(port, function() {
     console.log('Starting node.js on port ' + port);
 });
 
 
-// app.get('/', function (req, res) {
-//     res.send('<h1>Hello Node.js</h1>');
-// });
 
 // app.get('/index', function (req, res) {
 //     res.send('<h1>This is index page</h1>');
