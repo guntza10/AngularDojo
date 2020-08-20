@@ -164,4 +164,46 @@
 >   - สามารถ check ว่า index เป็น even ได้ด้วย `even as e` (e หรือ ชื่ออะไรก็ได้) 
 
 ## Component Interaction
+>  จะเกี่ยวกับการรับ-ส่ง data ระหว่าง Parent component กับ Child component \
+> `Note :` Parent component สามารถมี Child component ที่ทำงานอิสระต่อกัน
+
+> ### `1. รับ-ส่ง data ระหว่าง parent กับ child`
+> - `ส่ง data จาก parent ไป child` \
+>   - สร้าง property ที่จะส่ง แล้วทำ property binding ให้กับ selector ของ child component เช่น `[parentData]="propertyที่จะส่ง"` ใน property binding จะเป็น attribute ที่ child ใช้อ้างอิง data ที่ถูกส่งมาจาก parent (ตั้งชื่อ attribute อะไรก็ได้ไม่จำเป็นต้อง parentData)
+> ![componentInteraction1](PictureAngular/ng24.png)
+>   - ใช้ decorator input (`@input`) ที่ child ให้กับ property ที่เราจะเอาไว้รับค่าที่ส่งมาจาก parent โดยอ้างอิงจากชื่อ attribute ที่ทำ property binding จาก parent
+> ![componentInteraction1](PictureAngular/ng25.png)
+> - `ส่ง data จาก child กลับไปให้ parent` \
+>   - สร้าง event ในการส่ง data จาก child กลับไป parent (`EventEmitter`) ที่ child (define type ได้ เช่น new EventEmitter< string >() เป็นต้น)
+>   - ใช้ decorator output (`@output`) ที่ child ให้กับ event ที่เราสร้าง
+> ![componentInteraction2](PictureAngular/ng26.png)
+>   - สร้าง event binding (childEvent) ที่ parent component ให้กับ selector ของ child component + สร้าง property ที่รับค่าจาก event ที่ได้จาก child \
+>` หมายเหตุ :` ชื่อ Event ที่เอามาทำ event binding ไม่จำเป็นต้องชื่อ childEvent ขึ้นอยู่กับว่าเราสร้าง output event ที่ child หรืออ้างอิงมาชื่ออะไร `เช่นดังรูป`
+> ![componentInteraction3](PictureAngular/ng27.png)
+> ![componentInteraction4](PictureAngular/ng28.png)
+> ![componentInteraction5](PictureAngular/ng29.png)
+>` หมายเหตุ :` `message` คือ property ที่เอาไว้รับค่าจาก child ผ่าน event function `getDataFromChild` ที่เราทำ event binding และค่าที่รับจาก child จะเป็น `$event` (`event value`)
 >
+> `*** module ที่ต้องใช้` => import { EventEmitter } from '@angular/core';
+
+> ### `2. ViewChild Decorator`
+> โดยปกติเรารับ-ส่ง data ระหว่าง parent กับ child แบบ `one by one` โดยใช้ decorator `@input` , `@output` เข้ามาช่วย \
+> "แต่ถ้าเราอยากเข้าถึง property,method ทั้งหมดที่ Public ใน child เราจะใช้ `@ViewChild` decorator ในการเข้าถึง data ทั้งหมดของ child" \
+> `Note :` เราใช้ `@ViewChild` เข้าถึงเพื่อแก้ไข-เปลี่ยนแปลง data ของ child จาก parent เช่น _`การทำพวก modal`_ เป็นต้น \
+> `Note :` เราสามารถใช้ template ref อ้างถึงตัว child component ได้เหมือนกัน (`ไม่ต้องไปสนใจ แต่รู้ไว้พอ`)
+> ![componentInteraction6](PictureAngular/ng30.png)
+> - `@ViewChild`('testViewChild', { `static: false` }) testViewChild: NgDirectiveComponent; `=>` ใช้ template ref
+> - `@ViewChild`(NgDirectiveComponent, { `static: false` }) testViewChild: NgDirectiveComponent; `=>` ใช้ child ref \
+>
+> `Note :` ใน Angular เวอร์ชั่นใหม่เราต้องใส่ option static (`true,false`)
+> - `false` => เราจะใช้ view child ใน ngOnInit ไม่ได้ (`มันใช้ตอนที่ไม่ต้อง initialize เสร็จ แต่ไปใช้ใน ngOnInit ที่ต้องรอ initilize เสร็จก่อน ทำให้ใช้ใน ngOnInit ไม่ได้`)
+> - `true` => เราจะใช้ view child ใน ngOnInit ได้ (`ใช้ได้เมื่อมัน initialize เสร็จ อาจช้าเพราะต้องรอให้มันโหลดเสร็จก่อน`)
+
+> ### `3. Component Interaction Using Service (Advance ไม่รู้ว่าจะเอาไปใช้กับงานรูปแบบไหน)`
+> `Note :` ไปดูวิธีการทำในโน้ต Angular.txt
+
+## Pipes
+> ใช้แปลง data เป็นรูปแบบต่างๆ ก่อนจะเอาไปแสดงที่ view จะไม่เปลี่ยแปลงค่าของ property ของ class \
+> `Note :` ดูตัวอย่างที่ pipes.component.html
+
+## Service
