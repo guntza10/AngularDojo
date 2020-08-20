@@ -122,7 +122,7 @@ export class BindingComponent implements OnInit {
     return "Hello " + this.name;
   }
 
-  onClick(event) {
+  onClick(event:Event) {
     // console.log("Welcome gunt");
     console.log(event.type);
     this.showEvent = "Welcome gunt by event handle";

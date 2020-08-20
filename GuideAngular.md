@@ -45,3 +45,123 @@
 > ### `5.Service`
 > คือ class ที่มี `@Injectable` decorator ประกาศบอกไว้ ที่เอาไว้จัดการเกี่ยวกับการ share data , call api , เชื่อมต่อกับ database หรือ server \
 > `Note : ` `@Injectable` decorator เป็นตัวบอกว่า class นี้เป็น service และสามารถใช้ dependency injection ได้ โดยใน `@Injectable` จะมี Metadata providedIn: "root" เป็นการบอกว่าเป็น provide ในตัวเอง สามารถเรียกใช้ service นี้ได้เลย โดยไม่ต้องไป inject ใส่ใน providers ของ root module แล้ว
+
+## Binding Data
+
+>### `Interpolation`
+> คือ การ binding data จาก `component class` (.ts) สู่ `component template` (.html) 
+>
+> `syntax => {{ }}`
+>
+> `Note : ` interpolation มีข้อจำกัดคือไม่สามารถใช้กับ attribute ที่เป็น boolean ได้
+
+>### `Property Binding`
+> คือ การ binding data ให้กับ attribute ที่เป็น boolean (`ใช้ binding กับ attribute ได้หมดไม่จำเป็นต้องเป็น boolean`)
+>
+> `syntax => [attribute] or bind-ชื่อของ attribute`
+
+> ### `Class Binding`
+> คือ การ binding ให้กับ class css ว่าจะใช้หรือไม่ใช้ ใช้ `Property binding` 
+>
+> ![classBinding1](PictureAngular/ng4.png)
+>
+> ![classBinding2](PictureAngular/ng5.png)
+> 
+> `หมายเหตุ : โดยที่ IsTextProperty เป็น boolean มีค่าเป็น true , false`
+>
+> `Note : ` สามารถใช้ attribute ngClass ในการทำ Class binding เพื่อ set ค่าแบบ Object ได้
+>
+> ![ngClass1](PictureAngular/ng6.png)
+>
+> ![ngClass2](PictureAngular/ng7.png)
+>
+> ![ngClass3](PictureAngular/ng8.png)
+>
+> `หมายเหตุ : โดยที่ IsTextProperty , IsTextStyle เป็น boolean มีค่าเป็น true , false`
+
+> ### `Style Binding`
+> คือ การ binding style css property ใช้ `Property binding` รับค่าเป็น string value `("''") or ('""')`
+>
+> ![styleBinding1](PictureAngular/ng9.png)
+>
+> `Note : ` สามารถใช้ attribute ngStyle ในการทำ Style binding เพื่อ set ค่าแบบ Object ได้
+>
+> ![ngStyle1](PictureAngular/ng10.png)
+>
+> ![ngStyle2](PictureAngular/ng11.png)
+>
+> `หมายเหตุ : ชื่อ propery css ถ้ามี - สามารถเขียนได้ 2 แบบ`
+> - camelCase => `fontStyle`
+> - " " or ' ' => `"font-style"` or `'font-style'`
+
+> ### `Event Binding`
+> คือ การ binding data จาก `component template` สู่ `component class`
+>
+> `syntax => (ชื่อevent)="function ที่เอาไว้ handle event"`
+>
+> ![eventBinding1](PictureAngular/ng12.png)
+>
+> ![eventBinding2](PictureAngular/ng13.png)
+> หมายเหตุ : เราสามารถดักจับ event ได้ด้วยการส่ง `$event` (parameter event handle)
+>
+> ![eventBinding3](PictureAngular/ng14.png)
+> หมายเหตุ : เราสามารถใช้ template statement แทน funtion handle event ได้ (`set property ผ่าน event binding ได้เลย`)
+
+> ### `Template Reference Variables`
+> คือ การ binding ที่อ้างอิง template element นั้น โดยที่เราสามารถเข้าถึง property ต่างๆของ template element นั้นๆ ได้เลย เรานิยมใช้ template ref กับ 
+> - ng directive => ใช้อ้างอิง template element กับ ng directive ต่างๆ
+> ![templateRef1](PictureAngular/ng15.png)
+> - component interactive => ใช้กับ component interactive ระหว่าง parent component กับ child component เป็นต้น
+> ![templateRef2](PictureAngular/ng16.png)
+> - input 
+> ![templateRef3](PictureAngular/ng17.png)
+>
+> `syntax -> #ชื่อ or ref-ชื่อ`
+
+>### `Two Way Binding`
+> คือ การ binding data ให้กับ property 2 ทางคือ
+> - data(component template) เปลี่ยน ทำให้ data(component class) เปลี่ยนด้วย
+> - data(component class) เปลี่ยน ทำให้ data(component template) เปลี่ยนด้วย
+>
+> `syntax -> ใช้ attribute [(ngModel)]`\
+>=> [ ] property binding = data from class to template \
+>=> ( ) event binding = data from template to class \
+>=> จะรับค่าจาก template มาที่ class ผ่าน event binding แล้วอัพเดทค่าจาก class สู่ template ด้วย property binding
+>
+> `หมายเหตุ : เราสามารถทำ split two way binding เพื่อ handle การส่ง data จาก parent มา child ได้ advance มากขึ้น`
+
+> ### `Getters-Setters`
+> เราสามารถใช้ gettter-setter ในการจัดการค่าให้กับ property หรือ handle อะไรซักอย่าง หรือ ใช้แบบ Advance ในการส่ง data จาก Parent มา Child ได้ เช่น
+>
+> ![getter_setter](PictureAngular/ng18.png)
+>
+> ![getter_setter](PictureAngular/ng19.png)
+
+## Ng-Directive
+
+> ### `*nfIf`
+> เป็นคำสั่ง if-else condition ที่ใช้กับ component template\
+> `Note :` สามารถใช้ ng-template + template ref เข้ามาช่วยได้ แล้วก็ใน *ngIf ถ้า property ที่มาใช้เป็น condition เป็น null จะถือว่าเป็น false
+>
+> ![ngIf1](PictureAngular/ng20.png)
+>
+> ![ngIf1](PictureAngular/ng21.png)
+
+> ### `[ngSwitch] กับ *ngSwitchCase`
+> เป็นคำสั่ง switch case ที่ใช้กับ component template
+>
+> ![ngSwitch1](PictureAngular/ng22.png)
+
+> ### `*ngFor`
+> เป็นคำสั่ง for-loop ที่ใช้กับ component template
+>
+> ![ngFor](PictureAngular/ng23.png)
+> `หมายเหตุ :`
+>    - สามารถอ้างอิง Index ของ array ได้ ด้วย `index as i` (i หรือ ชื่ออะไรก็ได้) 
+>    - สามารถ check ว่าเป็น first element ได้ด้วย `first as f` (f หรือ ชื่ออะไรก็ได้) 
+>    - สามารถ check ว่าเป็น last element ได้ด้วย `last as l` (l หรือ ชื่ออะไรก็ได้) 
+>    - สามารถ check ว่า index เป็น odd ได้ด้วย `odd as o` (o หรือ ชื่ออะไรก็ได้) 
+>   - สามารถ check ว่า index เป็น even ได้ด้วย `even as e` (e หรือ ชื่ออะไรก็ได้) 
+
+## Component Interaction
+>
