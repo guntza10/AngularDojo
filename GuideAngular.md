@@ -44,7 +44,7 @@
 
 > ### `5.Service`
 > คือ class ที่มี `@Injectable` decorator ประกาศบอกไว้ ที่เอาไว้จัดการเกี่ยวกับการ share data , call api , เชื่อมต่อกับ database หรือ server \
-> `Note : ` `@Injectable` decorator เป็นตัวบอกว่า class นี้เป็น service และสามารถใช้ dependency injection ได้ โดยใน `@Injectable` จะมี Metadata providedIn: "root" เป็นการบอกว่าเป็น provide ในตัวเอง สามารถเรียกใช้ service นี้ได้เลย โดยไม่ต้องไป inject ใส่ใน providers ของ root module แล้ว
+> `Note : ` `@Injectable` decorator เป็นตัวบอกว่า class นี้เป็น service และสามารถใช้ dependency injection ได้ โดยใน `@Injectable` จะมี Metadata providedIn: "root" เป็นการบอกว่าเป็น provide ในตัวเอง สามารถเรียกใช้ service นี้ได้เลย โดยไม่ต้องไป inject ใส่ใน providers ของ root module แล้ว (`ใน version เก่า ทุกครั้งที่สร้าง service จะต้อง inject ไว้ใน providers ของ root module เพื่อให้ทั้ง App รู้จักและสามารถเรียกใช้ได้`)
 
 ## Binding Data
 
@@ -200,6 +200,7 @@
 > - `true` => เราจะใช้ view child ใน ngOnInit ได้ (`ใช้ได้เมื่อมัน initialize เสร็จ อาจช้าเพราะต้องรอให้มันโหลดเสร็จก่อน`)
 
 > ### `3. Component Interaction Using Service (Advance ไม่รู้ว่าจะเอาไปใช้กับงานรูปแบบไหน)`
+> คือ การส่ง data จาก parent ไปที่ service (share data ไว้ที่ service) แล้วให้ child ที่ต้องการ data ไป subscribe data มาใช้ \
 > `Note :` ไปดูวิธีการทำในโน้ต Angular.txt
 
 ## Pipes
@@ -207,3 +208,43 @@
 > `Note :` ดูตัวอย่างที่ pipes.component.html
 
 ## Service
+> เราสร้าง service เอาไว้จัดการ data ไม่ว่าจะเป็นการ share data , การเชื่อมต่อกับ database หรือ api , การจัดการข้อมูล ควรเอามาทำที่ service (`component class ควรจัดการแค่ logic ที่ควบคุม view`) 
+>
+> `step การทำ service` (เมื่อมีการเชื่อมต่อกับ database หรือ call api)
+> -  import { HttpClientModule } from '@angular/common/http'; ใน app.module.ts เพื่อใช้ `module ที่จัดการเกี่ยวกับ Http` ของ `angular`
+> - inject HttpClientModule ไว้ที่ imports ของ app.module.ts
+> - import { HttpClient } from "@angular/common/http"; ใน service ที่ต้องการใช้ HttpClient
+> - dependency injection HttpClient มาใช้ใน service 
+> - dependency injection service ไปที่ component class ที่ต้องการใช้ \
+> `Note: ` ถ้า dependency injection service มาใช้แล้ว สามารถใช้ได้กับตัว component class เองแล้วก็รวมถึง child ของมันด้วย
+
+> ### `Http and Observables`
+> เราดึง data จาก server ผ่าน service ด้วย Http request (`ส่ง Http request ไปที่ web api หรือ web service เพื่อไปดึง data จาก database แล้วส่ง Http response กลับมา`) 
+>
+> `หมายเหตุ :` Observable คือ Http response ที่ได้กลับมา
+>
+> `Step` การทำงานของ `Http,Observable` ใน `Angular`
+> - `service` ส่ง `Http request` ไปที่ web api or web server เพื่อไปดึง data จาก database
+> - database ส่ง `Observable` (Http response) กลับมา แปลง `Observable` ที่ได้ให้เป็นโมเดล data ที่เราต้องการนำมาใช้ใน Angular App (`cast observable ให้เป็นโมเดล data`)
+> - subscribe ตัว `Observable` ที่ถูก cast ไปใช้ต่อที่ component ที่เราต้องการใช้แสดงข้อมูล จะได้เป็น data กลับมา (`subscribe ตัว Observable ที่ถูก cast ให้เป็นก้อน data`)
+> - สร้าง `local property` ที่ `component class` เพื่อเก็บ data ที่ได้จากการ subscribe
+>
+> `Note : ` RxJs (`Reactive Extensions for Javascript`) เป็น library ที่จัดการเกี่ยวกับ Observable ใน angular (เป็น external library ที่ทำงานด้วย observable)
+
+> ### `Fetch Data Using HTTP`
+> - import HttpClientModule และ inject ใน imports ของ app.module (`เพื่อใช้ module ที่จัดการเกี่ยวกับ Http ของ angular`)
+> - สร้าง `service`
+> - dependency injection `HttpClient` ที่ service ที่เราจะใช้
+> - สร้าง model ของ data
+> - สร้าง url ที่จะใช้ยิง request 
+> - สร้าง Method ที่ส่ง Http request และรับ Http response กลับมา return observable
+> - dependency injection service ไปใช้ที่ component ที่ต้องการ
+> - subscribe ตัว Observable ที่ได้จาก Method ของ service จะได้ data กลับมา
+> - เอา data ที่ได้มาเก็บที่ local property ของ component เพื่อเอาไปใช้ binding ต่อ
+
+> ### `HTTP Error Handling`
+>  ใช้ catchError ผ่าน pipe ในการ handle exception error
+>
+> `Note : ` รายละเอียดเพิ่มเติมไปดูได้ที่ Angular.txt
+
+## Routing and Navigation
