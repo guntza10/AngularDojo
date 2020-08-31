@@ -19,8 +19,8 @@ export class DashboardComponent implements OnInit {
     this.listHero = this._heroicHeroesService.getAllTopHeroes();
   }
 
-  goToHeroDetail(id: string) {
-    this.router.navigate(['heroDetail', id], { relativeTo: this.route });
+  goToHeroDetail(page: string) {
+    this.router.navigate(['heroDetail', page], { relativeTo: this.route });
   }
 
 }

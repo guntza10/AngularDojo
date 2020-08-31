@@ -40,7 +40,11 @@
 > - `templateUrl` => เอาไว้อ้างอิงไฟล์ html \
 > `Note :` สามารถใช้ template ที่เอาไว้อ้างอิงถึง html ได้โดยตรง โดยเขียน html ลงไปใน metadata template ได้เลย
 > - `styleUrls` => เอาไว้อ้างอิงไฟล์ css \
-> `Note :` สามารถใช้ styles ที่เอาไว้อ้างอิงถึง css ได้โดยตรง โดยเขียน css ลงไปใน metadata styles ได้เลย
+> `Note :` สามารถใช้ styles ที่เอาไว้อ้างอิงถึง css ได้โดยตรง โดยเขียน css ลงไปใน metadata styles ได้เลย \
+> `Note :` การสร้าง component จะมี option
+>   - -it => inline template -> จะไม่มี html มาให้
+>   - -is => inline style -> จะไม่มี css  
+>   - --skipTests=true -> ถ้าเป็น true จะไม่สร้าง ไฟล์ .spec       
 
 > ### `5.Service`
 > คือ class ที่มี `@Injectable` decorator ประกาศบอกไว้ ที่เอาไว้จัดการเกี่ยวกับการ share data , call api , เชื่อมต่อกับ database หรือ server \
@@ -248,3 +252,104 @@
 > `Note : ` รายละเอียดเพิ่มเติมไปดูได้ที่ Angular.txt
 
 ## Routing and Navigation
+
+> ### `Routing` 
+> การกำหนด routing เพื่อให้ App สามารถ navigate ระหว่าง component ได้ \
+> `Note :` ใน Angular App จะมี `app-routing.module.ts` ใช้กำหนด routing 
+>
+> ![routing1](PictureAngular/ng31.png)
+> โดยจะแบ่งเป็น 2 ส่วน
+> - `const routes` => จะเป็นที่เอาไว้สำหรับกำหนด route (routes ที่โดนสร้างจะถูกส่งมาที่ `RouterModule.forRoot(routes)` แล้ว export RouterModule ไปใช้)
+> - `const routingComponent`=> เป็นที่เอาไว้เก็บ component ทั้งหมดที่เราต้องการให้มีการ navigate
+> `หมายเหตุ :` โดยปกติทุกครั้งที่เราสร้าง component มันจะ import แบบอัตโนมัติไปไว้ใน `app.module.ts` แต่ best practice ที่ควรทำคือเอามาเก็บไว้ที่ `const routingComponent` ที่เราสร้างไว้ใน `app-routing.module.ts` เพื่อที่จะจัดการทุกอย่างที่เกี่ยวกับ route ไว้ที่เดียวกัน
+>
+> `1. simple route`
+>
+> ![routing2](PictureAngular/ng32.png) \
+> จะมีการระบุ path กับ component ที่ต้องการ Navigate ไป
+>
+> `2. Route Parameters`
+>
+> ![routing3](PictureAngular/ng33.png) \
+> จะมีการระบุ path พร้อมกับ parameter กับ component ที่ต้องการ Navigate ไป
+>
+> `3. Child Routes`
+>
+> ![routing4](PictureAngular/ng34.png) \
+> จะมีการระบุ path กับ component ของตัว parent component และมีการระบุ path,component ของ child component (`การทำ child routes เพื่อต้องการเอา child component มาแปะบน parent component โดยที่ไม่เปลี่ยนหน้ายังอยู่และแสดงผลบน parent component`) \
+> `Note :` router-outlet เป็น tag ที่เอาไว้นำ child component มา render แสดงที่ parent component โดยที่ไม่เปลี่ยนหน้า
+> `Note :` ในการทำ child routes จำเป็นต้องใช้ router-outlet เพื่อให้ child component สามารถถูก render แสดง บน parent component ได้
+>
+> `4. Redirecting Routes`
+>
+> ![routing5](PictureAngular/ng35.png) \
+> เป็นการกำหนด default route เมื่อเข้า app มาครั้งแรก 
+> - `path : ' '` => เข้ามาด้วย path default เมื่อเปิด app มา
+> - `redirectTo: 'dashboard'` => ให้ redirect ไป path ไหน
+> - `pathMatch: 'full'` => เป็น property ที่กำหนดวิธีการ map path url ว่าจะ map url แบบไหน
+>   - full -> จะ redirect ไปได้ต้องเข้ามาด้วย path url แบบเต็มๆ
+>   - prefix -> ไม่ว่าจะเข้ามาด้วย path url แบบไหน ถ้าใน path url นั้นมี path url prefix อยู่ก็จะ redirect ไปได้หมด \
+> ![routing6](PictureAngular/ng36.png) 
+>
+> `5. Wildcard Route`
+>
+>  เป็นการกำหนด route เมื่อไม่เจอ map path ที่เรากำหนด (`เป็นการ set เพื่อทำหน้าพวก 404 Not Found`)
+>
+> ![routing7](PictureAngular/ng37.png) 
+>
+> `Note :` route มันทำจากบนลงล่าง เลยต้องกำหนด wildcard route ไว้ล่างสุด เพื่อให้มัน หา route path ทั้งหมดไม่เจอก่อน
+>
+> `Note :` path ที่กำหนดไม่ต้องใส่ / แต่ redirectTo จะใส่ / หรือไม่ใส่ก็ได้
+>
+> `Note :`  path ' ' (empty path) กำหนด pathMatch เป็น prefix ไม่ได้ จะทำให้เข้า path ไหนก็จะเข้ามาที่ path ' ' เสมอ เนื่องจาก path ' ' เป็น prefix path ของทุก path
+
+> ### `Navigation` 
+> `1. routerLink`
+>
+>  เป็นการ navigate ที่ใช้ที่ component template (`เป็นการ redirect ไปที่ path โดยตรง`)
+>
+> ![navigation1](PictureAngular/ng38.png) 
+>
+> `Note :` routerLinkActive เป็นการกำหนด css ให้กับ `routerLink` เมื่อมีการ navigate
+>
+> `2. การใช้ Router ในการ navigate `
+>
+>  `Note :` import {Router} from '@angular/router'; (`dependency injection ให้กับ component ที่เราจะใช้`)
+> 
+> ![navigation2](PictureAngular/ng39.png)
+> 
+> การ navigate มี 4 แบบ
+> - `Simple Navigation` => this.router.navigate(['ชื่อpath']) [`เป็นการ navigate ธรรมดา`]
+> - `Route parameter Navigation` => this.router.navigate(['ชื่อpath',parameter ที่ต้องการส่งไป]) [`เป็นการ navigate ที่มีการส่ง parameter ไปด้วยโดยจะ map กับ route ที่ config ไว้`]
+> - `Optional Route Parameters Navigation` => this.router.navigate(['ชื่อpath',{ชื่อ property: ค่าที่เราต้องการส่งกลับ}]) [`เป็นการ navigate ที่มีการส่ง property ไปให้อีก component`]
+> - `Relative Navigation` => [`เป็นการ navigate ที่ทำให้มันจัดการกับการ route และ navigate ได้ flexible ไม่ฟิกตายตัวเหมือนการทำ absolute path`] 
+>   - this.router.navigate(['ชื่อpath'], { relativeTo: `this.route` });
+>   - this.router.navigate(['ชื่อpath', parameter ที่ต้องการส่งไป], { relativeTo: `this.route` });
+>   - this.router.navigate(['ชื่อpath', {ชื่อ property: ค่าที่เราต้องการส่งกลับ}], { relativeTo: `this.route` }); \
+>   `Note :` path `'../'` กับ  `'./'` เอาไว้ใช้กับ relative path
+>       - `'../'` => เป็น path ที่กลับขึ้นไปที่ path ก่อนหน้า 1 ชั้น 
+>       - `'./'`  => เป็น current path
+>
+>`Note :` `this.route` มาจาก dependency injection `private route: ActivatedRoute` \
+>  ได้จาก import { ActivatedRoute } from '@angular/router';
+>
+>`Note :` relativeTo: `this.route` มีความหมายว่าให้อ้างอิงไปที่ path url ของ current route(ActivatedRoute) หรือก็คือ current path url นั่นแหละ
+>
+> `3. การใช้ ActivatedRoute ในการรับค่าจากการ navigate `
+> 
+> `Note : ` import { ActivatedRoute } from '@angular/router';
+>
+> `Note : ` import { ParamMap } from '@angular/router';
+>
+> ทำได้ 2 แบบ คือ
+> - `snapshot` => คือการ get state ของ router ในตอนนั้น(เมื่อ initialize)เพื่อที่จะใช้ paramMap.get('param') ต่อได้ 
+>
+>   ![navigation3](PictureAngular/ng40.png)
+>
+> - `ParamMap Observable` => ถ้าเรา navigate กลับมาที่ component เดิม snapshot ไม่เวิร์ค (`มันจะทำแค่ตอนที่ initialize`) เพราะว่ามัน Initialize แค่ครั้งแรกที่ถูกสร้าง ถ้าเรา navigate กลับมาที่ component เดิมมันไม่ได้ initialize ใหม่ แต่แค่ reused component เดิม เราจึงแก้ไขโดยใช้ paramMap (`ถ้าเรา navigate แล้วส่งค่ากลับมาที่ component เดิม ใช้ paramMap`)
+>
+>   ![navigation4](PictureAngular/ng41.png)
+>
+> `Note : ` `this.route` มาจาก ActivatedRoute ที่ได้จาก dependency injection สามารถเอา dot ใช้ snapshot หรือ ใช้ ParamMap Observable ต่อได้เลย
+
+## Angular LifeCycle hooks
