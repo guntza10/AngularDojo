@@ -353,3 +353,36 @@
 > `Note : ` `this.route` มาจาก ActivatedRoute ที่ได้จาก dependency injection สามารถเอา dot ใช้ snapshot หรือ ใช้ ParamMap Observable ต่อได้เลย
 
 ## Angular LifeCycle hooks
+> constructor() => จะถูกเรียกใช้เป็นตัวแรกเมื่อ component ถูกสร้างขึ้นมา (เป็นการสร้างค่าเริ่มต้นให้ component) 
+>
+> เราสามารถแบ่ง lifecycle ได้เป็น 2 กลุ่ม
+> - Parent Component 
+>      - `ngOnChanges()` -> จะถูกเรียกเมื่อ input , output ที่ binding มีการเปลี่ยนแปลง (เอาไว้ดักค่า current,previous value ของ input,output)
+>      - `ngOnInit()` -> จะถูกเรียกเมื่อ component ถูกสร้างเสร็จ(initialize component เสร็จ) -> จะถูกเรียกแค่ครั้งเดียว ไม่ถูกเรียกซ้ำจนกว่าจะมีการ initialize ครั้งใหม่
+>      - `ngDoCheck()` -> จะถูกเรียกทุกครั้งเมื่อเรา focus ที่ element นั้นๆ แล้ว check ว่ามีการเปลี่ยนแปลงมั้ย (เอาไว้ดักการเปลี่ยนแปลงของ property object)
+>      - `ngOnDestroy()` -> จะถูกเรียกใช้ก่อนที่ component จะถูกทำลาย (ใช้ตอนที่ unsubscribe ของ observable,event เพื่อไม่ให้ memory leak) \
+> `Note :` memory leak ก็คือเกิดการใช้ ram เรื่อยๆ แบบสิ้นเปลืองไม่เกิดไม่ประโยชน์ทำให้ performance ช้า
+>
+> - Child Component
+>   - `ngAfterContentInit()` -> จะถูกเรียกในการสร้าง view/content ครั้งแรก
+>   - `ngAfterContentChecked()` -> จะถูกเรียกเพื่อ check การเปลี่ยนแปลงต่างๆของ child
+>   - `ngAfterViewInit()` -> จะถูกเรียกเมื่อ child ถูกสร้างเสร็จ (initialize child component เสร็จ)
+>   - `ngAfterViewChecked()` -> จะถูกเรียกเมื่อ property ที่ binding มีการเปลี่ยนแปลง (ใน child) \
+> `Note :` group Child Component จะถูกเรียกหลัง ngDoCheck ทำเสร็จเสมอ  \
+> `Note :` Angular LifeCycle hooks เรียงลำดับตามที่เรียงมาข้างต้น
+>
+> `1. ngOnChanges`
+> - เอาไว้ดัก property ที่ค่าเปลี่ยน(เหมาะกับดัก input หลายๆตัว ที่สามารถ Keep track เรื่อง previouseValue,currentValue)
+> - จะรับ parameter เป็น type SimpleChanges (changes: SimpleChanges) เป็น object ที่มี property ดังนี้
+>    - previousValue เป็นค่าก่อนหน้าที่จะเปลี่ยน
+>    - currentValue เป็นค่าปัจจุบัน
+>    - firstChange เป็นสถานะ true,false ว่าเป็นการเปลี่ยนครั้งแรกใช่มั้ย?
+> - สามารถ get ค่า property ของ object SimpleChanges ได้ด้วย changes['ชื่อ property ของเราที่มีการเปลี่ยนแปลง']
+>
+> `Note :` getters-setters เหมาะกับจัดการ input แค่ตัวเดียว แต่ถ้ามี property หลายตัวที่เราอยากดักการเปลี่ยนแปลงให้ใช้ ngOnChanges (`มันจะประหยัดเรื่องบรรทัดไม่ต้องเขียนเยอะ`) \
+> `Note :` import,implement OnChanges -> import {  OnChanges } from '@angular/core';
+>
+> `2. ngOnInit`
+> - จะถูกเรียกเมื่อ component ถูกสร้างเสร็จ(initialize component เสร็จ)
+>
+> `3. ngDoCheck()`

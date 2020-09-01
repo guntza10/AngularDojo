@@ -402,7 +402,7 @@ New Feature in Angular 6
 - ใช้ ivy render engine ในการ render ที่มีความเร็ว และ ลดขนาด size ของ app
 
 ์Angular LifeCycle hooks
-- constructor() => จะถูกเรียกใช้เป็นตัวแรกเมื่อ component ถูกสร้างขึ้ันมา (เป็นการสร้างค่าเริ่มต้นให้ class)
+- constructor() => จะถูกเรียกใช้เป็นตัวแรกเมื่อ component ถูกสร้างขึ้นมา (เป็นการสร้างค่าเริ่มต้นให้ class)
 - เราสามารถแบ่ง lifecycle ได้เป็น 2 กลุ่ม
    -> group 1 Component (parent) 
         -ngOnChanges() -> จะถูกเรียกเมื่อ input , output ที่ binding มีการเปลี่ยนแปลง (เอาไว้ดักค่า current,previous value ของ input,output)
