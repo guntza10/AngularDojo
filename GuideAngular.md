@@ -386,10 +386,49 @@
 > - จะถูกเรียกเมื่อ component ถูกสร้างเสร็จ(initialize component เสร็จ)
 >
 > `3. ngDoCheck()`
-> - จะถูกเรียกเมื่อ input , output เป็น Object ที่มีการเปลี่ยนแปลงค่า property ภายใน Object ใน ngOnChanges ไม่สามารถ detect ได้เพราะมันไม่สามารถ access เข้าถึง obj ref ได้ 
+> - จะถูกเรียกเมื่อ input , output เป็น Object ที่มีการเปลี่ยนแปลงค่า property ภายใน Object ใน ngOnChanges ไม่สามารถ detect ได้เพราะมันไม่สามารถ access เข้าถึง obj ref ได้ ซึ่ง `ngDoCheck()` สามารถ detect ได้
 >
 > ![angularLifeCycle1](PictureAngular/ng42.png)
 > `Note : `ถ้าเป็นการเปลี่ยนค่าที่เป็น obj ref ngOnChanges ไม่สามารถ detect ได้ แต่ถ้าเป็นการ instance ค่าให้ใหม่แทนการเข้าถึง ref แบบนี้ ngOnChanges จะ detect ได้ \
 > `Note : ` import,implement DoCheck - > import {  DoCheck } from '@angular/core';
 >
-> `ngAfterContentInit`
+> `4. ngAfterContentInit`
+> - จะถูกเรียกในการสร้าง view/content ครั้งแรก (ทำแค่ครั้งแรกที่ child ถูกสร้าง)
+> - ใช้สำหรับ set value ที่เราไม่อยากให้มันเปลี่ยนแปลงอีก
+> - จะถูกเรียกหลังทำ ngDoCheck และทำแค่ครั้งเดียวเท่านั้น จนกว่าจะ refresh ทั้ง page มันถึงจะถูกเรียกอีกครั้ง
+>
+> `5. ngAfterContentChecked`
+> - จะเรียกหลัง ngDoCheck และถูกเรียกพร้อม ngAfterViewChecked เสมอ
+> - จะถูกเรียกเพื่อ check การเปลี่ยนแปลงต่างๆของ child
+>
+> `6. ngAfterViewInit`
+> - จะถูกเรียกเมื่อ child ถูกสร้างเสร็จ (initialize child component เสร็จ)
+> - ทำแค่ครั้งเดียวเท่านั้น จนกว่าจะ refresh ทั้ง page มันถึงจะถูกเรียกอีกครั้ง
+>
+> `7. ngAfterViewChecked`
+> - จะถูกเรียกเมื่อ property ที่ binding มีการเปลี่ยนแปลง (ใน child)
+> - จะถูกเรียกหลัง ngAfterContentChecked เสมอ
+>
+> `8. ngOnDestroy`
+> - เมื่อ component ถูกทำลาย เช่น ตอนซ่อนแสดง component (ถือเป็นการ destroy)
+> - จะถูกเรียกใช้ก่อนที่ component จะถูกทำลาย (ใช้ตอนที่ unsubscribe ของ observable,event เพื่อไม่ให้ memory leak)
+> 
+> `Note : ` life cycle ของ parent มันจะ execute ก่อนของ child เราควรจะจัดการทุกอย่างใน life cycle ของ parent เป็นอันดับแรก
+
+## Trick Typescript
+> - string interpolation expression 
+>
+>  ![trick1](PictureAngular/ng43.png)
+>
+> - ถ้าใช้ค่า null มา check ใน condition มันจะ return false
+
+## Angular Form
+> `1. Template Driven Forms (TDF)` 
+> - ใช้ Two Way Binding (ngModel)
+> - สามารถ keep track statement กับ validation
+> - เหมาะกับการจัดการข้อมูลที่ไม่ได้ซับซ้อน
+>
+> `2. Reactive Form`
+> - จัดการที่ class
+> - ไม่ใช้ two way binding
+> - เหมาะกับจัดการ data ที่ซับซ้อน
