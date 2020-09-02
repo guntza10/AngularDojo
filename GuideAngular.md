@@ -386,3 +386,10 @@
 > - จะถูกเรียกเมื่อ component ถูกสร้างเสร็จ(initialize component เสร็จ)
 >
 > `3. ngDoCheck()`
+> - จะถูกเรียกเมื่อ input , output เป็น Object ที่มีการเปลี่ยนแปลงค่า property ภายใน Object ใน ngOnChanges ไม่สามารถ detect ได้เพราะมันไม่สามารถ access เข้าถึง obj ref ได้ 
+>
+> ![angularLifeCycle1](PictureAngular/ng42.png)
+> `Note : `ถ้าเป็นการเปลี่ยนค่าที่เป็น obj ref ngOnChanges ไม่สามารถ detect ได้ แต่ถ้าเป็นการ instance ค่าให้ใหม่แทนการเข้าถึง ref แบบนี้ ngOnChanges จะ detect ได้ \
+> `Note : ` import,implement DoCheck - > import {  DoCheck } from '@angular/core';
+>
+> `ngAfterContentInit`
