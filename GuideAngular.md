@@ -6,7 +6,7 @@
 > คือ class ที่มี @NgModule decorator ประกาศบอกไว้ เป็น class ที่รวบรวมพวก component,directive,pipes,service ที่เกี่ยวข้องเอาไว้ด้วยกัน \
 > `Note : ` Angular app มี `app.module.ts` เป็น `root module` ที่เป็น module หลัก และ Angular app สามารถมีได้หลาย module 
 >
-> ![module](PictureAngular/ng1.png)
+> ![module](PictureAngular/ng1.PNG)
 >
 > ใน `@NgModule` decorator จะมี metadata ดังนี้
 > - `declarations` => เอาไว้ define components , directives , pipes ที่ต้องการจะใช้ใน Angular app
@@ -28,7 +28,7 @@
 >
 > คือ class ที่มี `@Component` decorator ประกาศบอกไว้ ทำหน้าที่เกี่ยวกับการทำงานกับ view และแบ่งการทำงานออกเป็น 2 ส่วน คือ ส่วนการทำงานของ `view(.html)` , `logic(.ts)`
 >
-> ![component](PictureAngular/ng2.png)
+> ![component](PictureAngular/ng2.PNG)
 >
 > ใน `@Component` decorator จะมี metadata ดังนี้
 > - `selector` => กำหนดชื่อให้กับ component ที่เราจะเอาไปใช้กับ view อื่นๆ สามารถ ประกาศได้ 3 แบบ \
@@ -36,7 +36,7 @@
 > => `class css` -> `selector: '.app-test'` \
 > => `attribute` -> `selector: '[app-test]'`\ 
 >
-> ![selector](PictureAngular/ng3.png)
+> ![selector](PictureAngular/ng3.PNG)
 > - `templateUrl` => เอาไว้อ้างอิงไฟล์ html \
 > `Note :` สามารถใช้ template ที่เอาไว้อ้างอิงถึง html ได้โดยตรง โดยเขียน html ลงไปใน metadata template ได้เลย
 > - `styleUrls` => เอาไว้อ้างอิงไฟล์ css \
@@ -67,32 +67,32 @@
 > ### `Class Binding`
 > คือ การ binding ให้กับ class css ว่าจะใช้หรือไม่ใช้ ใช้ `Property binding` 
 >
-> ![classBinding1](PictureAngular/ng4.png)
+> ![classBinding1](PictureAngular/ng4.PNG)
 >
-> ![classBinding2](PictureAngular/ng5.png)
+> ![classBinding2](PictureAngular/ng5.PNG)
 > 
 > `หมายเหตุ : โดยที่ IsTextProperty เป็น boolean มีค่าเป็น true , false`
 >
 > `Note : ` สามารถใช้ attribute ngClass ในการทำ Class binding เพื่อ set ค่าแบบ Object ได้
 >
-> ![ngClass1](PictureAngular/ng6.png)
+> ![ngClass1](PictureAngular/ng6.PNG)
 >
-> ![ngClass2](PictureAngular/ng7.png)
+> ![ngClass2](PictureAngular/ng7.PNG)
 >
-> ![ngClass3](PictureAngular/ng8.png)
+> ![ngClass3](PictureAngular/ng8.PNG)
 >
 > `หมายเหตุ : โดยที่ IsTextProperty , IsTextStyle เป็น boolean มีค่าเป็น true , false`
 
 > ### `Style Binding`
 > คือ การ binding style css property ใช้ `Property binding` รับค่าเป็น string value `("''") or ('""')`
 >
-> ![styleBinding1](PictureAngular/ng9.png)
+> ![styleBinding1](PictureAngular/ng9.PNG)
 >
 > `Note : ` สามารถใช้ attribute ngStyle ในการทำ Style binding เพื่อ set ค่าแบบ Object ได้
 >
-> ![ngStyle1](PictureAngular/ng10.png)
+> ![ngStyle1](PictureAngular/ng10.PNG)
 >
-> ![ngStyle2](PictureAngular/ng11.png)
+> ![ngStyle2](PictureAngular/ng11.PNG)
 >
 > `หมายเหตุ : ชื่อ propery css ถ้ามี - สามารถเขียนได้ 2 แบบ`
 > - camelCase => `fontStyle`
@@ -103,22 +103,22 @@
 >
 > `syntax => (ชื่อevent)="function ที่เอาไว้ handle event"`
 >
-> ![eventBinding1](PictureAngular/ng12.png)
+> ![eventBinding1](PictureAngular/ng12.PNG)
 >
-> ![eventBinding2](PictureAngular/ng13.png)
+> ![eventBinding2](PictureAngular/ng13.PNG)
 > หมายเหตุ : เราสามารถดักจับ event ได้ด้วยการส่ง `$event` (parameter event handle)
 >
-> ![eventBinding3](PictureAngular/ng14.png)
+> ![eventBinding3](PictureAngular/ng14.PNG)
 > หมายเหตุ : เราสามารถใช้ template statement แทน funtion handle event ได้ (`set property ผ่าน event binding ได้เลย`)
 
 > ### `Template Reference Variables`
 > คือ การ binding ที่อ้างอิง template element นั้น โดยที่เราสามารถเข้าถึง property ต่างๆของ template element นั้นๆ ได้เลย เรานิยมใช้ template ref กับ 
 > - ng directive => ใช้อ้างอิง template element กับ ng directive ต่างๆ
-> ![templateRef1](PictureAngular/ng15.png)
+> ![templateRef1](PictureAngular/ng15.PNG)
 > - component interactive => ใช้กับ component interactive ระหว่าง parent component กับ child component เป็นต้น
-> ![templateRef2](PictureAngular/ng16.png)
+> ![templateRef2](PictureAngular/ng16.PNG)
 > - input 
-> ![templateRef3](PictureAngular/ng17.png)
+> ![templateRef3](PictureAngular/ng17.PNG)
 >
 > `syntax -> #ชื่อ or ref-ชื่อ`
 
@@ -137,9 +137,9 @@
 > ### `Getters-Setters`
 > เราสามารถใช้ gettter-setter ในการจัดการค่าให้กับ property หรือ handle อะไรซักอย่าง หรือ ใช้แบบ Advance ในการส่ง data จาก Parent มา Child ได้ เช่น
 >
-> ![getter_setter](PictureAngular/ng18.png)
+> ![getter_setter](PictureAngular/ng18.PNG)
 >
-> ![getter_setter](PictureAngular/ng19.png)
+> ![getter_setter](PictureAngular/ng19.PNG)
 
 ## Ng-Directive
 
@@ -147,19 +147,19 @@
 > เป็นคำสั่ง if-else condition ที่ใช้กับ component template\
 > `Note :` สามารถใช้ ng-template + template ref เข้ามาช่วยได้ แล้วก็ใน *ngIf ถ้า property ที่มาใช้เป็น condition เป็น null จะถือว่าเป็น false
 >
-> ![ngIf1](PictureAngular/ng20.png)
+> ![ngIf1](PictureAngular/ng20.PNG)
 >
-> ![ngIf1](PictureAngular/ng21.png)
+> ![ngIf1](PictureAngular/ng21.PNG)
 
 > ### `[ngSwitch] กับ *ngSwitchCase`
 > เป็นคำสั่ง switch case ที่ใช้กับ component template
 >
-> ![ngSwitch1](PictureAngular/ng22.png)
+> ![ngSwitch1](PictureAngular/ng22.PNG)
 
 > ### `*ngFor`
 > เป็นคำสั่ง for-loop ที่ใช้กับ component template
 >
-> ![ngFor](PictureAngular/ng23.png)
+> ![ngFor](PictureAngular/ng23.PNG)
 > `หมายเหตุ :`
 >    - สามารถอ้างอิง Index ของ array ได้ ด้วย `index as i` (i หรือ ชื่ออะไรก็ได้) 
 >    - สามารถ check ว่าเป็น first element ได้ด้วย `first as f` (f หรือ ชื่ออะไรก็ได้) 
@@ -174,18 +174,18 @@
 > ### `1. รับ-ส่ง data ระหว่าง parent กับ child`
 > - `ส่ง data จาก parent ไป child` \
 >   - สร้าง property ที่จะส่ง แล้วทำ property binding ให้กับ selector ของ child component เช่น `[parentData]="propertyที่จะส่ง"` ใน property binding จะเป็น attribute ที่ child ใช้อ้างอิง data ที่ถูกส่งมาจาก parent (ตั้งชื่อ attribute อะไรก็ได้ไม่จำเป็นต้อง parentData)
-> ![componentInteraction1](PictureAngular/ng24.png)
+> ![componentInteraction1](PictureAngular/ng24.PNG)
 >   - ใช้ decorator input (`@input`) ที่ child ให้กับ property ที่เราจะเอาไว้รับค่าที่ส่งมาจาก parent โดยอ้างอิงจากชื่อ attribute ที่ทำ property binding จาก parent
-> ![componentInteraction1](PictureAngular/ng25.png)
+> ![componentInteraction1](PictureAngular/ng25.PNG)
 > - `ส่ง data จาก child กลับไปให้ parent` \
 >   - สร้าง event ในการส่ง data จาก child กลับไป parent (`EventEmitter`) ที่ child (define type ได้ เช่น new EventEmitter< string >() เป็นต้น)
 >   - ใช้ decorator output (`@output`) ที่ child ให้กับ event ที่เราสร้าง
-> ![componentInteraction2](PictureAngular/ng26.png)
+> ![componentInteraction2](PictureAngular/ng26.PNG)
 >   - สร้าง event binding (childEvent) ที่ parent component ให้กับ selector ของ child component + สร้าง property ที่รับค่าจาก event ที่ได้จาก child \
 >` หมายเหตุ :` ชื่อ Event ที่เอามาทำ event binding ไม่จำเป็นต้องชื่อ childEvent ขึ้นอยู่กับว่าเราสร้าง output event ที่ child หรืออ้างอิงมาชื่ออะไร `เช่นดังรูป`
-> ![componentInteraction3](PictureAngular/ng27.png)
-> ![componentInteraction4](PictureAngular/ng28.png)
-> ![componentInteraction5](PictureAngular/ng29.png)
+> ![componentInteraction3](PictureAngular/ng27.PNG)
+> ![componentInteraction4](PictureAngular/ng28.PNG)
+> ![componentInteraction5](PictureAngular/ng29.PNG)
 >` หมายเหตุ :` `message` คือ property ที่เอาไว้รับค่าจาก child ผ่าน event function `getDataFromChild` ที่เราทำ event binding และค่าที่รับจาก child จะเป็น `$event` (`event value`)
 >
 > `*** module ที่ต้องใช้` => import { EventEmitter } from '@angular/core';
@@ -195,7 +195,7 @@
 > "แต่ถ้าเราอยากเข้าถึง property,method ทั้งหมดที่ Public ใน child เราจะใช้ `@ViewChild` decorator ในการเข้าถึง data ทั้งหมดของ child" \
 > `Note :` เราใช้ `@ViewChild` เข้าถึงเพื่อแก้ไข-เปลี่ยนแปลง data ของ child จาก parent เช่น _`การทำพวก modal`_ เป็นต้น \
 > `Note :` เราสามารถใช้ template ref อ้างถึงตัว child component ได้เหมือนกัน (`ไม่ต้องไปสนใจ แต่รู้ไว้พอ`)
-> ![componentInteraction6](PictureAngular/ng30.png)
+> ![componentInteraction6](PictureAngular/ng30.PNG)
 > - `@ViewChild`('testViewChild', { `static: false` }) testViewChild: NgDirectiveComponent; `=>` ใช้ template ref
 > - `@ViewChild`(NgDirectiveComponent, { `static: false` }) testViewChild: NgDirectiveComponent; `=>` ใช้ child ref \
 >
@@ -257,7 +257,7 @@
 > การกำหนด routing เพื่อให้ App สามารถ navigate ระหว่าง component ได้ \
 > `Note :` ใน Angular App จะมี `app-routing.module.ts` ใช้กำหนด routing 
 >
-> ![routing1](PictureAngular/ng31.png)
+> ![routing1](PictureAngular/ng31.PNG)
 > โดยจะแบ่งเป็น 2 ส่วน
 > - `const routes` => จะเป็นที่เอาไว้สำหรับกำหนด route (routes ที่โดนสร้างจะถูกส่งมาที่ `RouterModule.forRoot(routes)` แล้ว export RouterModule ไปใช้)
 > - `const routingComponent`=> เป็นที่เอาไว้เก็บ component ทั้งหมดที่เราต้องการให้มีการ navigate
@@ -265,37 +265,37 @@
 >
 > `1. simple route`
 >
-> ![routing2](PictureAngular/ng32.png) \
+> ![routing2](PictureAngular/ng32.PNG) \
 > จะมีการระบุ path กับ component ที่ต้องการ Navigate ไป
 >
 > `2. Route Parameters`
 >
-> ![routing3](PictureAngular/ng33.png) \
+> ![routing3](PictureAngular/ng33.PNG) \
 > จะมีการระบุ path พร้อมกับ parameter กับ component ที่ต้องการ Navigate ไป
 >
 > `3. Child Routes`
 >
-> ![routing4](PictureAngular/ng34.png) \
+> ![routing4](PictureAngular/ng34.PNG) \
 > จะมีการระบุ path กับ component ของตัว parent component และมีการระบุ path,component ของ child component (`การทำ child routes เพื่อต้องการเอา child component มาแปะบน parent component โดยที่ไม่เปลี่ยนหน้ายังอยู่และแสดงผลบน parent component`) \
 > `Note :` router-outlet เป็น tag ที่เอาไว้นำ child component มา render แสดงที่ parent component โดยที่ไม่เปลี่ยนหน้า
 > `Note :` ในการทำ child routes จำเป็นต้องใช้ router-outlet เพื่อให้ child component สามารถถูก render แสดง บน parent component ได้
 >
 > `4. Redirecting Routes`
 >
-> ![routing5](PictureAngular/ng35.png) \
+> ![routing5](PictureAngular/ng35.PNG) \
 > เป็นการกำหนด default route เมื่อเข้า app มาครั้งแรก 
 > - `path : ' '` => เข้ามาด้วย path default เมื่อเปิด app มา
 > - `redirectTo: 'dashboard'` => ให้ redirect ไป path ไหน
 > - `pathMatch: 'full'` => เป็น property ที่กำหนดวิธีการ map path url ว่าจะ map url แบบไหน
 >   - full -> จะ redirect ไปได้ต้องเข้ามาด้วย path url แบบเต็มๆ
 >   - prefix -> ไม่ว่าจะเข้ามาด้วย path url แบบไหน ถ้าใน path url นั้นมี path url prefix อยู่ก็จะ redirect ไปได้หมด \
-> ![routing6](PictureAngular/ng36.png) 
+> ![routing6](PictureAngular/ng36.PNG) 
 >
 > `5. Wildcard Route`
 >
 >  เป็นการกำหนด route เมื่อไม่เจอ map path ที่เรากำหนด (`เป็นการ set เพื่อทำหน้าพวก 404 Not Found`)
 >
-> ![routing7](PictureAngular/ng37.png) 
+> ![routing7](PictureAngular/ng37.PNG) 
 >
 > `Note :` route มันทำจากบนลงล่าง เลยต้องกำหนด wildcard route ไว้ล่างสุด เพื่อให้มัน หา route path ทั้งหมดไม่เจอก่อน
 >
@@ -308,7 +308,7 @@
 >
 >  เป็นการ navigate ที่ใช้ที่ component template (`เป็นการ redirect ไปที่ path โดยตรง`)
 >
-> ![navigation1](PictureAngular/ng38.png) 
+> ![navigation1](PictureAngular/ng38.PNG) 
 >
 > `Note :` routerLinkActive เป็นการกำหนด css ให้กับ `routerLink` เมื่อมีการ navigate
 >
@@ -316,7 +316,7 @@
 >
 >  `Note :` import {Router} from '@angular/router'; (`dependency injection ให้กับ component ที่เราจะใช้`)
 > 
-> ![navigation2](PictureAngular/ng39.png)
+> ![navigation2](PictureAngular/ng39.PNG)
 > 
 > การ navigate มี 4 แบบ
 > - `Simple Navigation` => this.router.navigate(['ชื่อpath']) [`เป็นการ navigate ธรรมดา`]
@@ -344,11 +344,11 @@
 > ทำได้ 2 แบบ คือ
 > - `snapshot` => คือการ get state ของ router ในตอนนั้น(เมื่อ initialize)เพื่อที่จะใช้ paramMap.get('param') ต่อได้ 
 >
->   ![navigation3](PictureAngular/ng40.png)
+>   ![navigation3](PictureAngular/ng40.PNG)
 >
 > - `ParamMap Observable` => ถ้าเรา navigate กลับมาที่ component เดิม snapshot ไม่เวิร์ค (`มันจะทำแค่ตอนที่ initialize`) เพราะว่ามัน Initialize แค่ครั้งแรกที่ถูกสร้าง ถ้าเรา navigate กลับมาที่ component เดิมมันไม่ได้ initialize ใหม่ แต่แค่ reused component เดิม เราจึงแก้ไขโดยใช้ paramMap (`ถ้าเรา navigate แล้วส่งค่ากลับมาที่ component เดิม ใช้ paramMap`)
 >
->   ![navigation4](PictureAngular/ng41.png)
+>   ![navigation4](PictureAngular/ng41.PNG)
 >
 > `Note : ` `this.route` มาจาก ActivatedRoute ที่ได้จาก dependency injection สามารถเอา dot ใช้ snapshot หรือ ใช้ ParamMap Observable ต่อได้เลย
 
@@ -388,7 +388,7 @@
 > `3. ngDoCheck()`
 > - จะถูกเรียกเมื่อ input , output เป็น Object ที่มีการเปลี่ยนแปลงค่า property ภายใน Object ใน ngOnChanges ไม่สามารถ detect ได้เพราะมันไม่สามารถ access เข้าถึง obj ref ได้ ซึ่ง `ngDoCheck()` สามารถ detect ได้
 >
-> ![angularLifeCycle1](PictureAngular/ng42.png)
+> ![angularLifeCycle1](PictureAngular/ng42.PNG)
 > `Note : `ถ้าเป็นการเปลี่ยนค่าที่เป็น obj ref ngOnChanges ไม่สามารถ detect ได้ แต่ถ้าเป็นการ instance ค่าให้ใหม่แทนการเข้าถึง ref แบบนี้ ngOnChanges จะ detect ได้ \
 > `Note : ` import,implement DoCheck - > import {  DoCheck } from '@angular/core';
 >
@@ -418,7 +418,7 @@
 ## Trick Typescript
 > - string interpolation expression 
 >
->  ![trick1](PictureAngular/ng43.png)
+>  ![trick1](PictureAngular/ng43.PNG)
 >
 > - ถ้าใช้ค่า null มา check ใน condition มันจะ return false
 
