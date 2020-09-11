@@ -354,6 +354,18 @@
 >
 > `Note : ` `this.route` มาจาก ActivatedRoute ที่ได้จาก dependency injection สามารถเอา dot ใช้ snapshot หรือ ใช้ ParamMap Observable ต่อได้เลย
 
+> ### `Lazy Loading` 
+> โดยปกติใน Angular App ทุกครั้งที่เปิด App มาครั้งแรกจะทำการโหลด component ทั้งหมดมาไว้ก่อน ทำให้เวลาใช้งานมันจะไม่มีการโหลด component อีก (`เป็นข้อดีของ SPA`) แต่ถ้า Project ที่เราทำมีขนาดใหญ่ มี component เยอะ จะทำให้เวลาเปิด App มาครั้งแรกจะเกิดการโหลดนาน เราแก้ปัญหาด้วยการทำ Lazy Loading โดยการรวม component ที่เกี่ยวข้องกันเป็น feature module แล้วค่อยๆโหลดทีละ feature module นี้ทีละอันตามลำดับเมื่อมีเปิดหน้าของ feature นั้น ทำให้เวลาเปิด App จะเร็วขึ้นเพราะเราไม่ต้องโหลดมาทุก component แล้ว
+>
+> `Note : ` option ในการสร้าง feature module เพิ่มเติม
+>   - --routing => สร้าง routing-module สำหรับ feature module
+>   - --route => สร้าง route ของ feature module ของเราให้อัตโนมัติที่ `app-routing.module.ts`(routing module ของ root module)
+>   - --module app.module => เป็นการ import feature module ที่เราสร้างให้อัตโนมัติที่ imports ใน app.module (root module)
+>
+> ![lazyLoad](PictureAngular/lazyLoad.PNG)
+>
+> `Note : ` เวลาจะจัดการกับ component ที่อยู่ใน feature module ก็จัดการที่ module กับ routing module ของ feature module ที่มันอยู่
+
 ## Angular LifeCycle hooks
 > constructor() => จะถูกเรียกใช้เป็นตัวแรกเมื่อ component ถูกสร้างขึ้นมา (เป็นการสร้างค่าเริ่มต้นให้ component) 
 >
