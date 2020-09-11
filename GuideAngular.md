@@ -44,7 +44,9 @@
 > `Note :` การสร้าง component จะมี option
 >   - -it => inline template -> จะไม่มี html มาให้
 >   - -is => inline style -> จะไม่มี css  
->   - --skipTests=true -> ถ้าเป็น true จะไม่สร้าง ไฟล์ .spec       
+>   - --flat => จะไม่สร้างโฟลเดอร์
+>   - --module=app => เป็นตัวบอก angular ให้ Import component ตัวนี้ให้กับ declarations ใน app.module.ts
+>   - --skipTests=true -> ถ้าเป็น true จะไม่สร้าง ไฟล์ .spec (เป็นไฟล์สำหรับการ test)   
 
 > ### `5.Service`
 > คือ class ที่มี `@Injectable` decorator ประกาศบอกไว้ ที่เอาไว้จัดการเกี่ยวกับการ share data , call api , เชื่อมต่อกับ database หรือ server \
