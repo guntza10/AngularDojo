@@ -446,3 +446,24 @@
 > - จัดการที่ class
 > - ไม่ใช้ two way binding
 > - เหมาะกับจัดการ data ที่ซับซ้อน
+
+## RxJs
+> เป็น Library ที่เอาไว้จัดการกับ data หรือ event ที่อยู่ในรูป Observable โดยที่ Observable เป็น stream เมื่อมี data หรือ event เข้ามา จะสามารถแก้ไข หรือ ทำงานได้ทันที ทำให้ระบบมีการตอบสนองต่อค่าที่เปลี่ยนไปทันที ซึ่งเป็นไปตาม concept reactive programming
+>
+>` Note : ` เอาไว้ใช้กับ asychronous program เอามาใช้แทน callback ต่างๆ ให้อยู่ในรูป Observable ทำให้
+> - เขียนหรือจัดการ error ได้ง่ายและเป็น pattern เดียวกัน
+> - Observable มีคุณสมบัติในการปล่อย data stream ออกมาทีละตัว ทำให้ไม่มีการ hold data ไว้ใน memory และรอให้ถึงคิวตัวเอง ทำให้ใช้ resource น้อยลง
+> - code อ่านง่ายขึ้น
+>
+> ### `Observable`
+> เป็น data ใดๆก็ได้ที่เราสนใจ (_`number,string,promise,object เป็นต้น`_) ที่เก็บอยู่ในรูป Observable เอาไว้ Observe (`stream ของ data ใดๆ`) \
+> `Note :` ใน Angular เอาไว้ใช้จัดการกับ response ที่ได้จาก server
+> ### `Observer`
+> คือคนที่สนใจ data ชุดนี้ แล้วมา subscribe Observable นั้นเพื่อนำ data ไปใช้ต่อ
+>
+>
+>
+> ### `Observable Operator`
+> - map() => คือการเลือกแต่ละตัวใน Observable pipe
+> - first() => คือตัวแรกใน Observable pipe
+> - 
