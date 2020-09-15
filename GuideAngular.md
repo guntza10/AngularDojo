@@ -448,7 +448,7 @@
 > - เหมาะกับจัดการ data ที่ซับซ้อน
 
 ## RxJs
-> เป็น Library ที่เอาไว้จัดการกับ data หรือ event ที่อยู่ในรูป Observable โดยที่ Observable เป็น stream เมื่อมี data หรือ event เข้ามา จะสามารถแก้ไข หรือ ทำงานได้ทันที ทำให้ระบบมีการตอบสนองต่อค่าที่เปลี่ยนไปทันที ซึ่งเป็นไปตาม concept reactive programming
+> เป็น Library ที่เอาไว้จัดการกับ data หรือ event ที่อยู่ในรูป Observable โดยที่ Observable เป็น stream เมื่อมี data หรือ event เข้ามา จะทำงานทันที หรือ  จะสามารถแก้ไขเปลี่ยนแปลงได้เลย  ทำให้ระบบมีการตอบสนองต่อค่าที่เปลี่ยนไปทันที ซึ่งเป็นไปตาม concept reactive programming
 >
 >` Note : ` เอาไว้ใช้กับ asychronous program เอามาใช้แทน callback ต่างๆ ให้อยู่ในรูป Observable ทำให้
 > - เขียนหรือจัดการ error ได้ง่ายและเป็น pattern เดียวกัน
@@ -456,14 +456,58 @@
 > - code อ่านง่ายขึ้น
 >
 > ### `Observable`
-> เป็น data ใดๆก็ได้ที่เราสนใจ (_`number,string,promise,object เป็นต้น`_) ที่เก็บอยู่ในรูป Observable เอาไว้ Observe (`stream ของ data ใดๆ`) \
+> เป็น data ใดๆก็ได้ที่เราสนใจ (_`number,string,promise,object เป็นต้น`_) ที่เก็บอยู่ในรูป Observable เอาไว้ Observe (`stream ของ data หรือ event ใดๆ ที่มีการ emit ตลอดเวลา`) \
 > `Note :` ใน Angular เอาไว้ใช้จัดการกับ response ที่ได้จาก server
 > ### `Observer`
 > คือคนที่สนใจ data ชุดนี้ แล้วมา subscribe Observable นั้นเพื่อนำ data ไปใช้ต่อ
 >
+> `Note : ` การ subscription คือการที่ subscribe Observable แล้วมี Observer เป็นตัวมารับ data
 >
+> จะมี 3 function ใน Observable
+> - next() -> จะถูกเรียกเมื่อ Observable ปล่อย data ให้ Observer
+> - error() -> จะถูกเรียกเมื่อมี error
+> - complete() -> จะถูกเรียกเมื่อไม่มีการ emit data แล้ว และ Observable จะหยุดทำงานทันที
 >
+> จะมี 3 function ใน Observer ทำผ่าน subscribe()
+> - next() -> จะถูกเรียกเมื่อ Observer รับ data จาก Observable
+> - error() -> จะถูกเรียกเมื่อมี error
+> - complete() -> จะถูกเรียกเมื่อไม่มีการ emit data แล้ว และ Observable จะหยุดทำงานทันที
+>
+> `Note : ` function ของ Observer ที่ใช้ใน subscribe() ไม่จำเป็นต้องมีครบ 3 function ก็ทำงานได้
+>
+> `Note : ` เมื่อเรา subscribe Observable ภายใน Observer จะมีการ call subscription และเราสามารถ cancel subscription ที่เราไม่ได้ใช้เป็นเวลานานได้
+>
+> `Note : ` Observable สามารถมี multi Observer ได้ คือ add(observer) และสามารถ remove(observer) ออกได้
+>
+> ![observableDiagram](PictureAngular/ObservableDiagram.PNG)
+>
+> `Note : ` Observable เป็นเพียงตัวเชื่อม(`stream`) ในการส่ง data ระหว่าง Producer(`ผู้ส่ง`) กับ Consumer(`ผู้รับ`)
+>
+> ### `Hot & Cold Observable`
+>
+> 1. Hot Observable => คือ Observable ที่ไม่ได้สนว่า Observer จะมา subscribe มันตอนไหน ซึ่ง data ที่ emit ให้แต่ละ Observer จะเป็น data ชุดเดียวกัน (`เป็นการ share source data หรือ Producer ตัวเดียวกัน`) สาเหตุที่เป็นแบบนี้เพราะว่า เมื่อเราสร้าง Hot Observable เราจะ create Producer ไว้ข้างนอก Observable แล้วค่อยเอา Producer ไปใช้ใน Observable อีกที ทำให้ไม่มีการสร้าง Producer ขึ้นมาใหม่เมื่อมีการ subscribe ส่งผลให้ Observer ที่มา subscribe แต่ละตัวจะมี source data หรือ Producer ตัวเดียวกัน
+> 2. Cold Observable => คือ Observable ที่จะ emit data ก็ต่อเมื่อมี Observer ที่มา subscribe ซึ่ง data ที่ emit ให้ Observer แต่ละตัวนั้นเป็น data คนละชุดกัน เป็นข้อมูลของใครของมันในแต่ละ Observer สาเหตุที่เป็นแบบนี้เพราะว่า เมื่อเราสร้าง Cold Observable เราจะ create Producer ไว้ภายใน Observable ทำให้ทุกครั้งที่มีการ subscribe เกิดขึ้น Observable จะสร้าง Producer ขึ้นมาใหม่ ส่งผลให้ Observer ที่มา subscribe แต่ละตัวจะมี source data หรือ Producer เป็นของตัวเอง
+>
+> `Note :` https://coursetro.com/posts/code/148/RxJS-Observables-Tutorial---Creating-&-Subscribing-to-Observables
+>
+> ### `Subject`
+> เป็น Observable กับ Observer ในตัวเดียวกัน มี 3 ประเภท
+> 1. Behavior Subject \
+> เป็น subject ที่จะ get data จาก emit ตัวล่าสุดก่อนหน้าของ Behavior Subject มาด้วย
+>
+> 2. Replay Subject \
+> เป็น subject ที่สามารถกำหนดจำนวน emit ตัวล่าสุดที่ต้องการ get data ของ Replay Subject
+>
+> 3. Async Subject
+> เป็น subject ที่จะ get data จาก emit ตัวสุดท้ายเท่านั้น แล้วต้อง subject.complete() (`ไม่มีการ emit data อีกแล้ว จบการทำงานของ subject`)
+>
+> `Note : ` https://coursetro.com/posts/code/149/RxJS-Subjects-Tutorial---Subjects,-BehaviorSubject,-ReplaySubject-&-AsyncSubject
+> 
 > ### `Observable Operator`
+> - filter() => คือการคิวรี่หา
 > - map() => คือการเลือกแต่ละตัวใน Observable pipe
+> - pluck() => คือการเลือกเอาเฉพาะฟีลด์ property จาก object array
 > - first() => คือตัวแรกใน Observable pipe
-> - 
+> - pipe() => เป็นการทำ Observable แบบ multi operator
+>
+> `Note : ` https://coursetro.com/posts/code/150/RxJS-Operators-Tutorial---Learn-How-to-Transform-Observables
