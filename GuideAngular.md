@@ -437,15 +437,124 @@
 > - ถ้าใช้ค่า null มา check ใน condition มันจะ return false
 
 ## Angular Form
-> `1. Template Driven Forms (TDF)` 
+> ## `1. Template Driven Forms (TDF)` 
 > - ใช้ Two Way Binding (ngModel)
 > - สามารถ keep track statement กับ validation
 > - เหมาะกับการจัดการข้อมูลที่ไม่ได้ซับซ้อน
+> - จัดการที่ html 
 >
-> `2. Reactive Form`
+> `Note :` รายละเอียดอ่านเพิ่มเติมใน Angular Form.txt , project ตัวอย่าง templateDrivenForm (`ไม่นิยมใช้`)
+>
+> ## `2. Reactive Form`
 > - จัดการที่ class
 > - ไม่ใช้ two way binding
 > - เหมาะกับจัดการ data ที่ซับซ้อน
+> 
+> ### **FormControl**
+> คือ filed data สำหรับ Input 1 ตัว \
+> `Ex.` 
+>```
+>   formControl = new FormControl('value');
+>```
+> `Note :` new FormControl(' ') เป็น default ไม่มีค่า
+>
+> ### **FormGroup**
+> คือ group ของ FormControl \
+> `Ex.` 
+>```
+>formGroup = new FormGroup({
+>        formcon1 : new FormControl(''),
+>        formcon2 : new FormControl('')
+>    });
+>```
+> ` Note :` เราใช้ FormBuilder มาช่วยจัดการ FormGroup,FormControl,FormArray ให้เขียนได้ง่ายขึ้น
+> ```
+> import { FormBuilder } from '@angular/forms'; 
+>
+>  formGroup -> this.fb.group({})
+>  formControl -> this.fb.control('')
+>  formArray -> this.fb.array([])
+> ```
+> `Note :` form array เอาไว้จัดการพวก dynamic form เช่น สามารถเพิ่ม input form control ได้เรื่อยๆ ก็เอา form control มาเก็บไว้ใน form array 
+>
+> ### **Dynamic Form Control**
+> - import {FormArray} from '@angular/forms'; 
+> - define form array ใน form model (`ใน form array จะ contain form control`)
+> - define getter ที่ เข้าถึง form array เพื่อให้ html เข้าถึงได้ง่าย(ควรใส่ type assert ว่าเป็น FormArray ให้มันด้วย)
+> - สร้าง method ที่เอาไว้ add dynamic form control เข้าไปใน form array
+> - สร้าง button ที่ call method ข้างบน
+> - เอา form array มา show บน html
+>   - binding form array => `formArrayName="ชื่อ field ของ formArray"`
+>   - formArray.controls คือการ get array form control ของ form array 
+>   - binding form control ใน form array ด้วย index ของ form control ใน form array => `[formControlName]="i"` (i คือ index)
+>
+> ## Step การทำ Reactive Form
+> 1. import { ReactiveFormsModule } from '@angular/forms';
+> 2. inject ใส่ imports ใน app.module
+> 3. สร้าง form ใน component template (html)
+> 4. สร้าง form model ที่ compoent class (.ts)
+> 5. binding formGroup , formControl , formArray ใน html
+> - `[formGroup]="ชื่อ formGroup"`
+> - `formControlName="ชื่อ formControl"`
+> - `formArrayName="ชื่อ formArray"`
+> - `formGroupName="ชื่อ formGroup ที่ซ้อนอยู่ใน nested form group"`
+>
+> ## จัดการกับ Form Control Value
+> - form.setValue(`object value ของ form ที่ต้องการเปลี่ยนแปลง`) \
+> `Note : ` ต้อง set value ให้ครบทุก field
+> - form.patchValue(`object value ของ form ที่ต้องการเปลี่ยนแปลง`) \
+> `Note : ` set value ให้บาง field ที่เราต้องการให้เปลี่ยนแปลง
+>
+> ![form](PictureAngular/form.PNG)
+>
+> ## Validation Form
+> `Note : ` import { Validators } from '@angular/forms'; 
+> - สร้างเงื่อนไข validate
+> ```
+> ex. passWord: ['', [Validators.required,Validators.minLength(5)]] -> เงื่อนไข validate มากกว่า 1
+>        
+> ex. passWord: ['', Validators.required] -> เงื่อนไข validation อันเดียว
+>
+> Note : passWord: ['default value',validation] validation สามารถทำ multi validation ได้ เก็บเป็น array
+> ```
+> - จัดการ show validation กับ error message 
+>   - เช็คจาก reactiveForm.get('ชื่อ filed').property
+>   - ทำเป็น method get field ของ form ได้ แล้วนำมาใช้ get property อีกที
+> ![formMethod1](PictureAngular/formMethod.PNG)
+> ![formMethod2](PictureAngular/formMethod2.PNG)
+> ![formMethod3](PictureAngular/formMethod3.PNG)
+> ![formMethod4](PictureAngular/formMethod4.PNG)
+>
+> ## Custom validation (`ดูตัวอย่างที่ ReactiveForm ที่ user-name-validator.ts`)
+> - สร้างไฟล์ที่จัดการเกี่ยวกับ validation 
+> - สร้าง function ที่จัดการ validation แล้ว export ออกไปใช้ที่ component class ที่อยากใช้ custom validation (validator function)
+> - รับ parameter แค่ 1 ตัว เป็น formControl (จัดการ check validate form control แค่ form control เดียว)
+> - เวลาเอาไปใช้ เอาไปใส่ไว้ใน validation array ของ formControl ที่เราต้องการจะ validate
+>
+> ![customValidation1](PictureAngular/customValidation.PNG)
+> ![customValidation2](PictureAngular/customValidation2.PNG)
+>
+> ## Cross Field Validation (`ดูตัวอย่างที่ ReactiveForm ดูที่ password-validator.ts`)
+> ใช้ตอนที่ต้องการจะ compare value ของ formControl ที่อยู่ใน form Group เดียวกัน (จัดการ check validate form control มากกว่า 1 ตัว) 
+>
+> ทำเหมือน custom validation
+> - ต่างกันตรงที่ parameter ไม่ได้รับมาเป็น form control เดี่ยวๆ แต่รับมาเป็น formGroup (`มัน ref formGroup แทนจากที่เป็น formControl`)
+> - ไม่ได้ set ที่ validation array ของ form control
+>    - set ให้ formGroup แทน (set ให้เป็น argument ตัวที่ 2)
+>    - set validator function สำหรับ cross field ให้ property validators ใน argument ตัวที่ 2 
+>
+> ![crossField](PictureAngular/crossFieldValidation.PNG)
+> ![crossField2](PictureAngular/crossFieldValidation2.PNG)
+>
+> ## Conditional Validation (`ดูตัวอย่างที่ ReactiveForm`)
+> เป็น validation ที่จัดการกับเงื่อนไข validate ที่มันเฉพาะ \
+> `ex.` ถ้าไม่ตื้ก check box email field จะไม่ required แต่ถ้าติ้กจะ required
+>
+> ![conditionalValidation](PictureAngular/conditionalValidation.PNG)
+>
+> ### Submitting Form Data
+> - submit data คือการ post form data ไปที่ server
+> - binding event (ngSubmit) ให้กับ form
 
 ## RxJs
 > เป็น Library ที่เอาไว้จัดการกับ data หรือ event ที่อยู่ในรูป Observable โดยที่ Observable เป็น stream เมื่อมี data หรือ event เข้ามา จะทำงานทันที หรือ  จะสามารถแก้ไขเปลี่ยนแปลงได้เลย  ทำให้ระบบมีการตอบสนองต่อค่าที่เปลี่ยนไปทันที ซึ่งเป็นไปตาม concept reactive programming
