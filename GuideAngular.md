@@ -279,7 +279,7 @@
 >
 > ![routing4](PictureAngular/ng34.PNG) \
 > จะมีการระบุ path กับ component ของตัว parent component และมีการระบุ path,component ของ child component (`การทำ child routes เพื่อต้องการเอา child component มาแปะบน parent component โดยที่ไม่เปลี่ยนหน้ายังอยู่และแสดงผลบน parent component`) \
-> `Note :` router-outlet เป็น tag ที่เอาไว้นำ child component มา render แสดงที่ parent component โดยที่ไม่เปลี่ยนหน้า
+> `Note :` router-outlet เป็น tag ที่เอาไว้นำ child component มา render แสดงที่ parent component โดยที่ไม่เปลี่ยนหน้า \
 > `Note :` ในการทำ child routes จำเป็นต้องใช้ router-outlet เพื่อให้ child component สามารถถูก render แสดง บน parent component ได้
 >
 > `4. Redirecting Routes`
