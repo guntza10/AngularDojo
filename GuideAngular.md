@@ -135,6 +135,8 @@
 >=> จะรับค่าจาก template มาที่ class ผ่าน event binding แล้วอัพเดทค่าจาก class สู่ template ด้วย property binding
 >
 > `หมายเหตุ : เราสามารถทำ split two way binding เพื่อ handle การส่ง data จาก parent มา child ได้ advance มากขึ้น`
+>
+> `Note : ` ต้อง import { FormsModule } from '@angular/forms'; แล้ว inject FormsModule ใน imports ของ module นั้นๆที่จะใช้
 
 > ### `Getters-Setters`
 > เราสามารถใช้ gettter-setter ในการจัดการค่าให้กับ property หรือ handle อะไรซักอย่าง หรือ ใช้แบบ Advance ในการส่ง data จาก Parent มา Child ได้ เช่น
